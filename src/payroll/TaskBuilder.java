@@ -18,7 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
  */
 public class TaskBuilder {
     
-    public static Task createTask(Job inJob, HSSFRow inRow,
+    public static void createTask(Job inJob, HSSFRow inRow,
                                     PaymentFileFormatChecker checker){
         
         int taskTypeIndex = checker.getTaskTypeLocation();
@@ -49,7 +49,6 @@ public class TaskBuilder {
                         new NonSerializedEquipmentTask(taskName,taskDescription);
                 // Add task to appropriate task list
                 inJob.addNonSerializedEquipmentTask(newTask);
-                return newTask;
             }
             else{
                 // Use the task description to see if equipment is serialized
@@ -60,7 +59,6 @@ public class TaskBuilder {
                         new SerializedEquipmentTask(taskName, taskDescription);
                     // Add task to appropriate task list
                     inJob.addSerializedEquipmentTask(newTask);
-                    return newTask;
                 }
             }   
         }
@@ -75,8 +73,8 @@ public class TaskBuilder {
                 int pay = stdLaborTask.lookupLaborPayment();
                 // Set the labor payment
                 stdLaborTask.setPayment(pay);
-                // Return the Standard Labor Task
-                return stdLaborTask;
+                // Add Standard Labor Task to job
+                inJob.addStandardLaborTask(stdLaborTask);
             }
             // Else return new Smart Home Service task
             else if(isSHSLaborTask(taskName)){
@@ -86,14 +84,10 @@ public class TaskBuilder {
                 int pay = shsTask.lookupLaborPayment();
                 // Set the labor payment
                 shsTask.setPayment(pay);
-                // Return the new SHS Task
-                return shsTask;
+                // Add SHS Labor Task to job
+                inJob.addSHSLaborTask(shsTask);
             }
         }
-        // IF ALL ELSE FAILS, RETURN NULL.
-        // At this time only adding task to Task List if not null
-        // Checking for null in JobBuilder
-        return null;
     }
     
     // Method checks the type of cell and returns the value as a String

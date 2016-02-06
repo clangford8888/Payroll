@@ -52,48 +52,9 @@ public class JobBuilder {
             
             // Traverse list of rows and add tasks to job's Task list
             for(HSSFRow row : rowList){
-                Task task = TaskBuilder.createTask(createdJob, row, checker);
-                /* TODO:
-                REDO THIS: pass job into TaskBuilder's createTask() method
-                In this method, just directly add each task to job?
+                // Create a task for each row. TaskBuilder will add task to job
+                TaskBuilder.createTask(createdJob, row, checker);
                 
-                Or pass in the list of rows to task Builder, so you don't have
-                to pass an instance of createdJob object each time you want to
-                make a task.
-                
-                */
-                // Check to make sure task isn't null before adding to list
-                if(task!=null){
-                    /*
-                    Could Try and use visitor pattern here. Might be the better
-                    way to assign the task to the right list.
-                    */
-                    String taskType = task.getTaskType();
-                    switch (taskType) {
-                        case "Equipment":
-                            /* TODO:
-                            Figure out a way to either distinguish different types of equipment
-                            tasks with Generics or redo this to where there is an equipment list for
-                            each type of Equipment Task
-                            */
-                            // System.out.println("Task Type "+taskType + " " + task.getTaskName());
-                            //EquipmentTask equipmentTask = (EquipmentTask)task;
-                            //createdJob.addEquipmentTask(equipmentTask);
-                            break;
-                        case "Standard Labor":
-                            // System.out.println("Task Type "+taskType + " " + task.getTaskName());
-                            StandardLaborTask standardTask = (StandardLaborTask)task;
-                            createdJob.addStandardLaborTask(standardTask);
-                            break;
-                        case "SHS Labor":
-                            //System.out.println("Task Type "+taskType + " " + task.getTaskName());
-                            SHSLaborTask shsTask = (SHSLaborTask)task;
-                            createdJob.addSHSLaborTask(shsTask);
-                            break;
-                        default:
-                            break;
-                    }
-                }
             }
             jobCreatedCount++;
             
