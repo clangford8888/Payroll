@@ -20,7 +20,8 @@ public abstract class Job {
     private String designation;
     private final String customerName;
     private final String techID; // Want DB to have TID, get name from there??
-    private ArrayList<EquipmentTask> equipmentList;
+    private ArrayList<EquipmentTask> serializedEquipmentList;
+    private ArrayList<EquipmentTask> nonSerializedEquipmentList;
     private ArrayList<StandardLaborTask> standardLaborList;
     private ArrayList<SHSLaborTask> shsList;
     private int payment;
@@ -34,7 +35,8 @@ public abstract class Job {
         this.designation = inDesignation;
         this.techID = inTID;
         this.customerName = inCName;
-        this.equipmentList = new ArrayList<>();
+        this.serializedEquipmentList = new ArrayList<>();
+        this.nonSerializedEquipmentList = new ArrayList<>();
         this.standardLaborList = new ArrayList<>();
         this.shsList = new ArrayList<>();
         this.payment = 0;
@@ -59,8 +61,12 @@ public abstract class Job {
     // ***********************************************************
     // TRYING THIS METHOD OF ADDING TASKS, SO YOU DON'T HAVE TO PASS 
     // A WHOLE LIST IN THE CONSTRUCTOR. GOOD IDEA? WHO KNOWS!
-    public void addEquipmentTask(EquipmentTask inTask){
-        this.equipmentList.add(inTask);
+    public void addSerializedEquipmentTask(EquipmentTask inTask){
+        this.serializedEquipmentList.add(inTask);
+    }
+    
+    public void addNonSerializedEquipmentTask(EquipmentTask inTask){
+        this.nonSerializedEquipmentList.add(inTask);
     }
     
     public void addStandardLaborTask(StandardLaborTask inTask){
@@ -97,8 +103,12 @@ public abstract class Job {
         return customerName;
     }
     
-    public ArrayList<EquipmentTask> getEquipmentTaskList(){
-        return equipmentList;
+    public ArrayList<EquipmentTask> getNonSerializedEquipmentTaskList(){
+        return serializedEquipmentList;
+    }
+    
+    public ArrayList<EquipmentTask> getSerializedEquipmentTaskList(){
+        return nonSerializedEquipmentList;
     }
     
     public ArrayList<StandardLaborTask> getStandardLaborTaskList(){
