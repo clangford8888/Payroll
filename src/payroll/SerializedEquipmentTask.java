@@ -30,7 +30,7 @@ public class SerializedEquipmentTask extends EquipmentTask{
     }
     
     // TODO: LOOKUP ITEM NUMBER FROM NAME!! ********************************
-    public String lookupItemNumber(String inName){
+    private String lookupItemNumber(String inName){
         return "ITEM NUMBER";
     }
     
