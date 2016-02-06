@@ -59,21 +59,4 @@ public class ServiceCall extends Job{
         // Return Service Call Payment Amount
         return pay;
     }
-
-   /*
-    // TODO: Handle multiple chargebacks for same tech/
-    public void addWarrantyChargeback(Job inJob){
-        
-        ServiceCallDAO scDAO = new ServiceCallDAO(this);
-        
-        boolean chargebackAdded = scDAO.addChargeback(inJob);
-        
-        if(!chargebackAdded){
-            // TODO: LOG THAT CHARGEBACK WASN'T PROPERLY ADDED!
-            System.out.println("Chargeback not added properly!");
-        }
-        else{
-            System.out.println("Chargeback applied");
-        }
-    } */
 }
