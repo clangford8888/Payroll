@@ -18,6 +18,7 @@ public abstract class EquipmentTask extends Task {
         this.taskType = "Equipment";
     }
     
+    @Override
     public String getTaskType(){
         return taskType;
     }
