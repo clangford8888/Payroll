@@ -52,7 +52,7 @@ public class JobBuilder {
             
             // Traverse list of rows and add tasks to job's Task list
             for(HSSFRow row : rowList){
-                Task task = TaskBuilder.createTask(row, checker);
+                Task task = TaskBuilder.createTask(createdJob, row, checker);
                 /* TODO:
                 REDO THIS: pass job into TaskBuilder's createTask() method
                 In this method, just directly add each task to job?
@@ -77,8 +77,8 @@ public class JobBuilder {
                             each type of Equipment Task
                             */
                             // System.out.println("Task Type "+taskType + " " + task.getTaskName());
-                            EquipmentTask equipmentTask = (EquipmentTask)task;
-                            createdJob.addEquipmentTask(equipmentTask);
+                            //EquipmentTask equipmentTask = (EquipmentTask)task;
+                            //createdJob.addEquipmentTask(equipmentTask);
                             break;
                         case "Standard Labor":
                             // System.out.println("Task Type "+taskType + " " + task.getTaskName());
@@ -105,12 +105,7 @@ public class JobBuilder {
             // Push to Database
             JobDAO jobDAO = new JobDAO();
             
-            ArrayList<EquipmentTask> equipList = createdJob.getEquipmentTaskList();
             
-            System.out.println("Job #: " + jobCreatedCount);
-            for(Task t : equipList){
-                System.out.println(t.getTaskName() + "\t" + t.getTaskDescription());
-            }
             
             
             //jobDAO.addJob(createdJob);

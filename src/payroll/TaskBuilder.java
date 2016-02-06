@@ -18,7 +18,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
  */
 public class TaskBuilder {
     
-    public static Task createTask(HSSFRow inRow, PaymentFileFormatChecker checker){
+    public static Task createTask(Job inJob, HSSFRow inRow,
+                                    PaymentFileFormatChecker checker){
         
         int taskTypeIndex = checker.getTaskTypeLocation();
         int taskNameIndex = checker.getTaskNameLocation();
@@ -43,15 +44,23 @@ public class TaskBuilder {
         if(taskType.equals("E")){
             // Check if taskName is Non-Serialized
             if(isNonSerializedEquipment(taskName)){
-                // Return new Unserialized equipment
-                return new NonSerializedEquipmentTask(taskName,taskDescription);
+                // Create new Serialized Equipment Task
+                NonSerializedEquipmentTask newTask = 
+                        new NonSerializedEquipmentTask(taskName,taskDescription);
+                // Add task to appropriate task list
+                inJob.addNonSerializedEquipmentTask(newTask);
+                return newTask;
             }
             else{
                 // Use the task description to see if equipment is serialized
                 // Task name is not used, because it will contain the serial #
                 if(isSerializedEquipment(taskDescription)){
-                    // Return new Seriallized equipment
-                    return new SerializedEquipmentTask(taskName, taskDescription);
+                    // Create new Serialized Equipment Task
+                    SerializedEquipmentTask newTask = 
+                        new SerializedEquipmentTask(taskName, taskDescription);
+                    // Add task to appropriate task list
+                    inJob.addSerializedEquipmentTask(newTask);
+                    return newTask;
                 }
             }   
         }
