@@ -51,8 +51,8 @@ public abstract class Job {
         if(shsList != null && !shsList.isEmpty()){
             //Traverse the list
            for(SHSLaborTask task : shsList){
-               // Look up the SHS payment and add it to pay
-               pay += task.lookupLaborPayment();
+               // Add SHS labor for each task
+               pay += task.getPayment();
            }
         }
         return pay;
