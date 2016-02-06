@@ -29,7 +29,7 @@ public class EquipmentDAO {
         this.job = inJob;
     }
     
-    public void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
+    protected void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
         
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();
@@ -74,7 +74,43 @@ public class EquipmentDAO {
         }
     }
     
-    public void addNonSerializedEquipmentFromList(List<NonSerializedEquipmentTask> list){
-    
+    protected void addNonSerializedEquipmentFromList(List<NonSerializedEquipmentTask> list){
+        String workOrderNum = job.getWorkOrderNumber();
+        String techID = job.getTechID();
+        String model;
+        int quantity;
+        
+        if(!list.isEmpty()){
+            quantity = 1;
+            try{
+                conn = DatabaseConnector.getConnection();
+                
+                String sql = "insert into consumed_equip_nonserialized "
+                            + "values(?,?,?,?)"
+                            + "on duplicate key update"
+                            + "(select quantity from "
+                            + "consumed_quip_nonserialized as quant"
+                            + "where workOrderNum = ?)"
+                            + "values(?,?,?,quant)";
+                
+                for(NonSerializedEquipmentTask task : list){
+                    
+
+                    ps = conn.prepareStatement(sql);
+                    
+                    
+                }
+                
+            }
+            catch(SQLException e){
+                System.out.println(e.getMessage());
+                System.out.println(e.getSQLState());
+            }
+            finally{
+                DatabaseConnector.closeQuietly(conn);
+                DatabaseConnector.closeQuietly(ps);
+                DatabaseConnector.closeQuietly(rs);
+            }
+        }
     }
 }
