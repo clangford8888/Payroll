@@ -102,10 +102,10 @@ public class ServiceChange extends Job{
             internetJob.addSHSLaborTask(task);
         }
         // Traverse equipment task list and add tasks to new job
-        for(EquipmentTask task: this.getNonSerializedEquipmentTaskList()){
+        for(NonSerializedEquipmentTask task: this.getNonSerializedEquipmentTaskList()){
             internetJob.addNonSerializedEquipmentTask(task);
         }
-        for(EquipmentTask task: this.getSerializedEquipmentTaskList()){
+        for(SerializedEquipmentTask task: this.getSerializedEquipmentTaskList()){
             internetJob.addSerializedEquipmentTask(task);
         }
         // Use existing internet install's method to calculate pay

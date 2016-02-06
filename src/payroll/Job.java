@@ -20,8 +20,8 @@ public abstract class Job {
     private String designation;
     private final String customerName;
     private final String techID; // Want DB to have TID, get name from there??
-    private ArrayList<EquipmentTask> serializedEquipmentList;
-    private ArrayList<EquipmentTask> nonSerializedEquipmentList;
+    private ArrayList<SerializedEquipmentTask> serializedEquipmentList;
+    private ArrayList<NonSerializedEquipmentTask> nonSerializedEquipmentList;
     private ArrayList<StandardLaborTask> standardLaborList;
     private ArrayList<SHSLaborTask> shsList;
     private int payment;
@@ -61,11 +61,11 @@ public abstract class Job {
     // ***********************************************************
     // TRYING THIS METHOD OF ADDING TASKS, SO YOU DON'T HAVE TO PASS 
     // A WHOLE LIST IN THE CONSTRUCTOR. GOOD IDEA? WHO KNOWS!
-    public void addSerializedEquipmentTask(EquipmentTask inTask){
+    public void addSerializedEquipmentTask(SerializedEquipmentTask inTask){
         this.serializedEquipmentList.add(inTask);
     }
     
-    public void addNonSerializedEquipmentTask(EquipmentTask inTask){
+    public void addNonSerializedEquipmentTask(NonSerializedEquipmentTask inTask){
         this.nonSerializedEquipmentList.add(inTask);
     }
     
@@ -103,11 +103,11 @@ public abstract class Job {
         return customerName;
     }
     
-    public ArrayList<EquipmentTask> getNonSerializedEquipmentTaskList(){
+    public ArrayList<SerializedEquipmentTask> getSerializedEquipmentTaskList(){
         return serializedEquipmentList;
     }
     
-    public ArrayList<EquipmentTask> getSerializedEquipmentTaskList(){
+    public ArrayList<NonSerializedEquipmentTask> getNonSerializedEquipmentTaskList(){
         return nonSerializedEquipmentList;
     }
     
