@@ -66,11 +66,18 @@ public class JobBuilder {
             
             // Push to Database
             JobDAO jobDAO = new JobDAO();
-            
-            
-            
-            
             //jobDAO.addJob(createdJob);
+            
+            List<SerializedEquipmentTask> list = createdJob.getSerializedEquipmentTaskList();
+            
+            if(!list.isEmpty()){
+                EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
+                
+                eqDAO.addSerializedEquipmentFromList(list);
+            }
+            
+            
+            
             //jobDAO.deleteJob(createdJob);
             
         }
