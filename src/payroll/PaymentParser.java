@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -25,14 +27,13 @@ public class PaymentParser {
     
     // Declare variables.
     
-    File inputFile;
-    FileInputStream inputStream;
-    HSSFWorkbook workbook;
-    HSSFSheet sheet;
-    int lastRow;
-    String[] headings;
-    HashMap<String, ArrayList<HSSFRow>> inputMap;
-    ArrayList<HSSFRow> rowList;
+    private File inputFile;
+    private FileInputStream inputStream;
+    private HSSFWorkbook workbook;
+    private HSSFSheet sheet;
+    private int lastRow;
+    private Map<String, List<HSSFRow>> inputMap;
+    private List<HSSFRow> rowList;
     
     // Constructor takes in an Excel file, sets up components
     public PaymentParser(File inFile){
@@ -93,7 +94,7 @@ public class PaymentParser {
                 }
                 else{
                     // WO# is not contained in map, so add it, along with row
-                    ArrayList<HSSFRow> list = new ArrayList<>();
+                    List<HSSFRow> list = new ArrayList<>();
                     list.add(currentRow);
                     inputMap.put(workOrderNum, list);
                 }
@@ -108,7 +109,7 @@ public class PaymentParser {
     }
     
     // ONLY PRINTS THE KEYS AND COUNT!
-    public void printMap(HashMap<String, ArrayList<HSSFRow>> map){
+    public void printMap(Map<String, List<HSSFRow>> map){
         int count = 0;
         for(String wo : map.keySet()){
             count++;
@@ -130,7 +131,7 @@ public class PaymentParser {
     Getter method for the PaymentParser's HashMap. Allows builder class to 
     create jobs.
     */
-    public HashMap<String, ArrayList<HSSFRow>> getMap(){
+    public Map<String, List<HSSFRow>> getMap(){
         return inputMap;
     }
 }

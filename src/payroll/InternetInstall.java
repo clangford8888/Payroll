@@ -20,6 +20,7 @@ public class InternetInstall extends Install{
     
     }
     
+    @Override
     public int calculatePay(){
         
         int pay = 0;

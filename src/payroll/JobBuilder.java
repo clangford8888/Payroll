@@ -7,7 +7,8 @@ package payroll;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 
@@ -28,14 +29,14 @@ public class JobBuilder {
     
 
     /*
-    Purpose: Traverse a HashMap of <WO#, ArrayList<Row>> and build jobs for
+    Purpose: Traverse a HashMap of <WO#, List<Row>> and build jobs for
             each work order number.
     */
-    public void buildJobsFromMap(HashMap<String, ArrayList<HSSFRow>> inMap){
+    public void buildJobsFromMap(Map<String, List<HSSFRow>> inMap){
         // Initialize Map of WorkOrderNumber/List of Rows 
-        HashMap<String, ArrayList<HSSFRow>> map = inMap;
+        Map<String, List<HSSFRow>> map = inMap;
         // Create a new list of rows
-        ArrayList<HSSFRow> rowList;
+        List<HSSFRow> rowList;
         
         int jobCreatedCount = 0;
         
@@ -79,7 +80,7 @@ public class JobBuilder {
     /*
     Purpose: Take in a list of Rows and return the job type so the class can
              build the correct type of job.
-    Parameters: inList: ArrayList of HSSFRow. 
+    Parameters: inList: List of HSSFRow. 
     */
     public String getJobType(HSSFRow inRow){
         

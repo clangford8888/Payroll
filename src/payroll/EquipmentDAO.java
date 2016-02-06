@@ -5,7 +5,7 @@
  */
 package payroll;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,11 +17,11 @@ public class EquipmentDAO {
         
     }
     
-    public void addSerializedEquipmentFromList(ArrayList<SerializedEquipmentTask> list){
+    public void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
         
     }
     
-    public void addNonSerializedEquipmentFromList(ArrayList<NonSerializedEquipmentTask> list){
+    public void addNonSerializedEquipmentFromList(List<NonSerializedEquipmentTask> list){
     
     }
 }
