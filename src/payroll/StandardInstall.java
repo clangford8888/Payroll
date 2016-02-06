@@ -5,8 +5,8 @@
  */
 package payroll;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -21,7 +21,7 @@ public class StandardInstall extends Install{
     }
     
     public int calculatePay(){
-        ArrayList<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
+        List<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
         // Base pay for Standard Install is 70 for one receiver
         int pay = 70;
         // Initialize receiver count

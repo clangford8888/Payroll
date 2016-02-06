@@ -6,6 +6,7 @@
 package payroll;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 /**
@@ -20,10 +21,10 @@ public abstract class Job {
     private String designation;
     private final String customerName;
     private final String techID; // Want DB to have TID, get name from there??
-    private ArrayList<SerializedEquipmentTask> serializedEquipmentList;
-    private ArrayList<NonSerializedEquipmentTask> nonSerializedEquipmentList;
-    private ArrayList<StandardLaborTask> standardLaborList;
-    private ArrayList<SHSLaborTask> shsList;
+    private List<SerializedEquipmentTask> serializedEquipmentList;
+    private List<NonSerializedEquipmentTask> nonSerializedEquipmentList;
+    private List<StandardLaborTask> standardLaborList;
+    private List<SHSLaborTask> shsList;
     private int payment;
     
     public Job(String inANum, String inWONum, Date inDate, String inDesignation,
@@ -103,19 +104,19 @@ public abstract class Job {
         return customerName;
     }
     
-    public ArrayList<SerializedEquipmentTask> getSerializedEquipmentTaskList(){
+    public List<SerializedEquipmentTask> getSerializedEquipmentTaskList(){
         return serializedEquipmentList;
     }
     
-    public ArrayList<NonSerializedEquipmentTask> getNonSerializedEquipmentTaskList(){
+    public List<NonSerializedEquipmentTask> getNonSerializedEquipmentTaskList(){
         return nonSerializedEquipmentList;
     }
     
-    public ArrayList<StandardLaborTask> getStandardLaborTaskList(){
+    public List<StandardLaborTask> getStandardLaborTaskList(){
         return standardLaborList;
     }
     
-    public ArrayList<SHSLaborTask> getSHSTaskList(){
+    public List<SHSLaborTask> getSHSTaskList(){
         return shsList;
     }
     

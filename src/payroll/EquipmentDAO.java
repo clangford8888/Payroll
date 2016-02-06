@@ -17,7 +17,11 @@ public class EquipmentDAO {
         
     }
     
-    public void addEquipmentFromList(ArrayList<SerializedEquipmentTask> equipment){
+    public void addSerializedEquipmentFromList(ArrayList<SerializedEquipmentTask> list){
+        
+    }
+    
+    public void addNonSerializedEquipmentFromList(ArrayList<NonSerializedEquipmentTask> list){
     
     }
 }

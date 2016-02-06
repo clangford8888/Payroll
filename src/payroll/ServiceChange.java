@@ -7,6 +7,7 @@ package payroll;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -30,7 +31,7 @@ public class ServiceChange extends Job{
         int pay = 0;
         String designation = this.getDesignation();
         // Get the standard labor list for this object
-        ArrayList<StandardLaborTask> laborList = this.getStandardLaborTaskList();
+        List<StandardLaborTask> laborList = this.getStandardLaborTaskList();
         // If the labor list contains an internet install task
         if(containsInternetInstall(laborList)){
             // Calculate the internet install pay
@@ -65,7 +66,7 @@ public class ServiceChange extends Job{
     
     // TODO: ************ NEED TO TEST THIS METHOD ***************************
     private static boolean containsInternetInstall(
-                                    ArrayList<StandardLaborTask> inList){
+                                    List<StandardLaborTask> inList){
         StandardLaborTask internetTask = new StandardLaborTask(
                                             "-K", "Set Up Broadband by Sat");
         // Check if labor list contains internet install task
@@ -84,7 +85,7 @@ public class ServiceChange extends Job{
      */
     private int calculateInternetInstallPay(){
         int pay;
-        ArrayList<StandardLaborTask> laborList = this.getStandardLaborTaskList();
+        List<StandardLaborTask> laborList = this.getStandardLaborTaskList();
         // Create an Internet Install Job
         InternetInstall internetJob = new InternetInstall(
                                                 this.getAccountNumber(),
@@ -118,7 +119,7 @@ public class ServiceChange extends Job{
      * Method to display all labor tasks. Used for debugging.
      * @param list ArrayList<StandardLaborTask> list of tasks to display
      */
-    private void displayLaborTasks(ArrayList<StandardLaborTask> list){
+    private void displayLaborTasks(List<StandardLaborTask> list){
         for(Task task : list){
             System.out.println(task.getTaskDescription());
         }
@@ -129,7 +130,7 @@ public class ServiceChange extends Job{
      * @param list
      * @return 
      */
-    private int calculateHopperDIUPay(ArrayList<StandardLaborTask> list){
+    private int calculateHopperDIUPay(List<StandardLaborTask> list){
         // Base pay for Hopper DIU is 40
         int pay = 40;
         // Initialize variables to count # of receivers installed

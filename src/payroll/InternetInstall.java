@@ -5,8 +5,8 @@
  */
 package payroll;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,7 +24,7 @@ public class InternetInstall extends Install{
         
         int pay = 0;
         // Get the labor and shs task lists
-        ArrayList<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
+        List<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
         
         // Check to make sure labor list is not null
         if(standardLaborList != null){

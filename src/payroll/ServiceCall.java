@@ -5,8 +5,8 @@
  */
 package payroll;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -28,7 +28,7 @@ public class ServiceCall extends Job{
         
         int pay = 0;
         
-        ArrayList<StandardLaborTask> standardLaborList = 
+        List<StandardLaborTask> standardLaborList = 
                                             this.getStandardLaborTaskList();
         
         // Check if the job is still under warranty

@@ -5,8 +5,8 @@
  */
 package payroll;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -29,7 +29,7 @@ public class HopperInstall extends Install{
         // Initialize count of Joeys
         int joeyCount = 0;
 
-        ArrayList<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
+        List<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
         
         if(standardLaborList != null){
             for(StandardLaborTask task : standardLaborList){
