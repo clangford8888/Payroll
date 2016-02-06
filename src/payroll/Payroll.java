@@ -38,12 +38,12 @@ public class Payroll {
         
         
         System.out.println(myFile.getAbsolutePath());
-        PaymentParser parser = new PaymentParser(myFile2);
+        PaymentParser parser = new PaymentParser(myFile);
         
         parser.parsePaymentFile();
         parser.closeFile();
         // parser.printMap(parser.getMap());
-        JobBuilder builder = new JobBuilder(checker2);
+        JobBuilder builder = new JobBuilder(checker);
         builder.buildJobsFromMap(parser.getMap());
         
         long endTime = System.currentTimeMillis();

@@ -5,6 +5,10 @@
  */
 package payroll;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,12 +17,61 @@ import java.util.List;
  */
 public class EquipmentDAO {
     
-    public EquipmentDAO(){
-        
+    private Connection conn;
+    private PreparedStatement ps;
+    private ResultSet rs;
+    private Job job;
+    
+    public EquipmentDAO(Job inJob){
+        this.conn = null;
+        this.ps = null;
+        this.rs = null;
+        this.job = inJob;
     }
     
     public void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
         
+        String workOrderNum = job.getWorkOrderNumber();
+        String techID = job.getTechID();
+        String serialNumber;
+        String model;
+        
+        if(!list.isEmpty()){
+            try{
+                conn = DatabaseConnector.getConnection();
+                
+                String sql = "insert into consumed_equip_serialized values(?,?,?,?) ";
+                
+                for(SerializedEquipmentTask task : list){
+                    
+                    serialNumber = task.getSerialNumber();
+                    model = task.getModel();
+                    
+                    ps = conn.prepareStatement(sql);
+                    
+                    ps.setString(1, serialNumber);
+                    ps.setString(2, model);
+                    ps.setString(3, techID);
+                    ps.setString(4, workOrderNum);
+                    
+                    int result = ps.executeUpdate();
+                    
+                    if(result > 0){
+                        System.out.println("Added: " + model);
+                    }
+                }
+                
+            }
+            catch(SQLException e){
+                System.out.println(e.getMessage());
+                System.out.println(e.getSQLState());
+            }
+            finally{
+                DatabaseConnector.closeQuietly(conn);
+                DatabaseConnector.closeQuietly(ps);
+                DatabaseConnector.closeQuietly(rs);
+            }
+        }
     }
     
     public void addNonSerializedEquipmentFromList(List<NonSerializedEquipmentTask> list){

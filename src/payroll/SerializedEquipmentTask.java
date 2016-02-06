@@ -11,19 +11,19 @@ package payroll;
  */
 public class SerializedEquipmentTask extends EquipmentTask{
     
-    String serialNumber;
-    String serializedBoxType;
-    String itemNumber;
+    private final String serialNumber;
+    private final String model;
+    private String itemNumber;
     
     public SerializedEquipmentTask(String inName, String inDescription){
         super(inName, inDescription);
         
         serialNumber = inName;
-        serializedBoxType = inDescription;
+        model = inDescription;
         itemNumber = lookupItemNumber(inName);
     }
     
-    
+    @Override
     // Getter method for Item Number
     public String getItemNumber(){
         return itemNumber;
@@ -42,8 +42,8 @@ public class SerializedEquipmentTask extends EquipmentTask{
     // **************************************************** may remove??
     // More descriptive name for receiver/modem/tria type
     // otherwise could use getTaskDescription from super method
-    public String getSerializedBoxType(){
-        return serializedBoxType;
+    public String getModel(){
+        return this.model;
     }
     
 }
