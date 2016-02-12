@@ -263,7 +263,6 @@ public class ServiceCallDAO {
                 techID = rs.getString("techID");
                 queryResult[0] = workOrderNum;
                 queryResult[1] = techID;
-                System.out.println(workOrderNum + " " + techID);
             }
         }
         catch(SQLException e){

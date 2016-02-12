@@ -5,7 +5,6 @@
  */
 package payroll;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
  */
 public class JobBuilder {
     
-    private PaymentFileFormatChecker checker;
+    private final PaymentFileFormatChecker checker;
     
     public JobBuilder(PaymentFileFormatChecker inChecker){
         this.checker = inChecker;
@@ -66,17 +65,22 @@ public class JobBuilder {
             
             // Push to Database
             JobDAO jobDAO = new JobDAO();
-            //jobDAO.addJob(createdJob);
+            jobDAO.addJob(createdJob);
             
             List<SerializedEquipmentTask> list = createdJob.getSerializedEquipmentTaskList();
             
             if(!list.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
                 
-                //eqDAO.addSerializedEquipmentFromList(list);
+                eqDAO.addSerializedEquipmentFromList(list);
             }
-            EquipmentDAO myDAO = new EquipmentDAO(createdJob);
-            myDAO.testInsertUpdate();
+            
+            List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();
+            
+            if(!nsList.isEmpty()){
+                EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
+                eqDAO.addNonSerializedEquipmentFromList(nsList);
+            }
             
             
             //jobDAO.deleteJob(createdJob);

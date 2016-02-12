@@ -30,20 +30,20 @@ public class Payroll {
         
         
         checker.readFileFormat();
-        System.out.println(checker.toString());
+        //System.out.println(checker.toString());
         
         checker2.readFileFormat();
-        //System.out.println(checker2.toString());
+        System.out.println(checker2.toString());
         
         
         
         System.out.println(myFile.getAbsolutePath());
-        PaymentParser parser = new PaymentParser(myFile);
+        PaymentParser parser = new PaymentParser(myFile2);
         
         parser.parsePaymentFile();
         parser.closeFile();
         // parser.printMap(parser.getMap());
-        JobBuilder builder = new JobBuilder(checker);
+        JobBuilder builder = new JobBuilder(checker2);
         builder.buildJobsFromMap(parser.getMap());
                
         long endTime = System.currentTimeMillis();
