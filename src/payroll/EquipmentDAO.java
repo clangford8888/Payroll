@@ -78,27 +78,30 @@ public class EquipmentDAO {
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();
         String model;
-        int quantity;
         
         if(!list.isEmpty()){
-            quantity = 1;
             try{
                 conn = DatabaseConnector.getConnection();
                 
                 String sql = "insert into consumed_equip_nonserialized "
-                            + "values(?,?,?,?)"
-                            + "on duplicate key update"
-                            + "(select quantity from "
-                            + "consumed_quip_nonserialized as quant"
-                            + "where workOrderNum = ?)"
-                            + "values(?,?,?,quant)";
+                            + "(model, workOrderNum, techID, quantity) "
+                            + "values (?,?,?,1)"
+                            + "on duplicate key update quantity = quantity + 1";
+                
+                
                 
                 for(NonSerializedEquipmentTask task : list){
-                    
-
+                    model = task.getTaskDescription();
                     ps = conn.prepareStatement(sql);
+                    ps.setString(1,model);
+                    ps.setString(2, workOrderNum);
+                    ps.setString(3, techID);
                     
+                    int result  = ps.executeUpdate();
                     
+                    if(result > 1){
+                        System.out.println("Added: 1 " + model);
+                    }
                 }
                 
             }
@@ -114,16 +117,18 @@ public class EquipmentDAO {
         }
     }
     
+    
+    // Can remove this method. Just here for test purposes
     public void testInsertUpdate(){
         try{
             conn = DatabaseConnector.getConnection();
             
-            String sql = "insert into consumed_equip_nonserialized (a,b,c,d) "
+            String sql = "insert into consumed_equip_nonserialized (model,workOrderNum,techID,quantity) "
                             + "values('Smart Bar& DN006087', '1002731688633011', 'Corey.Gomez1', 1) "
-                            + "on duplicate key update d = d + 1";
+                            + "on duplicate key update quantity = quantity + 1";
             ps = conn.prepareStatement(sql);
             
-            ps.executeQuery();
+            ps.executeUpdate();
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
