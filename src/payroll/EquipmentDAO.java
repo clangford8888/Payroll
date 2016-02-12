@@ -7,7 +7,6 @@ package payroll;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,13 +18,11 @@ public class EquipmentDAO {
     
     private Connection conn;
     private PreparedStatement ps;
-    private ResultSet rs;
     private final Job job;
     
     public EquipmentDAO(Job inJob){
         this.conn = null;
         this.ps = null;
-        this.rs = null;
         this.job = inJob;
     }
     
@@ -65,7 +62,6 @@ public class EquipmentDAO {
             finally{
                 DatabaseConnector.closeQuietly(conn);
                 DatabaseConnector.closeQuietly(ps);
-                DatabaseConnector.closeQuietly(rs);
             }
         }
     }
@@ -83,9 +79,7 @@ public class EquipmentDAO {
                             + "(model, workOrderNum, techID, quantity) "
                             + "values (?,?,?,1)"
                             + "on duplicate key update quantity = quantity + 1";
-                
-                
-                
+
                 for(NonSerializedEquipmentTask task : list){
                     model = task.getTaskDescription();
                     ps = conn.prepareStatement(sql);
@@ -104,7 +98,6 @@ public class EquipmentDAO {
             finally{
                 DatabaseConnector.closeQuietly(conn);
                 DatabaseConnector.closeQuietly(ps);
-                DatabaseConnector.closeQuietly(rs);
             }
         }
     }
