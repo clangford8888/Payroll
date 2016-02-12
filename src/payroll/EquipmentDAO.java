@@ -113,4 +113,28 @@ public class EquipmentDAO {
             }
         }
     }
+    
+    public void testInsertUpdate(){
+        try{
+            conn = DatabaseConnector.getConnection();
+            
+            String sql = "insert into consumed_equip_nonserialized (a,b,c,d) "
+                            + "values('Smart Bar& DN006087', '1002731688633011', 'Corey.Gomez1', 1) "
+                            + "on duplicate key update d = d + 1";
+            ps = conn.prepareStatement(sql);
+            
+            ps.executeQuery();
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getSQLState());
+            
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+                DatabaseConnector.closeQuietly(ps);
+                DatabaseConnector.closeQuietly(rs);
+        }
+        
+    }
 }
