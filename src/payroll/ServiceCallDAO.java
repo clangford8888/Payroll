@@ -232,8 +232,8 @@ public class ServiceCallDAO {
     // Todo: Comments
     private String[] getWarrantyInfo(){
         
-        String workOrderNum = "";
-        String techID = "";
+        String workOrderNum;
+        String techID;
         
         String queryResult[] = new String[2];
         
