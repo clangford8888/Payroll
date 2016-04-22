@@ -5,7 +5,8 @@
  */
 package payroll.tasks;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,8 +16,49 @@ import java.util.Map;
  */
 public class TaskReader {
     
-    private Map<String, String> taskList;
+    private List<Task> nonSerializedList;
+    private List<Task> serializedList;
+    private List<Task> standardLaborList;
+    private List<Task> shsLaborList;
+    private TaskReaderDAO taskDAO;
     
+    public TaskReader(){
+        nonSerializedList = new ArrayList<>();
+        serializedList = new ArrayList<>();
+        standardLaborList = new ArrayList<>();
+        shsLaborList = new ArrayList<>();
+        taskDAO = new TaskReaderDAO();
+        updateTaskLists();
+    }
     
+    private void updateTaskLists(){
+        nonSerializedList = taskDAO.getNonSerializedTable();
+        serializedList = taskDAO.getNonSerializedTable();
+        standardLaborList = taskDAO.getNonSerializedTable();
+        shsLaborList = taskDAO.getNonSerializedTable();
+    }
+    
+    private static boolean isNonSerializedEquipment(String inTaskName){
+        
+        
+        return true;
+    }
+    
+    private static boolean isSerializedEquipment(String inTaskDescription){
+        
+        return true;
+    }
+    
+    private static boolean isStandardLaborTask(String inTaskName){
+        
+        
+        return true;
+    }
+    
+    private static boolean isSHSLaborTask(String inTaskName){
+        
+        
+        return 
+    }
     
 }
