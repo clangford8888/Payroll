@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Casey
  */
-public class HopperInstall extends Install{
+public class HopperInstall extends Job{
     
     
     public HopperInstall(String inANum, String inWONum, Date inDate, String inDesignation,

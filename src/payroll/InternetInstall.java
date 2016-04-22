@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Casey
  */
-public class InternetInstall extends Install{
+public class InternetInstall extends Job{
     
     public InternetInstall(String inANum, String inWONum, Date inDate, 
             String inDesignation, String inTID, String inCName){

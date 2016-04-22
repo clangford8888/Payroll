@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Casey
  */
-public class StandardInstall extends Install{
+public class StandardInstall extends Job{
     
     public StandardInstall(String inANum, String inWONum, Date inDate, 
             String inDesignation, String inTID, String inCName){
@@ -20,6 +20,7 @@ public class StandardInstall extends Install{
     
     }
     
+    @Override 
     public int calculatePay(){
         List<StandardLaborTask> standardLaborList = this.getStandardLaborTaskList();
         // Base pay for Standard Install is 70 for one receiver
