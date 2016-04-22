@@ -38,6 +38,12 @@ public class TaskReader {
         shsLaborList = taskDAO.getNonSerializedTable();
     }
     
+    public void display(){
+        for(Task t : nonSerializedList){
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+    }
+    
     private static boolean isNonSerializedEquipment(String inTaskName){
         
         
@@ -58,7 +64,7 @@ public class TaskReader {
     private static boolean isSHSLaborTask(String inTaskName){
         
         
-        return 
+        return true;
     }
     
 }
