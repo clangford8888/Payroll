@@ -39,15 +39,129 @@ public class TaskReaderDAO {
         try{
             conn = DatabaseConnector.getConnection();
             String sql = "select * from nonserialized_equipment";
+            
+            ps = conn.prepareStatement(sql);
+            
             rs = ps.executeQuery(sql);
             
             String taskName;
             String taskDescription;
             Task newTask;
             
+            // Loop through entire result set
             while(rs.next()){
+                // Get the task name and description from each row
                 taskName = rs.getString("task");
                 taskDescription = rs.getString("taskDescription");
+                // Create a new Task object and add to the task list
+                newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
+                nonSerialized.add(newTask);
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getSQLState());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
+        return nonSerialized;
+    }
+    
+    public List<Task> getSerializedTable(){
+        // Instantiate ArrayList to add tasks to
+        List<Task> serializedList = new ArrayList<>();
+        try{
+            // Connect to database and get all rows from serialized equipment table
+            conn = DatabaseConnector.getConnection();
+            String sql = "select * from serialized_equipment";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery(sql);
+            String taskName;
+            String taskDescription;
+            Task newTask;
+            
+            // Loop through entire result set
+            while(rs.next()){
+                // Get the task name and description from each row
+                taskName = rs.getString("model");
+                taskDescription = rs.getString("description");
+                // Create a new Task object and add to the task list
+                newTask = new SerializedEquipmentTask(taskName, taskDescription);
+                serializedList.add(newTask);
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getSQLState());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
+        return serializedList;
+    }
+    
+    public List<Task> getStandardLaborTable(){
+        
+        List<Task> nonSerialized = new ArrayList<>();
+        
+        try{
+            conn = DatabaseConnector.getConnection();
+            String sql = "select * from nonserialized_equipment";
+            
+            ps = conn.prepareStatement(sql);
+            
+            rs = ps.executeQuery(sql);
+            
+            String taskName;
+            String taskDescription;
+            Task newTask;
+            
+            // Loop through entire result set
+            while(rs.next()){
+                // Get the task name and description from each row
+                taskName = rs.getString("task");
+                taskDescription = rs.getString("taskDescription");
+                // Create a new Task object and add to the task list
+                newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
+                nonSerialized.add(newTask);
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getSQLState());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
+        return nonSerialized;
+    }
+    
+    public List<Task> getSHSLaborTable(){
+        
+        List<Task> nonSerialized = new ArrayList<>();
+        
+        try{
+            conn = DatabaseConnector.getConnection();
+            String sql = "select * from nonserialized_equipment";
+            
+            ps = conn.prepareStatement(sql);
+            
+            rs = ps.executeQuery(sql);
+            
+            String taskName;
+            String taskDescription;
+            Task newTask;
+            
+            // Loop through entire result set
+            while(rs.next()){
+                // Get the task name and description from each row
+                taskName = rs.getString("task");
+                taskDescription = rs.getString("taskDescription");
+                // Create a new Task object and add to the task list
                 newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
                 nonSerialized.add(newTask);
             }
