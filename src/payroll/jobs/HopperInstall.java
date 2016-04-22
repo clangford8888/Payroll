@@ -8,8 +8,8 @@ package payroll.jobs;
 import payroll.jobs.Job;
 import java.util.Date;
 import java.util.List;
-import payroll.LaborTask;
-import payroll.StandardLaborTask;
+import payroll.tasks.LaborTask;
+import payroll.tasks.StandardLaborTask;
 
 /**
  *

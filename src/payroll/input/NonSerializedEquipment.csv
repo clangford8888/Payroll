@@ -1,0 +1,36 @@
+$~,Dish Plus
+#9,Dish 1000.2
+#Z,Dish 1000.4
+WN,LNB1000.4 WA
+.8,LNBF 1000.4
+.!,LNBF 1000.2
+D>,LNB 1000.2 EA Twin
+7W,LNBF DP Dual
+D;,LNBF DP Single
+D-,LNBF DP/DPP Twin
+.V,LNBF DPP 500 Plus
+2!,LNB DPP500+
+F?,Node Hopper/Joey Solo
+F{,Node Hopper/Joey Duo
+D~,Switch DP 34
+:?,Switch DPP 33
+T4,Switch DPP 44
+SL,Sling Adapter
+JH,Sling Adapter
+DB3,Remote - 21.1 (622/722)
+DB4,Remote - 32.0 (922)
+DB5,Remote - 40 (H/J)
+B<,Wildblue Modem - SB2
+B=,Wildblue Tria - SB2
+B1,Dish Internet by Sat
+8X,Hughes Modem Jupiter
+KO,Hughes Modem Spaceway
+8L,Hughes TRIA Spaceway
+LA,Hughes TRIA Jupiter
+8V,Dish dishNet by Sat
+ED8,Wireless Joey Access Point
+EE5,Super Joey – Integrator
+EV8,LNB Hybrid 1000.2 EA
+EV9,LNB Hybrid 1000.2 WA
+EW1,Hybrid Solo Hub
+EW2,Hybrid Duo Hub

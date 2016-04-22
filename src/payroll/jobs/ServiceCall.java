@@ -9,7 +9,7 @@ import payroll.jobs.ServiceCallDAO;
 import payroll.jobs.Job;
 import java.util.Date;
 import java.util.List;
-import payroll.StandardLaborTask;
+import payroll.tasks.StandardLaborTask;
 
 /**
  *

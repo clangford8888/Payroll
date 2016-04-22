@@ -10,12 +10,12 @@ import payroll.jobs.Job;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import payroll.LaborTask;
-import payroll.NonSerializedEquipmentTask;
-import payroll.SHSLaborTask;
-import payroll.SerializedEquipmentTask;
-import payroll.StandardLaborTask;
-import payroll.Task;
+import payroll.tasks.LaborTask;
+import payroll.tasks.NonSerializedEquipmentTask;
+import payroll.tasks.SHSLaborTask;
+import payroll.tasks.SerializedEquipmentTask;
+import payroll.tasks.StandardLaborTask;
+import payroll.tasks.Task;
 
 /**
  *
