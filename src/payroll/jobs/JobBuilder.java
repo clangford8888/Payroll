@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-import payroll.tasks.EquipmentDAO;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.PaymentFileFormatChecker;
 import payroll.tasks.SerializedEquipmentTask;
