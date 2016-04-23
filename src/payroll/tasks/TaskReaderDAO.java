@@ -147,18 +147,17 @@ public class TaskReaderDAO {
     
     public List<Task> getSHSLaborTable(){
         
-        List<Task> nonSerialized = new ArrayList<>();
+        List<Task> shsLaborList = new ArrayList<>();
         
         try{
             conn = DatabaseConnector.getConnection();
-            String sql = "select * from nonserialized_equipment";
-            
+            String sql = "select * from shs_labor";
             ps = conn.prepareStatement(sql);
-            
             rs = ps.executeQuery(sql);
             
             String taskName;
             String taskDescription;
+            int payment;
             Task newTask;
             
             // Loop through entire result set
@@ -166,9 +165,10 @@ public class TaskReaderDAO {
                 // Get the task name and description from each row
                 taskName = rs.getString("task");
                 taskDescription = rs.getString("taskDescription");
+                payment = rs.getInt("payment");
                 // Create a new Task object and add to the task list
-                newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
-                nonSerialized.add(newTask);
+                newTask = new SHSLaborTask(taskName,taskDescription);
+                shsLaborList.add(newTask);
             }
         }
         catch (SQLException e){
@@ -179,6 +179,6 @@ public class TaskReaderDAO {
             DatabaseConnector.closeQuietly(ps);
             DatabaseConnector.closeQuietly(rs);
         }
-        return nonSerialized;
+        return shsLaborList;
     }
 }
