@@ -46,6 +46,9 @@ public class TaskReader {
         for(Task t : serializedList){
             System.out.println(t.getTaskName() + " " + t.getTaskDescription());
         }
+        System.out.println();
+        for(Task t : shsLaborList){
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
     }
     
     private static boolean isNonSerializedEquipment(String inTaskName){
