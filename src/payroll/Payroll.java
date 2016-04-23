@@ -7,8 +7,7 @@ package payroll;
 
 import payroll.jobs.JobBuilder;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
+import payroll.tasks.TaskReader;
 
 /**
  *
@@ -45,7 +44,11 @@ public class Payroll {
         parser.closeFile();
         // parser.printMap(parser.getMap());
         JobBuilder builder = new JobBuilder(checker2);
-        builder.buildJobsFromMap(parser.getMap());
+        //builder.buildJobsFromMap(parser.getMap());
+        
+        
+        TaskReader reader = new TaskReader();
+        reader.display();
                
         long endTime = System.currentTimeMillis();
         
