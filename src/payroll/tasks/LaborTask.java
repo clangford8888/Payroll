@@ -11,8 +11,8 @@ package payroll.tasks;
  */
 public abstract class LaborTask extends Task{
     
-    private String taskType;
-    private int payment;
+    protected String taskType;
+    protected int payment;
     
     public LaborTask(String inName, String inDescription){
         super(inName,inDescription);

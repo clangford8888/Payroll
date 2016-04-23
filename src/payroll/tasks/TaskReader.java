@@ -33,13 +33,17 @@ public class TaskReader {
     
     private void updateTaskLists(){
         nonSerializedList = taskDAO.getNonSerializedTable();
-        serializedList = taskDAO.getNonSerializedTable();
-        standardLaborList = taskDAO.getNonSerializedTable();
-        shsLaborList = taskDAO.getNonSerializedTable();
+        serializedList = taskDAO.getSerializedTable();
+        standardLaborList = taskDAO.getStandardLaborTable();
+        shsLaborList = taskDAO.getSHSLaborTable();
     }
     
     public void display(){
         for(Task t : nonSerializedList){
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+        System.out.println();
+        for(Task t : serializedList){
             System.out.println(t.getTaskName() + " " + t.getTaskDescription());
         }
     }

@@ -117,15 +117,20 @@ public class TaskReaderDAO {
             
             String taskName;
             String taskDescription;
+            int payment;
             Task newTask;
             
             // Loop through entire result set
             while(rs.next()){
-                // Get the task name and description from each row
+                // Get the task name, description, and payment from each row
                 taskName = rs.getString("task");
                 taskDescription = rs.getString("taskDescription");
+                payment = rs.getInt("payment");
                 // Create a new Task object and add to the task list
-                newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
+                /*
+                    CHANGE BELOW TO STANDARD LABOR ONCE
+                */
+                newTask = new SHSLaborTask(taskName,taskDescription,payment);
                 nonSerialized.add(newTask);
             }
         }

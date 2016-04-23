@@ -25,6 +25,13 @@ public class SHSLaborTask extends LaborTask{
         this.setTaskType(advancedTaskType);
     }
     
+    public SHSLaborTask(String inName, String inDescription, int payment){
+        super(inName, inDescription);
+        this.advancedTaskType = "SHS Labor";
+        this.taskType = advancedTaskType;
+        this.payment = payment;
+    }
+    
     @Override
     public String getAdvancedTaskType(){
         return advancedTaskType;

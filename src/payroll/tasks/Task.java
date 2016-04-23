@@ -18,7 +18,7 @@ public abstract class Task {
         
         this.taskName = inTaskName;
         this.taskDescription = inTaskDescription;
-        
+
     }
     
     // Abstract method implemented by various types of tasks to return task type
