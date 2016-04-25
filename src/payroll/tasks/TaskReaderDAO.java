@@ -94,6 +94,7 @@ public class TaskReaderDAO {
         }
         catch (SQLException e){
             System.out.println(e.getSQLState());
+            System.out.println("SQL Error " + e.getMessage());
         }
         finally{
             DatabaseConnector.closeQuietly(conn);
@@ -105,11 +106,11 @@ public class TaskReaderDAO {
     
     public List<Task> getStandardLaborTable(){
         
-        List<Task> nonSerialized = new ArrayList<>();
+        List<Task> standardList = new ArrayList<>();
         
         try{
             conn = DatabaseConnector.getConnection();
-            String sql = "select * from nonserialized_equipment";
+            String sql = "select * from standard_labor";
             
             ps = conn.prepareStatement(sql);
             
@@ -124,25 +125,26 @@ public class TaskReaderDAO {
             while(rs.next()){
                 // Get the task name, description, and payment from each row
                 taskName = rs.getString("task");
-                taskDescription = rs.getString("taskDescription");
+                taskDescription = rs.getString("description");
                 payment = rs.getInt("payment");
                 // Create a new Task object and add to the task list
                 /*
                     CHANGE BELOW TO STANDARD LABOR ONCE
                 */
-                newTask = new SHSLaborTask(taskName,taskDescription,payment);
-                nonSerialized.add(newTask);
+                newTask = new StandardLaborTask(taskName,taskDescription,payment);
+                standardList.add(newTask);
             }
         }
         catch (SQLException e){
             System.out.println(e.getSQLState());
+            System.out.println("SQL Error " + e.getMessage());
         }
         finally{
             DatabaseConnector.closeQuietly(conn);
             DatabaseConnector.closeQuietly(ps);
             DatabaseConnector.closeQuietly(rs);
         }
-        return nonSerialized;
+        return standardList;
     }
     
     public List<Task> getSHSLaborTable(){

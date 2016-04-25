@@ -48,7 +48,7 @@ public class TaskReader {
         }
         System.out.println();
         for(Task t : shsLaborList){
-            //System.out.println("HELLO");
+            System.out.println(t.getClass());
             System.out.println(t.getTaskName() + " " + t.getTaskDescription());
         }
     }
