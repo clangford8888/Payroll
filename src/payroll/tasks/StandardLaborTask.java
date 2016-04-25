@@ -25,6 +25,14 @@ public class StandardLaborTask extends LaborTask{
         this.setTaskType(advancedTaskType);
     }
     
+    // 2nd constructor to accept a payment
+    public StandardLaborTask(String inName, String inDescription, int payment){
+        super(inName, inDescription);
+        this.advancedTaskType = "Standard Labor";
+        this.setTaskType(advancedTaskType);
+        this.payment = payment;
+    }
+    
     @Override
     public String getAdvancedTaskType(){
         return advancedTaskType;
