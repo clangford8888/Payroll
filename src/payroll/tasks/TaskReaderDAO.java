@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import payroll.DatabaseConnector;
 
 
@@ -31,6 +33,49 @@ public class TaskReaderDAO {
         rs = null;
     }
     
+    /*
+        Changed the approach to use a Map<String,Task> in order to be able to
+        quickly search based on the task name, and instantly get the Task
+        associated with that task name.
+    */
+    
+    public Map<String,Task> getNonSerializedMap(){
+        
+        Map<String,Task> nonSerialized = new HashMap<>();
+        
+        try{
+            conn = DatabaseConnector.getConnection();
+            String sql = "select * from nonserialized_equipment";
+            
+            ps = conn.prepareStatement(sql);
+            
+            rs = ps.executeQuery(sql);
+            
+            String taskName;
+            String taskDescription;
+            Task newTask;
+            
+            // Loop through entire result set
+            while(rs.next()){
+                // Get the task name and description from each row
+                taskName = rs.getString("task");
+                taskDescription = rs.getString("taskDescription");
+                // Create a new Task object and add to the task list
+                newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
+                nonSerialized.put(taskName, newTask);
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getSQLState());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
+        
+        return nonSerialized;
+    }
     
     public List<Task> getNonSerializedTable(){
         

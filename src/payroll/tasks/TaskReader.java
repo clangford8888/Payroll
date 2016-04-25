@@ -6,7 +6,9 @@
 package payroll.tasks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -20,9 +22,14 @@ public class TaskReader {
     private List<Task> serializedList;
     private List<Task> standardLaborList;
     private List<Task> shsLaborList;
+    
+    private Map<String,Task> nonSerializedMap;
+    
     private TaskReaderDAO taskDAO;
     
     public TaskReader(){
+        nonSerializedMap = new HashMap<>();
+        
         nonSerializedList = new ArrayList<>();
         serializedList = new ArrayList<>();
         standardLaborList = new ArrayList<>();
@@ -32,6 +39,8 @@ public class TaskReader {
     }
     
     private void updateTaskLists(){
+        nonSerializedMap = taskDAO.getNonSerializedMap();
+        
         nonSerializedList = taskDAO.getNonSerializedTable();
         serializedList = taskDAO.getSerializedTable();
         standardLaborList = taskDAO.getStandardLaborTable();
@@ -49,6 +58,15 @@ public class TaskReader {
         System.out.println();
         for(Task t : shsLaborList){
             System.out.println(t.getClass());
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+        System.out.println();
+        for(Task t : standardLaborList){
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+        System.out.println("MAPTIME");
+        for(String s : nonSerializedMap.keySet()){
+            Task t = nonSerializedMap.get(s);
             System.out.println(t.getTaskName() + " " + t.getTaskDescription());
         }
     }
