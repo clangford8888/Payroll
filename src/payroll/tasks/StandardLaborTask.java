@@ -34,7 +34,7 @@ public class StandardLaborTask extends LaborTask{
     // TODO: Maybe move database calls and stuff to super class?
     @Override
     public int lookupLaborPayment(){
-        int payment = 0;
+        int pay = 0;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -46,7 +46,7 @@ public class StandardLaborTask extends LaborTask{
             ps.setString(1,taskName);
             rs = ps.executeQuery();
             if(rs.next()){
-                payment+=rs.getInt(1);
+                pay+=rs.getInt(1);
             }
         }
         catch(SQLException e){
@@ -58,7 +58,7 @@ public class StandardLaborTask extends LaborTask{
             DatabaseConnector.closeQuietly(conn);
         }
         
-        return payment;
+        return pay;
     }
     
 }

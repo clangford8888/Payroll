@@ -162,17 +162,19 @@ public class TaskReaderDAO {
             
             // Loop through entire result set
             while(rs.next()){
+                //System.out.println("here2");
                 // Get the task name and description from each row
                 taskName = rs.getString("task");
-                taskDescription = rs.getString("taskDescription");
+                taskDescription = rs.getString("description");
                 payment = rs.getInt("payment");
                 // Create a new Task object and add to the task list
-                newTask = new SHSLaborTask(taskName,taskDescription);
+                newTask = new SHSLaborTask(taskName,taskDescription,payment);
                 shsLaborList.add(newTask);
             }
         }
         catch (SQLException e){
             System.out.println(e.getSQLState());
+            System.out.println("SQL Error " + e.getMessage());
         }
         finally{
             DatabaseConnector.closeQuietly(conn);
