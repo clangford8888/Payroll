@@ -20,7 +20,7 @@ import org.apache.poi.ss.usermodel.Cell;
  */
 public class PaymentFileFormatChecker {
     
-    private final File inputFile;
+    private File inputFile;
     private int workOrderLocation;
     private int accountNumLocation;
     private int advancedTypeLocation;
@@ -32,11 +32,11 @@ public class PaymentFileFormatChecker {
     private int taskNameLocation;
     private int taskDescriptionLocation;
     
-    public PaymentFileFormatChecker(File inFile){
-        this.inputFile = inFile;
+    public PaymentFileFormatChecker(){
     }
     
-    public void readFileFormat(){
+    public void readFileFormat(File inFile){
+        this.inputFile = inFile;
         try{
             // Create new file input stream from input file
             FileInputStream fis = new FileInputStream(this.inputFile);

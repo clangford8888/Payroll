@@ -24,6 +24,7 @@ public class HopperInstall extends Job{
         
     }
     
+    @ Override
     public int calculatePay(){
         // Base pay for Hopper install with only 1 hopper is 70
         int pay = 70;

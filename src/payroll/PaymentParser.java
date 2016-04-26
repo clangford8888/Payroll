@@ -64,9 +64,9 @@ public class PaymentParser {
     */
     public void parsePaymentFile(){
         
-        PaymentFileFormatChecker checker = new PaymentFileFormatChecker(inputFile);
+        PaymentFileFormatChecker checker = new PaymentFileFormatChecker();
         
-        checker.readFileFormat();
+        checker.readFileFormat(inputFile);
         int workOrderIndex = checker.getWorkOrderLocation();
         String workOrderNum;
         

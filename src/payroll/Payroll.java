@@ -23,27 +23,24 @@ public class Payroll {
         long startTime = System.currentTimeMillis();
        
         File myFile = new File("src/payroll/input/inputFile.xls");
-        PaymentFileFormatChecker checker = new PaymentFileFormatChecker(myFile);
+        PaymentFileFormatChecker checker = new PaymentFileFormatChecker();
+        checker.readFileFormat(myFile);
+        System.out.println(checker.toString());
         
+        
+        // Every time a new payment file is selected, we will need to check the format again
         File myFile2 = new File("src/payroll/input/Payments 01-01-16 to 01-07-16.xls");
-        PaymentFileFormatChecker checker2 = new PaymentFileFormatChecker(myFile2);
+        checker.readFileFormat(myFile2);
+        System.out.println(checker.toString());
         
-        
-        checker.readFileFormat();
-        //System.out.println(checker.toString());
-        
-        checker2.readFileFormat();
-        System.out.println(checker2.toString());
-        
-        
-        
+
         System.out.println(myFile.getAbsolutePath());
         PaymentParser parser = new PaymentParser(myFile2);
         
         parser.parsePaymentFile();
         parser.closeFile();
         // parser.printMap(parser.getMap());
-        JobBuilder builder = new JobBuilder(checker2);
+        JobBuilder builder = new JobBuilder(checker);
         builder.buildJobsFromMap(parser.getMap());
         
         
