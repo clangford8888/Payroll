@@ -23,8 +23,8 @@ import payroll.tasks.TaskReader;
 public class JobBuilder {
     
     private final PaymentFileFormatChecker checker;
-    private TaskFactory taskFactory;
-    private TaskReader masterTaskList;
+    private final TaskFactory taskFactory;
+    private final TaskReader masterTaskList;
     
     public JobBuilder(PaymentFileFormatChecker inChecker){
         this.checker = inChecker;
@@ -74,8 +74,7 @@ public class JobBuilder {
             for(HSSFRow row : rowList){
                 taskFactory.createTask(createdJob, row, checker);
             }
-            
-            
+
             jobCreatedCount++;
             
             // Calculate Job payment
@@ -95,19 +94,15 @@ public class JobBuilder {
             if(!list.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
                 
-                //eqDAO.addSerializedEquipmentFromList(list);
+                eqDAO.addSerializedEquipmentFromList(list);
             }
             
             List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();
             
             if(!nsList.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                //eqDAO.addNonSerializedEquipmentFromList(nsList);
+                eqDAO.addNonSerializedEquipmentFromList(nsList);
             }
-            
-            
-            //jobDAO.deleteJob(createdJob);
-            
         }
         System.out.println("Number Jobs Created: " + jobCreatedCount);
     }
