@@ -5,14 +5,13 @@
  */
 package payroll.jobs;
 
-import payroll.jobs.Job;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.PaymentFileFormatChecker;
+import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
 import payroll.tasks.TaskBuilder;
 
@@ -82,14 +81,14 @@ public class JobBuilder {
             if(!list.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
                 
-                //eqDAO.addSerializedEquipmentFromList(list);
+                eqDAO.addSerializedEquipmentFromList(list);
             }
             
             List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();
             
             if(!nsList.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                //eqDAO.addNonSerializedEquipmentFromList(nsList);
+                eqDAO.addNonSerializedEquipmentFromList(nsList);
             }
             
             

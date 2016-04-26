@@ -12,6 +12,7 @@ import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SHSLaborTask;
 import payroll.tasks.SerializedEquipmentTask;
 import payroll.tasks.StandardLaborTask;
+import payroll.tasks.Task;
 
 /**
  *

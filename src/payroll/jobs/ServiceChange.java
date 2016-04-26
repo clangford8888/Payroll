@@ -5,9 +5,6 @@
  */
 package payroll.jobs;
 
-import payroll.jobs.InternetInstall;
-import payroll.jobs.Job;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import payroll.tasks.LaborTask;

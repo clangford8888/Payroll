@@ -5,7 +5,6 @@
  */
 package payroll.jobs;
 
-import payroll.jobs.Job;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,6 +12,7 @@ import java.util.List;
 import payroll.DatabaseConnector;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
+import payroll.tasks.Task;
 
 /**
  *
@@ -30,7 +30,7 @@ public class EquipmentDAO {
         this.job = inJob;
     }
     
-    protected void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
+    protected void addSerializedEquipmentFromList(List<Task> list){
         
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();
@@ -43,7 +43,7 @@ public class EquipmentDAO {
                 
                 String sql = "insert into consumed_equip_serialized values(?,?,?,?) ";
                 
-                for(SerializedEquipmentTask task : list){
+                for(Task task : list){
                     
                     serialNumber = task.getSerialNumber();
                     model = task.getModel();
@@ -70,7 +70,7 @@ public class EquipmentDAO {
         }
     }
     
-    protected void addNonSerializedEquipmentFromList(List<NonSerializedEquipmentTask> list){
+    protected void addNonSerializedEquipmentFromList(List<Task> list){
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();
         String model;

@@ -53,9 +53,13 @@ public class TaskFactory {
         if(taskType.equals("E")){
             // Check if taskName is Non-Serialized
             newTask = masterTaskList.getEquipmentTask(taskName);
-            
-            inJob.addNonSerializedEquipmentTask(newTask);
-            inJob.addSerializedEquipmentTask(newTask);
+            if(newTask instanceof payroll.tasks.NonSerializedEquipmentTask){
+                inJob.addNonSerializedEquipmentTask((NonSerializedEquipmentTask)newTask);
+            }
+            else if(newTask instanceof payroll.tasks.SerializedEquipmentTask){
+                inJob.addSerializedEquipmentTask((SerializedEquipmentTask)newTask);
+            }
+            // If newTask was null, it will not be added to the task list
         }
         // Else If task type indicates Labor task
         else if(taskType.equals("L")){

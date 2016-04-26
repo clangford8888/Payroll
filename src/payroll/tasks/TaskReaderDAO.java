@@ -39,9 +39,9 @@ public class TaskReaderDAO {
         associated with that task name.
     */
     
-    public Map<String,Task> getNonSerializedMap(){
+    public Map<String,NonSerializedEquipmentTask> getNonSerializedMap(){
         
-        Map<String,Task> nonSerialized = new HashMap<>();
+        Map<String,NonSerializedEquipmentTask> nonSerialized = new HashMap<>();
         
         try{
             conn = DatabaseConnector.getConnection();
@@ -53,7 +53,7 @@ public class TaskReaderDAO {
             
             String taskName;
             String taskDescription;
-            Task newTask;
+            NonSerializedEquipmentTask newTask;
             
             // Loop through entire result set
             while(rs.next()){
@@ -78,9 +78,9 @@ public class TaskReaderDAO {
     }
     
     
-    public Map<String,Task> getSerializedMap(){
+    public Map<String,SerializedEquipmentTask> getSerializedMap(){
         // Instantiate ArrayList to add tasks to
-        Map<String, Task> serializedMap = new HashMap<>();
+        Map<String, SerializedEquipmentTask> serializedMap = new HashMap<>();
         try{
             // Connect to database and get all rows from serialized equipment table
             conn = DatabaseConnector.getConnection();
@@ -89,7 +89,7 @@ public class TaskReaderDAO {
             rs = ps.executeQuery(sql);
             String taskName;
             String taskDescription;
-            Task newTask;
+            SerializedEquipmentTask newTask;
             
             // Loop through entire result set
             while(rs.next()){

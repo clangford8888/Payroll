@@ -18,8 +18,8 @@ import java.util.Map;
  */
 public class TaskReader {
     
-    private Map<String,Task> nonSerializedMap;
-    private Map<String,Task> serializedMap;
+    private Map<String,? extends EquipmentTask> nonSerializedMap;
+    private Map<String,? extends EquipmentTask> serializedMap;
     private Map<String,Task> standardLaborMap;
     private Map<String,Task> shsLaborMap;
     private TaskReaderDAO taskDAO;
@@ -62,12 +62,11 @@ public class TaskReader {
         }
     }
     
-    public Task getEquipmentTask(String taskName){
-        Task newTask;
+    public EquipmentTask getEquipmentTask(String taskName){
+        EquipmentTask newTask;
         // Check if the task name is in the non-serialized map
         if(nonSerializedMap.containsKey(taskName)){
-            newTask = nonSerializedMap.get(taskName);
-            return newTask;
+            return nonSerializedMap.get(taskName);
         }
         // Else check if the task is in the serialized map
         else if(serializedMap.containsKey(taskName)){
