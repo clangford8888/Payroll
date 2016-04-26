@@ -18,55 +18,46 @@ import java.util.Map;
  */
 public class TaskReader {
     
-    private List<Task> nonSerializedList;
-    private List<Task> serializedList;
-    private List<Task> standardLaborList;
-    private List<Task> shsLaborList;
-    
     private Map<String,Task> nonSerializedMap;
-    
+    private Map<String,Task> serializedMap;
+    private Map<String,Task> standardLaborMap;
+    private Map<String,Task> shsLaborMap;
     private TaskReaderDAO taskDAO;
     
     public TaskReader(){
         nonSerializedMap = new HashMap<>();
-        
-        nonSerializedList = new ArrayList<>();
-        serializedList = new ArrayList<>();
-        standardLaborList = new ArrayList<>();
-        shsLaborList = new ArrayList<>();
+        serializedMap = new HashMap<>();
+        standardLaborMap = new HashMap<>();
+        shsLaborMap = new HashMap<>();
         taskDAO = new TaskReaderDAO();
         updateTaskLists();
     }
     
     private void updateTaskLists(){
         nonSerializedMap = taskDAO.getNonSerializedMap();
-        
-        nonSerializedList = taskDAO.getNonSerializedTable();
-        serializedList = taskDAO.getSerializedTable();
-        standardLaborList = taskDAO.getStandardLaborTable();
-        shsLaborList = taskDAO.getSHSLaborTable();
+        serializedMap = taskDAO.getSerializedMap();
+        standardLaborMap = taskDAO.getStandardLaborMap();
+        shsLaborMap = taskDAO.getSHSLaborMap();
     }
     
     public void display(){
-        for(Task t : nonSerializedList){
-            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
-        }
-        System.out.println();
-        for(Task t : serializedList){
-            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
-        }
-        System.out.println();
-        for(Task t : shsLaborList){
-            System.out.println(t.getClass());
-            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
-        }
-        System.out.println();
-        for(Task t : standardLaborList){
-            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
-        }
-        System.out.println("MAPTIME");
         for(String s : nonSerializedMap.keySet()){
             Task t = nonSerializedMap.get(s);
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+        System.out.println();
+        for(String s : serializedMap.keySet()){
+            Task t = serializedMap.get(s);
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+        System.out.println();
+        for(String s : standardLaborMap.keySet()){
+            Task t = standardLaborMap.get(s);
+            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+        }
+        System.out.println();
+        for(String s : shsLaborMap.keySet()){
+            Task t = shsLaborMap.get(s);
             System.out.println(t.getTaskName() + " " + t.getTaskDescription());
         }
     }

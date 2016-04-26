@@ -77,46 +77,10 @@ public class TaskReaderDAO {
         return nonSerialized;
     }
     
-    public List<Task> getNonSerializedTable(){
-        
-        List<Task> nonSerialized = new ArrayList<>();
-        
-        try{
-            conn = DatabaseConnector.getConnection();
-            String sql = "select * from nonserialized_equipment";
-            
-            ps = conn.prepareStatement(sql);
-            
-            rs = ps.executeQuery(sql);
-            
-            String taskName;
-            String taskDescription;
-            Task newTask;
-            
-            // Loop through entire result set
-            while(rs.next()){
-                // Get the task name and description from each row
-                taskName = rs.getString("task");
-                taskDescription = rs.getString("taskDescription");
-                // Create a new Task object and add to the task list
-                newTask = new NonSerializedEquipmentTask(taskName,taskDescription);
-                nonSerialized.add(newTask);
-            }
-        }
-        catch (SQLException e){
-            System.out.println(e.getSQLState());
-        }
-        finally{
-            DatabaseConnector.closeQuietly(conn);
-            DatabaseConnector.closeQuietly(ps);
-            DatabaseConnector.closeQuietly(rs);
-        }
-        return nonSerialized;
-    }
     
-    public List<Task> getSerializedTable(){
+    public Map<String,Task> getSerializedMap(){
         // Instantiate ArrayList to add tasks to
-        List<Task> serializedList = new ArrayList<>();
+        Map<String, Task> serializedMap = new HashMap<>();
         try{
             // Connect to database and get all rows from serialized equipment table
             conn = DatabaseConnector.getConnection();
@@ -134,7 +98,7 @@ public class TaskReaderDAO {
                 taskDescription = rs.getString("description");
                 // Create a new Task object and add to the task list
                 newTask = new SerializedEquipmentTask(taskName, taskDescription);
-                serializedList.add(newTask);
+                serializedMap.put(taskName, newTask);
             }
         }
         catch (SQLException e){
@@ -146,12 +110,12 @@ public class TaskReaderDAO {
             DatabaseConnector.closeQuietly(ps);
             DatabaseConnector.closeQuietly(rs);
         }
-        return serializedList;
+        return serializedMap;
     }
     
-    public List<Task> getStandardLaborTable(){
+    public Map<String,Task> getStandardLaborMap(){
         
-        List<Task> standardList = new ArrayList<>();
+        Map<String,Task> standardMap = new HashMap<>();
         
         try{
             conn = DatabaseConnector.getConnection();
@@ -177,7 +141,7 @@ public class TaskReaderDAO {
                     CHANGE BELOW TO STANDARD LABOR ONCE
                 */
                 newTask = new StandardLaborTask(taskName,taskDescription,payment);
-                standardList.add(newTask);
+                standardMap.put(taskName,newTask);
             }
         }
         catch (SQLException e){
@@ -189,12 +153,12 @@ public class TaskReaderDAO {
             DatabaseConnector.closeQuietly(ps);
             DatabaseConnector.closeQuietly(rs);
         }
-        return standardList;
+        return standardMap;
     }
     
-    public List<Task> getSHSLaborTable(){
+    public Map<String,Task> getSHSLaborMap(){
         
-        List<Task> shsLaborList = new ArrayList<>();
+        Map<String,Task> shsLaborMap = new HashMap<>();
         
         try{
             conn = DatabaseConnector.getConnection();
@@ -216,7 +180,7 @@ public class TaskReaderDAO {
                 payment = rs.getInt("payment");
                 // Create a new Task object and add to the task list
                 newTask = new SHSLaborTask(taskName,taskDescription,payment);
-                shsLaborList.add(newTask);
+                shsLaborMap.put(taskName, newTask);
             }
         }
         catch (SQLException e){
@@ -228,6 +192,6 @@ public class TaskReaderDAO {
             DatabaseConnector.closeQuietly(ps);
             DatabaseConnector.closeQuietly(rs);
         }
-        return shsLaborList;
+        return shsLaborMap;
     }
 }
