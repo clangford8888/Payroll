@@ -47,6 +47,23 @@ public abstract class Job {
         this.payment = 0;
     }
     
+    // Second constructor that accepts a payment also, for reading from DB
+    public Job(String inANum, String inWONum, Date inDate, String inDesignation,
+                String inTID, String inCName, int payment){
+        
+        this.accountNum = inANum;
+        this.workOrderNum = inWONum;
+        this.date = inDate;
+        this.designation = inDesignation;
+        this.techID = inTID;
+        this.customerName = inCName;
+        this.serializedEquipmentList = new ArrayList<>();
+        this.nonSerializedEquipmentList = new ArrayList<>();
+        this.standardLaborList = new ArrayList<>();
+        this.shsList = new ArrayList<>();
+        this.payment = payment;
+    }
+    
     public abstract int calculatePay();
     
     protected int calculateSHSPay(){
