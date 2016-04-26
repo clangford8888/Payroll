@@ -62,6 +62,23 @@ public class TaskReader {
         }
     }
     
+    public Task getEquipmentTask(String taskName){
+        Task newTask;
+        // Check if the task name is in the non-serialized map
+        if(nonSerializedMap.containsKey(taskName)){
+            newTask = nonSerializedMap.get(taskName);
+            return newTask;
+        }
+        // Else check if the task is in the serialized map
+        else if(serializedMap.containsKey(taskName)){
+            newTask = serializedMap.get(taskName);
+            return newTask;
+        }
+        // If the task was not found, return null. Will have to check for null
+        // in calling method
+        return null;
+    }
+    
     private static boolean isNonSerializedEquipment(String inTaskName){
         
         
