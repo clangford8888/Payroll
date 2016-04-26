@@ -6,13 +6,8 @@
 package payroll.tasks;
 
 import payroll.jobs.Job;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-import payroll.DatabaseConnector;
 import payroll.PaymentFileFormatChecker;
 
 /**
@@ -32,7 +27,6 @@ public class TaskFactory {
         
         int taskTypeIndex = checker.getTaskTypeLocation();
         int taskNameIndex = checker.getTaskNameLocation();
-        int taskDescriptionIndex = checker.getTaskDescriptionLocation();
         
         
         HSSFRow row = inRow;
@@ -43,9 +37,6 @@ public class TaskFactory {
         // Get task name and store value
         HSSFCell taskNameCell = row.getCell(taskNameIndex);
         String taskName = getStringCellValue(taskNameCell);
-        // Get task description and store value
-        HSSFCell taskDescriptionCell = row.getCell(taskDescriptionIndex);
-        String taskDescription = getStringCellValue(taskDescriptionCell);
         
         Task newTask;
         
@@ -63,28 +54,13 @@ public class TaskFactory {
         }
         // Else If task type indicates Labor task
         else if(taskType.equals("L")){
+            newTask = masterTaskList.getLaborTask(taskName);
             // If task name is standard labor task
-            if(isStandardLaborTask(taskName)){
-                // Create new Standard Labor Task
-                StandardLaborTask stdLaborTask = new StandardLaborTask(
-                                                    taskName, taskDescription);
-                // Look up the labor payment
-                int pay = stdLaborTask.lookupLaborPayment();
-                // Set the labor payment
-                stdLaborTask.setPayment(pay);
-                // Add Standard Labor Task to job
-                inJob.addStandardLaborTask(stdLaborTask);
+            if(newTask instanceof StandardLaborTask){
+                inJob.addStandardLaborTask((StandardLaborTask)newTask);
             }
-            // Else return new Smart Home Service task
-            else if(isSHSLaborTask(taskName)){
-                // Create new SHS Labor Task
-                SHSLaborTask shsTask = new SHSLaborTask(taskName, taskDescription);
-                // Look up the labor payment
-                int pay = shsTask.lookupLaborPayment();
-                // Set the labor payment
-                shsTask.setPayment(pay);
-                // Add SHS Labor Task to job
-                inJob.addSHSLaborTask(shsTask);
+            else if(newTask instanceof SHSLaborTask){
+                inJob.addSHSLaborTask((SHSLaborTask)newTask);
             }
         }
     }
@@ -109,68 +85,6 @@ public class TaskFactory {
         }
         return value;
     }
-    
-    private static boolean isNonSerializedEquipment(String inTaskName){
-        String taskName = inTaskName;
-        String sql = "select exists(select 1 from nonserialized_equipment where task = ? )";
-        
-        return checkIfTaskExists(sql,taskName);
-    }
-    
-    private static boolean isSerializedEquipment(String inTaskDescription){
-        String taskDescription = inTaskDescription;
-        String sql = "select exists(select 1 from serialized_equipment where model = ? )";
-        
-        return checkIfTaskExists(sql,taskDescription);
-    }
-    
-    private static boolean isStandardLaborTask(String inTaskName){
-        String taskName = inTaskName;
-        String sql = "select exists(select 1 from standard_labor where task = ? )";
-        
-        return checkIfTaskExists(sql, taskName);
-    }
-    
-    private static boolean isSHSLaborTask(String inTaskName){
-        String taskName = inTaskName;
-        String sql = "select exists(select 1 from shs_labor where task = ? )";
-        
-        return checkIfTaskExists(sql, taskName);
-    }
-    
-    private static boolean checkIfTaskExists(String inSql, String inTask){
-        // TODO: COMMENTS!!
-        String sql = inSql;
-        String task = inTask;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        try{
-            // TODO: COMMENTS!
-            conn = DatabaseConnector.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, task);
-            rs = ps.executeQuery();
-            int result = 0;
-            if(rs.next()){
-                result = rs.getInt(1);
-            }
-            if(result > 0){
-                return true;
-            }
-        }
-        catch(SQLException e){
-            System.out.println(e.getMessage());
-            System.out.println(e.getSQLState());
-        }
-        finally{
-            DatabaseConnector.closeQuietly(rs);
-            DatabaseConnector.closeQuietly(ps);
-            DatabaseConnector.closeQuietly(conn);
-        }
-        // If not Standard labor, return false
-        return false;
-    }
+
 }
 

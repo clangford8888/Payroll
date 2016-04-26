@@ -30,7 +30,7 @@ public class EquipmentDAO {
         this.job = inJob;
     }
     
-    protected void addSerializedEquipmentFromList(List<Task> list){
+    protected void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
         
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();
@@ -43,7 +43,7 @@ public class EquipmentDAO {
                 
                 String sql = "insert into consumed_equip_serialized values(?,?,?,?) ";
                 
-                for(Task task : list){
+                for(SerializedEquipmentTask task : list){
                     
                     serialNumber = task.getSerialNumber();
                     model = task.getModel();
@@ -70,7 +70,7 @@ public class EquipmentDAO {
         }
     }
     
-    protected void addNonSerializedEquipmentFromList(List<Task> list){
+    protected void addNonSerializedEquipmentFromList(List<NonSerializedEquipmentTask> list){
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();
         String model;

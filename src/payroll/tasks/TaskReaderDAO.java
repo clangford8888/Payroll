@@ -113,9 +113,9 @@ public class TaskReaderDAO {
         return serializedMap;
     }
     
-    public Map<String,Task> getStandardLaborMap(){
+    public Map<String,StandardLaborTask> getStandardLaborMap(){
         
-        Map<String,Task> standardMap = new HashMap<>();
+        Map<String,StandardLaborTask> standardMap = new HashMap<>();
         
         try{
             conn = DatabaseConnector.getConnection();
@@ -128,7 +128,7 @@ public class TaskReaderDAO {
             String taskName;
             String taskDescription;
             int payment;
-            Task newTask;
+            StandardLaborTask newTask;
             
             // Loop through entire result set
             while(rs.next()){
@@ -156,9 +156,9 @@ public class TaskReaderDAO {
         return standardMap;
     }
     
-    public Map<String,Task> getSHSLaborMap(){
+    public Map<String,SHSLaborTask> getSHSLaborMap(){
         
-        Map<String,Task> shsLaborMap = new HashMap<>();
+        Map<String,SHSLaborTask> shsLaborMap = new HashMap<>();
         
         try{
             conn = DatabaseConnector.getConnection();
@@ -169,7 +169,7 @@ public class TaskReaderDAO {
             String taskName;
             String taskDescription;
             int payment;
-            Task newTask;
+            SHSLaborTask newTask;
             
             // Loop through entire result set
             while(rs.next()){

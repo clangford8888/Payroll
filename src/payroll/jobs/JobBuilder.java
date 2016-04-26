@@ -13,7 +13,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import payroll.PaymentFileFormatChecker;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
-import payroll.tasks.TaskBuilder;
+import payroll.tasks.TaskFactory;
+import payroll.tasks.TaskReader;
 
 /**
  *
@@ -22,9 +23,13 @@ import payroll.tasks.TaskBuilder;
 public class JobBuilder {
     
     private final PaymentFileFormatChecker checker;
+    private TaskFactory taskFactory;
+    private TaskReader masterTaskList;
     
     public JobBuilder(PaymentFileFormatChecker inChecker){
         this.checker = inChecker;
+        masterTaskList = new TaskReader();
+        taskFactory = new TaskFactory(masterTaskList);        
     }
     
     // TODO: GETTER/SETTER METHODS FOR inputFile? In case want to use same obj
@@ -55,12 +60,22 @@ public class JobBuilder {
             // Create appropriate job 
             Job createdJob = createJob(advancedJobType, firstRow);
             
+            /*
+                TRYING NEW TASK FACTORY
+            
             // Traverse list of rows and add tasks to job's Task list
             for(HSSFRow row : rowList){
                 // Create a task for each row. TaskBuilder will add task to job
                 TaskBuilder.createTask(createdJob, row, checker);
                 
             }
+            */
+            
+            for(HSSFRow row : rowList){
+                taskFactory.createTask(createdJob, row, checker);
+            }
+            
+            
             jobCreatedCount++;
             
             // Calculate Job payment
@@ -71,8 +86,7 @@ public class JobBuilder {
             // Push to Database
             
             // *** DEBUG
-            //JobDAO jobDAO = new JobDAO();
-            //jobDAO.addJob(createdJob);
+            jobDAO.addJob(createdJob);
             
             //jobDAO.deleteJob(createdJob);
             
@@ -81,14 +95,14 @@ public class JobBuilder {
             if(!list.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
                 
-                eqDAO.addSerializedEquipmentFromList(list);
+                //eqDAO.addSerializedEquipmentFromList(list);
             }
             
             List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();
             
             if(!nsList.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                eqDAO.addNonSerializedEquipmentFromList(nsList);
+                //eqDAO.addNonSerializedEquipmentFromList(nsList);
             }
             
             

@@ -5,9 +5,7 @@
  */
 package payroll.tasks;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,8 +18,8 @@ public class TaskReader {
     
     private Map<String,? extends EquipmentTask> nonSerializedMap;
     private Map<String,? extends EquipmentTask> serializedMap;
-    private Map<String,Task> standardLaborMap;
-    private Map<String,Task> shsLaborMap;
+    private Map<String,? extends LaborTask> standardLaborMap;
+    private Map<String,? extends LaborTask> shsLaborMap;
     private TaskReaderDAO taskDAO;
     
     public TaskReader(){
@@ -75,6 +73,17 @@ public class TaskReader {
         }
         // If the task was not found, return null. Will have to check for null
         // in calling method
+        return null;
+    }
+    
+    public LaborTask getLaborTask(String taskName){
+        LaborTask newTask;
+        if(standardLaborMap.containsKey(taskName)){
+            return standardLaborMap.get(taskName);
+        }
+        else if(shsLaborMap.containsKey(taskName)){
+            return shsLaborMap.get(taskName);
+        }
         return null;
     }
     
