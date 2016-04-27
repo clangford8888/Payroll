@@ -7,7 +7,12 @@ package payroll;
 
 import payroll.jobs.JobBuilder;
 import java.io.File;
-import payroll.tasks.TaskReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import paysheets.PaySheet;
 
 /**
  *
@@ -18,7 +23,7 @@ public class Payroll {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException{
        
         long startTime = System.currentTimeMillis();
        
@@ -39,13 +44,21 @@ public class Payroll {
         
         parser.parsePaymentFile();
         parser.closeFile();
+        
         // parser.printMap(parser.getMap());
         JobBuilder builder = new JobBuilder(checker);
-        builder.buildJobsFromMap(parser.getMap());
+        //builder.buildJobsFromMap(parser.getMap());
         
+        String tempStr = "TEST";
+        Date tempDate1 = new Date();
+        Date tempDate2 = new Date();
         
-        //TaskReader reader = new TaskReader();
-        //reader.display();
+        PaySheet sheet = new PaySheet(tempStr, tempDate1, tempDate2);
+        HSSFWorkbook workbook = sheet.getWorkbook();
+        
+        FileOutputStream out = new FileOutputStream("src/payroll/input/workbook.xls");
+        workbook.write(out);
+        out.close();
                
         long endTime = System.currentTimeMillis();
         

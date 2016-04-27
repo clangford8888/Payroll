@@ -30,6 +30,8 @@ public class PaySheet {
         this.endDate = end;
         this.workbook = new HSSFWorkbook();
         this.numJobs = 0;
+        
+        PaySheetFormatter.formatWorkbook(workbook);
     }
     
     /*
@@ -65,5 +67,9 @@ public class PaySheet {
         int rowIndex = (2 * numJobs) + 2;
         
         return rowIndex;
+    }
+    
+    public HSSFWorkbook getWorkbook(){
+        return this.workbook;
     }
 }

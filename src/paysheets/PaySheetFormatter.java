@@ -36,7 +36,7 @@ public class PaySheetFormatter {
   
         // Create a font and set its attributes
         Font font = workbook.createFont();        
-        font.setFontHeight((short)11);
+        font.setFontHeightInPoints((short)11);
         // Set the color to black (constant COLOR_NORMAL)
         font.setColor(Font.COLOR_NORMAL);
         font.setBold(true);
@@ -71,5 +71,21 @@ public class PaySheetFormatter {
         cell.setCellValue("PAY");
         cell = row.getCell(5);
         cell.setCellValue("LEP");
+        
+        // Create second title row
+        row = sheet.createRow(1);
+        row.setHeight((short)-1);
+        // Add the cells to the row
+        for(int cellNum = 0; cellNum < 3; cellNum++){
+            cell = row.createCell(cellNum);
+            cell.setCellStyle(cs);
+        }
+        // Populate the second title row's values
+        cell = row.getCell(0);
+        cell.setCellValue("WORK ORDER");
+        cell = row.getCell(1);
+        cell.setCellValue("TYPE");
+        cell = row.getCell(2);
+        cell.setCellValue("SERIALIZED");
     }
 }
