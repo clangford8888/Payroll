@@ -31,7 +31,7 @@ public class PaySheet {
         this.workbook = new HSSFWorkbook();
         this.numJobs = 0;
         
-        PaySheetFormatter.formatWorkbook(workbook);
+        PaySheetFormatter.addTitleRow(workbook);
     }
     
     /*
@@ -54,13 +54,13 @@ public class PaySheet {
     public void addJob(Job inJob){
         if(inJob != null){
             
-            int rowIndex = getRowIndex();
+            int rowIndex = getNextRowIndex();
             
         }
     }
     
     // Method to determine where a job should be added to a sheet
-    private int getRowIndex(){
+    private int getNextRowIndex(){
         
         // Each job will take two lines, rows are 0-based and we add 2 lines
         // for the column headers
