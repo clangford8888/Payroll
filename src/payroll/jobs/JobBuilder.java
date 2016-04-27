@@ -59,18 +59,7 @@ public class JobBuilder {
             String advancedJobType = getJobType(firstRow);        
             // Create appropriate job 
             Job createdJob = createJob(advancedJobType, firstRow);
-            
-            /*
-                TRYING NEW TASK FACTORY
-            
-            // Traverse list of rows and add tasks to job's Task list
-            for(HSSFRow row : rowList){
-                // Create a task for each row. TaskBuilder will add task to job
-                TaskBuilder.createTask(createdJob, row, checker);
-                
-            }
-            */
-            
+            // Task factory will create a task from each row
             for(HSSFRow row : rowList){
                 taskFactory.createTask(createdJob, row, checker);
             }
@@ -83,25 +72,25 @@ public class JobBuilder {
             createdJob.setPayment(payment);
             
             // Push to Database
-            
             // *** DEBUG
             jobDAO.addJob(createdJob);
             
             //jobDAO.deleteJob(createdJob);
             
+            // Add Serialized Equipment to database
             List<SerializedEquipmentTask> list = createdJob.getSerializedEquipmentTaskList();
             
             if(!list.isEmpty()){
-                EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                
-                eqDAO.addSerializedEquipmentFromList(list);
+                EquipmentDAO eqDAO = new EquipmentDAO(createdJob);                
+                //eqDAO.addSerializedEquipmentFromList(list);
             }
             
-            List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();
+            //Add Non-Serialized equipment to database
+            List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();            
             
             if(!nsList.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                eqDAO.addNonSerializedEquipmentFromList(nsList);
+                //eqDAO.addNonSerializedEquipmentFromList(nsList);
             }
         }
         System.out.println("Number Jobs Created: " + jobCreatedCount);
