@@ -60,9 +60,9 @@ public class PaySheet {
     // Method to determine where a job should be added to a sheet
     private int getRowIndex(){
         
-        // Each job will take two lines, rows are 0-based and we add 1 line
+        // Each job will take two lines, rows are 0-based and we add 2 lines
         // for the column headers
-        int rowIndex = (2 * numJobs) + 1;
+        int rowIndex = (2 * numJobs) + 2;
         
         return rowIndex;
     }
