@@ -21,9 +21,11 @@ public class PaySheetFormatter {
     
     /*
         Given a workbook, this method formats the first two rows to contain
-        the title information for a standard pay sheet.
+        the title information for a standard pay sheet. Assumes the workbook
+        does not have a sheet created
     */
     public static void addTitleRow(HSSFWorkbook workbook){
+        workbook.createSheet("Sheet 1");
         // Each pay sheet only uses the first sheet
         HSSFSheet sheet = workbook.getSheetAt(0);
         HSSFRow row;
@@ -110,7 +112,8 @@ public class PaySheetFormatter {
         // Format the first row for the new job
         for(int cellNum = 0; cellNum < 6; cellNum++){
             cell = row.createCell(cellNum);
-            if(cellNum > 1){
+            // Only the first cell uses the date style
+            if(cellNum > 0){
                 cell.setCellStyle(generalStyle);
             }
             else{
