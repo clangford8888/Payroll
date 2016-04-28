@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Date;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import paysheets.PaySheet;
+import paysheets.PaySheetFormatter;
 
 /**
  *
@@ -55,6 +56,8 @@ public class Payroll {
         
         PaySheet sheet = new PaySheet(tempStr, tempDate1, tempDate2);
         HSSFWorkbook workbook = sheet.getWorkbook();
+        PaySheetFormatter.addJobFormatting(workbook, 2);
+        PaySheetFormatter.addJobFormatting(workbook, 4);
         
         FileOutputStream out = new FileOutputStream("src/payroll/input/workbook.xls");
         workbook.write(out);
