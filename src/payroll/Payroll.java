@@ -8,12 +8,11 @@ package payroll;
 import payroll.jobs.JobBuilder;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import paysheets.PaySheet;
-import paysheets.PaySheetFormatter;
+import paysheets.PaySheetCreatorDAO;
 
 /**
  *
@@ -50,18 +49,29 @@ public class Payroll {
         JobBuilder builder = new JobBuilder(checker);
         //builder.buildJobsFromMap(parser.getMap());
         
-        String tempStr = "TEST";
-        Date tempDate1 = new Date();
-        Date tempDate2 = new Date();
+        //String tempStr = "TEST";
+        //Date tempDate1 = new Date();
+        //Date tempDate2 = new Date();
         
-        PaySheet sheet = new PaySheet(tempStr, tempDate1, tempDate2);
-        HSSFWorkbook workbook = sheet.getWorkbook();
-        PaySheetFormatter.addJobFormatting(workbook, 2);
-        PaySheetFormatter.addJobFormatting(workbook, 4);
+        //PaySheet sheet = new PaySheet(tempStr, tempDate1, tempDate2);
+        //HSSFWorkbook workbook = sheet.getWorkbook();
+        //PaySheetFormatter.addJobFormatting(workbook, 2);
+        //PaySheetFormatter.addJobFormatting(workbook, 4);
         
-        FileOutputStream out = new FileOutputStream("src/payroll/input/workbook.xls");
-        workbook.write(out);
-        out.close();
+        //FileOutputStream out = new FileOutputStream("src/payroll/input/workbook.xls");
+        //workbook.write(out);
+        //out.close();
+        
+        try{
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date start = df.parse("01/02/16");
+            Date end = df.parse("01/02/16");
+            PaySheetCreatorDAO pscDAO = new PaySheetCreatorDAO();
+            pscDAO.getJobsByTech("Randi.Cyril1", start, end);
+        }
+        catch(ParseException e){
+            System.out.print(e.getMessage());
+        }
                
         long endTime = System.currentTimeMillis();
         
