@@ -21,8 +21,8 @@ import payroll.tasks.Task;
 public class ServiceChange extends Job{
     
     public ServiceChange(String inANum, String inWONum, Date inDate, 
-            String inDesignation, String inTID, String inCName){
-        super(inANum, inWONum, inDate, inDesignation, inTID, inCName);
+            String inDesignation, String inTID, String inCName, String inJobType){
+        super(inANum, inWONum, inDate, inDesignation, inTID, inCName, inJobType);
     }
     
     
@@ -98,7 +98,8 @@ public class ServiceChange extends Job{
                                                 this.getDate(),
                                                 this.getDesignation(),
                                                 this.getTechID(),
-                                                this.getCustomerName());
+                                                this.getCustomerName(),
+                                                this.getJobType());
         // Traverse standard labor list and add tasks to new job
         for(StandardLaborTask task : laborList){
             internetJob.addStandardLaborTask(task);

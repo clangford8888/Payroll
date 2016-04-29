@@ -58,7 +58,7 @@ public class JobFactory {
             // Find the job type
             String advancedJobType = getJobType(firstRow);        
             // Create appropriate job 
-            Job createdJob = createJob(advancedJobType, firstRow);
+            Job createdJob = createJobFromRow(advancedJobType, firstRow);
             // Task factory will create a task from each row
             for(HSSFRow row : rowList){
                 taskFactory.createTask(createdJob, row, checker);
@@ -184,7 +184,7 @@ public class JobFactory {
             case "RS":
                 designation = "NC";
                 newJob = new StandardInstall(accountNumber, workOrderNumber, 
-                            date, designation, techID, customerName);
+                            date, designation, techID, customerName, jobType);
                 break; 
             default:
                 System.out.println("JOB TYPE NOT FOUND!");

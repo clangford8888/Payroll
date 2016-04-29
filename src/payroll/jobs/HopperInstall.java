@@ -19,8 +19,8 @@ public class HopperInstall extends Job{
     
     
     public HopperInstall(String inANum, String inWONum, Date inDate, String inDesignation,
-                String inTID, String inCName){
-        super(inANum, inWONum, inDate, inDesignation, inTID, inCName);
+                String inTID, String inCName, String inJobType){
+        super(inANum, inWONum, inDate, inDesignation, inTID, inCName, inJobType);
         
     }
     

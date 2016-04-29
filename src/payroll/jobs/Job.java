@@ -148,6 +148,10 @@ public abstract class Job {
         return designation;
     }
     
+    public String getJobType(){
+        return jobType;
+    }
+    
     public int getPayment(){
         return payment;
     }

@@ -17,8 +17,8 @@ import payroll.tasks.StandardLaborTask;
 public class StandardInstall extends Job{
     
     public StandardInstall(String inANum, String inWONum, Date inDate, 
-            String inDesignation, String inTID, String inCName){
-        super(inANum, inWONum, inDate, inDesignation, inTID, inCName);
+            String inDesignation, String inTID, String inCName, String inJobType){
+        super(inANum, inWONum, inDate, inDesignation, inTID, inCName, inJobType);
     
     }
     
