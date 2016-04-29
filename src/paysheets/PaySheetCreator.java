@@ -11,17 +11,12 @@ package paysheets;
  */
 public class PaySheetCreator {
     
-    PaySheetDAO paySheetDAO;
+    PaySheetCreatorDAO paySheetDAO;
     
     public PaySheetCreator(){
-        paySheetDAO = new PaySheetDAO();
+        paySheetDAO = new PaySheetCreatorDAO();
     }
     
-    public PaySheet createPaySheet(){
-        
-        PaySheet newSheet = new PaySheet();
-        
-        return newSheet;
-    }
+    
     
 }
