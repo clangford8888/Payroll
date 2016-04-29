@@ -24,7 +24,8 @@ public abstract class Job {
     private final Date date;
     private String designation;
     private final String customerName;
-    private final String techID; // Want DB to have TID, get name from there??
+    private final String techID;
+    private final String jobType;
     private List<SerializedEquipmentTask> serializedEquipmentList;
     private List<NonSerializedEquipmentTask> nonSerializedEquipmentList;
     private List<StandardLaborTask> standardLaborList;
@@ -32,7 +33,7 @@ public abstract class Job {
     private int payment;
     
     public Job(String inANum, String inWONum, Date inDate, String inDesignation,
-                String inTID, String inCName){
+                String inTID, String inCName, String inJobType){
         
         this.accountNum = inANum;
         this.workOrderNum = inWONum;
@@ -40,6 +41,7 @@ public abstract class Job {
         this.designation = inDesignation;
         this.techID = inTID;
         this.customerName = inCName;
+        this.jobType = inJobType;
         this.serializedEquipmentList = new ArrayList<>();
         this.nonSerializedEquipmentList = new ArrayList<>();
         this.standardLaborList = new ArrayList<>();
@@ -49,7 +51,7 @@ public abstract class Job {
     
     // Second constructor that accepts a payment also, for reading from DB
     public Job(String inANum, String inWONum, Date inDate, String inDesignation,
-                String inTID, String inCName, int payment){
+                String inTID, String inCName, String inJobType, int payment){
         
         this.accountNum = inANum;
         this.workOrderNum = inWONum;
@@ -57,6 +59,7 @@ public abstract class Job {
         this.designation = inDesignation;
         this.techID = inTID;
         this.customerName = inCName;
+        this.jobType = inJobType;
         this.serializedEquipmentList = new ArrayList<>();
         this.nonSerializedEquipmentList = new ArrayList<>();
         this.standardLaborList = new ArrayList<>();
