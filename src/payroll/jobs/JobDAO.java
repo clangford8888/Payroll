@@ -113,7 +113,7 @@ public class JobDAO {
             
             final int MYSQL_DUPLICATE_PK = 1062;
             if(e.getErrorCode() == MYSQL_DUPLICATE_PK){
-                System.out.println("Tried to add duplicate key.");
+                System.out.println("Tried to add duplicate job.");
             }
             else{
                 System.out.println("Error Message: " + e.getMessage());

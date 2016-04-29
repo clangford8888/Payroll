@@ -64,10 +64,11 @@ public class Payroll {
         
         try{
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            Date start = df.parse("01/02/16");
-            Date end = df.parse("01/02/16");
+            Date start = df.parse("01/02/2016");
+            Date end = df.parse("01/07/2016");
             PaySheetCreatorDAO pscDAO = new PaySheetCreatorDAO();
-            pscDAO.getJobsByTech("Randi.Cyril1", start, end);
+            pscDAO.getJobsByTech("Eric.Washington4", start, end);
+            System.out.println("Finished running query.");
         }
         catch(ParseException e){
             System.out.print(e.getMessage());

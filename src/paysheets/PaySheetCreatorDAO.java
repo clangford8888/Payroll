@@ -38,10 +38,9 @@ public class PaySheetCreatorDAO {
         try{
             conn = DatabaseConnector.getConnection();
             // Set the string version of the query to be used
-            String sql = "select * "
-                        + "from job "
+            String sql = "select * from job "
                         + "where techID = ? "
-                        + "and (date between ? and ?) "
+                        + "and (date between ? and ?)"
                         + "order by date";
             // Convert the input Dates to SQL Date format
             long startTimeAsLong = start.getTime();
@@ -49,23 +48,30 @@ public class PaySheetCreatorDAO {
             long endTimeAsLong = end.getTime();
             java.sql.Date sqlEnd = new java.sql.Date(endTimeAsLong);
             
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);     
             ps.setString(1, tech);
             ps.setDate(2, sqlStart);
             ps.setDate(3, sqlEnd);
-            rs = ps.executeQuery(sql);
+            rs = ps.executeQuery();
             
+            String customer;
+            String workOrder;
+            String designation;
+            Date woDate;
+            
+
             while(rs.next()){
                 System.out.println(rs.getString("techID") + " "
                                 + rs.getString("customerName" ) + " "
                                 + rs.getString("date") + " "
                                 + rs.getString("payment"));
             }
-            
-            
+  
         }
         catch(SQLException e){
-            
+            System.out.println(e.getMessage());
+            System.out.println("SQL state: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
         }
         finally{
             DatabaseConnector.closeQuietly(conn);
