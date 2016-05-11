@@ -5,13 +5,13 @@
  */
 package payroll;
 
-import payroll.jobs.JobBuilder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import payroll.jobs.JobFactory;
 import paysheets.PaySheetCreatorDAO;
 
 /**
@@ -27,10 +27,13 @@ public class Payroll {
        
         long startTime = System.currentTimeMillis();
        
-        File myFile = new File("src/payroll/input/inputFile.xls");
+        //File myFile = new File("src/payroll/input/inputFile.xls");
+        
         PaymentFileFormatChecker checker = new PaymentFileFormatChecker();
-        checker.readFileFormat(myFile);
-        System.out.println(checker.toString());
+        
+        //checker.readFileFormat(myFile);
+        //System.out.println(checker.toString());
+        //System.out.println(myFile.getAbsolutePath());
         
         
         // Every time a new payment file is selected, we will need to check the format again
@@ -38,16 +41,17 @@ public class Payroll {
         checker.readFileFormat(myFile2);
         System.out.println(checker.toString());
         
-
-        System.out.println(myFile.getAbsolutePath());
         PaymentParser parser = new PaymentParser(myFile2);
         
         parser.parsePaymentFile();
         parser.closeFile();
         
         // parser.printMap(parser.getMap());
-        JobBuilder builder = new JobBuilder(checker);
+        //JobBuilder builder = new JobBuilder(checker);
         //builder.buildJobsFromMap(parser.getMap());
+        
+        JobFactory jFactory = new JobFactory(checker);
+        jFactory.processMap(parser.getMap());
         
         //String tempStr = "TEST";
         //Date tempDate1 = new Date();
@@ -62,6 +66,7 @@ public class Payroll {
         //workbook.write(out);
         //out.close();
         
+        /*
         try{
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             Date start = df.parse("01/02/2016");
@@ -73,6 +78,7 @@ public class Payroll {
         catch(ParseException e){
             System.out.print(e.getMessage());
         }
+        */
                
         long endTime = System.currentTimeMillis();
         

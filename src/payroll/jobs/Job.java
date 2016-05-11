@@ -83,9 +83,7 @@ public abstract class Job {
         return pay;
     }
     
-    // ***********************************************************
-    // TRYING THIS METHOD OF ADDING TASKS, SO YOU DON'T HAVE TO PASS 
-    // A WHOLE LIST IN THE CONSTRUCTOR. GOOD IDEA? WHO KNOWS!
+
     public void addSerializedEquipmentTask(SerializedEquipmentTask inTask){
         this.serializedEquipmentList.add(inTask);
     }
