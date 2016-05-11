@@ -11,43 +11,57 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import payroll.PaymentFileFormatChecker;
 
 /**
- *
+ * Purpose: The RowParser object is intended to accept a HSSFRow containing
+ * job data and find the necessary information required to parse the row.
  * @author Casey
  */
 public class RowParser {
-    
+    // Format checker to get job information index locations
     private final PaymentFileFormatChecker formatChecker;
-       
-    private HSSFRow row;
+    
+    // Indicies for the relevant job information within each row.
+    private final int accountNumberIndex;
+    private final int workOrderIndex;
+    private final int dateIndex;
+    private final int techIDIndex;
+    private final int customerNameIndex;
+    
+    // Variables that will be changed with each row processed
     private String accountNumber;
     private String workOrderNumber;
     private Date date;
     private String techID;
     private String customerName;
     
+    /**
+     * RowParser constructor to create RowParser objects.
+     * @param inChecker PaymentFIleFormatChecker that will have the indices
+     * for relevant job information.
+     */
     public RowParser(PaymentFileFormatChecker inChecker){
         formatChecker = inChecker;
+        accountNumberIndex = formatChecker.getAccountNumLocation();
+        workOrderIndex = formatChecker.getWorkOrderLocation();
+        dateIndex = formatChecker.getDateLocation();
+        techIDIndex = formatChecker.getTechIDLocation();
+        customerNameIndex = formatChecker.getCustNameLocation();
     }
     
+    /**
+     * Method to parse a row containing Job data.
+     * @param inRow HSSFRow to be processed.
+     */
     public void processRow(HSSFRow inRow){
-        
-        row = inRow;
-        
-        int accountNumberIndex = formatChecker.getAccountNumLocation();
-        int workOrderIndex = formatChecker.getWorkOrderLocation();
-        int dateIndex = formatChecker.getDateLocation();
-        int techIDIndex = formatChecker.getTechIDLocation();
-        int customerNameIndex = formatChecker.getCustNameLocation();
-        
-        HSSFCell accountNumberCell = row.getCell(accountNumberIndex);
+
+        HSSFCell accountNumberCell = inRow.getCell(accountNumberIndex);
         accountNumber = accountNumberCell.getStringCellValue();      
-        HSSFCell workOrderNumberCell = row.getCell(workOrderIndex);
+        HSSFCell workOrderNumberCell = inRow.getCell(workOrderIndex);
         workOrderNumber = workOrderNumberCell.getStringCellValue();
-        HSSFCell dateCell = row.getCell(dateIndex);
+        HSSFCell dateCell = inRow.getCell(dateIndex);
         date = dateCell.getDateCellValue();
-        HSSFCell techIDCell = row.getCell(techIDIndex);
+        HSSFCell techIDCell = inRow.getCell(techIDIndex);
         techID = techIDCell.getStringCellValue();
-        HSSFCell customerNameCell = row.getCell(customerNameIndex);
+        HSSFCell customerNameCell = inRow.getCell(customerNameIndex);
         customerName = customerNameCell.getStringCellValue();
         
     }
