@@ -21,6 +21,7 @@ import payroll.tasks.TaskReader;
  * @author Casey
  */
 public class JobBuilder {
+    /*
     
     private final PaymentFileFormatChecker checker;
     private final TaskFactory taskFactory;
@@ -36,10 +37,7 @@ public class JobBuilder {
     //          to parse multiple files.
     
 
-    /*
-    Purpose: Traverse a HashMap of <WO#, List<Row>> and build jobs for
-            each work order number.
-    */
+   
     public void buildJobsFromMap(Map<String, List<HSSFRow>> inMap){
         // Initialize Map of WorkOrderNumber/List of Rows 
         Map<String, List<HSSFRow>> map = inMap;
@@ -100,7 +98,7 @@ public class JobBuilder {
     Purpose: Take in a list of Rows and return the job type so the class can
              build the correct type of job.
     Parameters: inList: List of HSSFRow. 
-    */
+    
     public String getJobType(HSSFRow inRow){
         
         int advancedJobTypeIndex = checker.getAdvancedTypeLocation();
@@ -119,7 +117,7 @@ public class JobBuilder {
             The format of the row will have been checked prior to the HashMap
             creation. At this time, sticking with hard coding the location of
             the cells containing relevant information.
-    */
+    
     private Job createJob(String inJobType, HSSFRow inRow){
         String jobType = inJobType;
         HSSFRow currentRow = inRow;
@@ -206,4 +204,5 @@ public class JobBuilder {
         return newJob;
         
     }   
+*/
 }
