@@ -56,7 +56,7 @@ public class TaskFactory {
             }
             else if(newTask instanceof payroll.tasks.SerializedEquipmentTask){
                 SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)newTask;
-                newSerialized.setSerialNumber(taskDescription);
+                newSerialized.setSerialNumber(taskName);
                 inJob.addSerializedEquipmentTask((SerializedEquipmentTask)newSerialized);
             }
             // If newTask was null, it will not be added to the task list
