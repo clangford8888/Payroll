@@ -27,7 +27,7 @@ public class TaskFactory {
         
         int taskTypeIndex = checker.getTaskTypeLocation();
         int taskNameIndex = checker.getTaskNameLocation();
-        
+        int taskDescriptionIndex = checker.getTaskDescriptionLocation();
         
         HSSFRow row = inRow;
         // Select the cell at the Task Type Position
@@ -37,19 +37,29 @@ public class TaskFactory {
         // Get task name and store value
         HSSFCell taskNameCell = row.getCell(taskNameIndex);
         String taskName = getStringCellValue(taskNameCell);
+        // Get task description and store value
+        HSSFCell taskDescriptionCell = row.getCell(taskDescriptionIndex);
+        String taskDescription = getStringCellValue(taskDescriptionCell);
         
         Task newTask;
+        // New approach: Search for task by description, since the R00# is the
+        // task name in the payment file. If we search for Task based on name,
+        // it will not show up since the R00#'s are unique.
         
         // If the task type represents equipment
         if(taskType.equals("E")){
             // Check if taskName is Non-Serialized
-            newTask = masterTaskList.getEquipmentTask(taskName);
+            System.out.println("Task Name: " + taskDescription);
+            newTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
+            
             if(newTask instanceof payroll.tasks.NonSerializedEquipmentTask){
                 inJob.addNonSerializedEquipmentTask((NonSerializedEquipmentTask)newTask);
             }
             else if(newTask instanceof payroll.tasks.SerializedEquipmentTask){
                 System.out.println("Serialized!");
-                inJob.addSerializedEquipmentTask((SerializedEquipmentTask)newTask);
+                SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)newTask;
+                newSerialized.setSerialNumber(taskDescription);
+                inJob.addSerializedEquipmentTask((SerializedEquipmentTask)newSerialized);
             }
             // If newTask was null, it will not be added to the task list
         }

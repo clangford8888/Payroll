@@ -11,16 +11,27 @@ package payroll.tasks;
  */
 public class SerializedEquipmentTask extends EquipmentTask{
     
-    private final String serialNumber;
+    private String serialNumber;
     private final String model;
     private String itemNumber;
     
     public SerializedEquipmentTask(String inName, String inDescription){
         super(inName, inDescription);
-        
-        serialNumber = inName;
+        serialNumber = "";
         model = inDescription;
         itemNumber = lookupItemNumber(inName);
+    }
+    
+    public SerializedEquipmentTask(String inName, String inDescription, 
+                                    String inSerialNumber){
+        super(inName, inDescription);
+        serialNumber = inSerialNumber;
+        model = inDescription;
+        itemNumber = lookupItemNumber(inName);
+    }
+    
+    public void setSerialNumber(String serialNumber){
+        this.serialNumber = serialNumber;
     }
     
     @Override
