@@ -99,7 +99,6 @@ public class TaskReaderDAO {
                 // Create a new Task object and add to the task list
                 newTask = new SerializedEquipmentTask(taskName, taskDescription);
                 serializedMap.put(taskName, newTask);
-                System.out.println("Added to Serialized Map " + taskName + " " + taskDescription);
             }
         }
         catch (SQLException e){

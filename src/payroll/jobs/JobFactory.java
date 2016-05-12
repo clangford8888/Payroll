@@ -81,7 +81,6 @@ public class JobFactory {
             List<SerializedEquipmentTask> list = createdJob.getSerializedEquipmentTaskList();
             
             if(!list.isEmpty()){
-                System.out.println("Adding Serialized Equipment to DB!");
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);                
                 //eqDAO.addSerializedEquipmentFromList(list);
             }

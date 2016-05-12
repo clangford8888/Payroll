@@ -49,14 +49,12 @@ public class TaskFactory {
         // If the task type represents equipment
         if(taskType.equals("E")){
             // Check if taskName is Non-Serialized
-            System.out.println("Task Name: " + taskDescription);
             newTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
             
             if(newTask instanceof payroll.tasks.NonSerializedEquipmentTask){
                 inJob.addNonSerializedEquipmentTask((NonSerializedEquipmentTask)newTask);
             }
             else if(newTask instanceof payroll.tasks.SerializedEquipmentTask){
-                System.out.println("Serialized!");
                 SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)newTask;
                 newSerialized.setSerialNumber(taskDescription);
                 inJob.addSerializedEquipmentTask((SerializedEquipmentTask)newSerialized);

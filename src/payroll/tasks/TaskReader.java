@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * TODO: COMMENT!!
  * @author Casey
  * The TaskReader class will build a list of SHS, Labor, and Equipment tasks
  * so the task creation factories will not have to access the database directly.
@@ -70,7 +70,6 @@ public class TaskReader {
         }
         // Else check if the task is in the serialized map
         else if(serializedMap.containsKey(taskDescription)){
-            System.out.println("Serialized Equipment Returned " + taskDescription);
             newTask = serializedMap.get(taskDescription);
             return newTask;
         }
