@@ -31,6 +31,8 @@ public class PaySheetCreatorDAO {
         rs = null;
     }
     
+    // Given a techID, a start date and an end date, return all jobs
+    // Completed by the tech during that time frame
     public List<Job> getJobsByTech(String tech, Date start, Date end){
         
         List<Job> jobList = new ArrayList<>();
@@ -54,17 +56,32 @@ public class PaySheetCreatorDAO {
             ps.setDate(3, sqlEnd);
             rs = ps.executeQuery();
             
-            String customer;
             String workOrder;
-            String designation;
+            String accountNumber;
             Date woDate;
+            String designation;
+            String customer;
+            int payment;
+            
+            
+            
             
 
             while(rs.next()){
-                System.out.println(rs.getString("techID") + " "
-                                + rs.getString("customerName" ) + " "
-                                + rs.getString("date") + " "
-                                + rs.getString("payment"));
+                
+                workOrder = rs.getString("workOrderNum");
+                accountNumber = rs.getString("accountNum");
+                woDate = rs.getDate("date");
+                designation = rs.getString("designation");
+                customer = rs.getString("customerName");
+                payment = rs.getInt("payment");
+                
+                System.out.println("WO Num " + workOrder);
+                System.out.println("Acc Num " + accountNumber);
+                System.out.println("Date " + woDate);
+                System.out.println("Designation " + designation);
+                System.out.println("Customer " + customer);
+                System.out.println("Payment " + payment);
             }
   
         }
