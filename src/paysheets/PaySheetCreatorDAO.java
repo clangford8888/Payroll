@@ -35,7 +35,9 @@ public class PaySheetCreatorDAO {
     // Completed by the tech during that time frame
     public List<Job> getJobsByTech(String tech, Date start, Date end){
         
+        Job newJob;
         List<Job> jobList = new ArrayList<>();
+        int jobCount = 0;
         
         try{
             conn = DatabaseConnector.getConnection();
@@ -62,10 +64,6 @@ public class PaySheetCreatorDAO {
             String designation;
             String customer;
             int payment;
-            
-            
-            
-            
 
             while(rs.next()){
                 
@@ -76,13 +74,15 @@ public class PaySheetCreatorDAO {
                 customer = rs.getString("customerName");
                 payment = rs.getInt("payment");
                 
-                System.out.println("WO Num " + workOrder);
-                System.out.println("Acc Num " + accountNumber);
-                System.out.println("Date " + woDate);
-                System.out.println("Designation " + designation);
-                System.out.println("Customer " + customer);
-                System.out.println("Payment " + payment);
+                // TODO: Create New Job object (JobFactory)
+                // then add to job list
+                
+                jobCount++;
+ 
             }
+            
+            // Debugging 
+            System.out.println("Total Jobs: " + jobCount);
   
         }
         catch(SQLException e){
