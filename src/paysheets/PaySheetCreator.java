@@ -5,7 +5,9 @@
  */
 package paysheets;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -21,8 +23,20 @@ public class PaySheetCreator {
     
     public PaySheet createPaySheet(String techID, Date start, Date end){
         // Check nulls
+        if(techID == null || start == null || end == null){
+            // For now, returning null if any data is missing
+            return null;
+        }
+        // TODO: Check if valid date range
         
-        PaySheet newSheet = new PaySheet(techID, start, end);
+        String techName = paySheetDAO.getTechName(techID);
+        
+        // Create a list of entries to be added to the pay sheet
+        List<PaySheetEntry> entryList = new ArrayList<>();
+        
+        // Create a new pay sheet using the tech name, and start/end dates
+        PaySheet newSheet = new PaySheet(techName, start, end);
+        
         
         return newSheet;
     }

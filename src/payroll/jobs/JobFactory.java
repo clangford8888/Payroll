@@ -73,7 +73,7 @@ public class JobFactory {
             
             // Push to Database
             // *** DEBUG
-            //jobDAO.addJob(createdJob);
+            jobDAO.addJob(createdJob);
             
             //jobDAO.deleteJob(createdJob);
             
@@ -82,7 +82,7 @@ public class JobFactory {
             
             if(!list.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);                
-                //eqDAO.addSerializedEquipmentFromList(list);
+                eqDAO.addSerializedEquipmentFromList(list);
             }
             
             //Add Non-Serialized equipment to database
@@ -90,7 +90,7 @@ public class JobFactory {
             
             if(!nsList.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                //eqDAO.addNonSerializedEquipmentFromList(nsList);
+                eqDAO.addNonSerializedEquipmentFromList(nsList);
             }
         }
         System.out.println("Number Jobs Created: " + jobCreatedCount);

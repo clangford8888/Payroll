@@ -43,7 +43,7 @@ public class Payroll {
         
         PaymentParser parser = new PaymentParser(myFile2);
         
-        parser.parsePaymentFile();
+        //parser.parsePaymentFile();
         parser.closeFile();
         
         // parser.printMap(parser.getMap());
@@ -51,7 +51,7 @@ public class Payroll {
         //builder.buildJobsFromMap(parser.getMap());
         
         JobFactory jFactory = new JobFactory(checker);
-        jFactory.processMap(parser.getMap());
+        //jFactory.processMap(parser.getMap());
         
         //String tempStr = "TEST";
         //Date tempDate1 = new Date();
@@ -66,7 +66,7 @@ public class Payroll {
         //workbook.write(out);
         //out.close();
         
-        /*
+        
         try{
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             Date start = df.parse("01/02/2016");
@@ -78,7 +78,10 @@ public class Payroll {
         catch(ParseException e){
             System.out.print(e.getMessage());
         }
-        */
+        
+        PaySheetCreatorDAO pscDAO2 = new PaySheetCreatorDAO();
+        String testGetName = pscDAO2.getTechName("Eric.Washington4");
+        System.out.println("test: " + testGetName);
                
         long endTime = System.currentTimeMillis();
         

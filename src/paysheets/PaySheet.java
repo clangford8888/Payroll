@@ -50,9 +50,14 @@ public class PaySheet {
         return this.endDate;
     }
     
-    // Method to add Jobs to pay sheet
-    public void addJob(Job inJob){
-        if(inJob != null){
+    /**
+     * Adds an entry to the pay sheet.
+     * 
+     * The entry will be a job the technician will need to be paid for.
+     * @param inEntry  entry to be added.
+     */
+    public void addEntry(PaySheetEntry inEntry){
+        if(inEntry != null){
             
             int rowIndex = getNextRowIndex();
             
