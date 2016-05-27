@@ -105,4 +105,44 @@ public class PaySheetCreatorDAO {
         return jobList;
     }
     
+    
+    /**
+     * Queries the database and returns the technician's name.
+     * 
+     * Will return null if the techID is not found in the DB.
+     * 
+     * @param techID  ID of technician whose name we want, not null
+     * @return techName
+    */
+    public String getTechName(String techID){
+        
+        String techName = "";
+        
+        try{
+            conn = DatabaseConnector.getConnection();
+            // Define the query and initialize the prepared statement
+            String sql = "select name from technician "
+                    + " where techID = ?";
+            ps = conn.prepareStatement(sql);     
+            ps.setString(1, techID);
+            // Execute the query
+            rs = ps.executeQuery();
+            // Get the techName from the result set
+            while(rs.next()){
+                techName = rs.getString("name");
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("SQL state: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
+        return techName;
+    }
+    
 }
