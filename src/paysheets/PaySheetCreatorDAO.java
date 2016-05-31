@@ -31,12 +31,11 @@ public class PaySheetCreatorDAO {
         rs = null;
     }
     
-    // Given a techID, a start date and an end date, return all jobs
-    // Completed by the tech during that time frame
-    public List<Job> getJobsByTech(String tech, Date start, Date end){
+    // TODO: Comment
+    protected List<PaySheetEntry> getJobsByTech(String tech, Date start, Date end){
         
-        Job newJob;
-        List<Job> jobList = new ArrayList<>();
+        PaySheetEntry newEntry;
+        List<PaySheetEntry> jobList = new ArrayList<>();
         int jobCount = 0;
         
         try{
@@ -99,7 +98,7 @@ public class PaySheetCreatorDAO {
         return jobList;
     }
     
-    public List<Job> getJobsByWeek(){
+    protected List<Job> getJobsByWeek(){
         List<Job> jobList = new ArrayList<>();
         
         return jobList;
@@ -114,7 +113,7 @@ public class PaySheetCreatorDAO {
      * @param techID  ID of technician whose name we want, not null
      * @return techName
     */
-    public String getTechName(String techID){
+    protected String getTechName(String techID){
         
         String techName = "";
         
