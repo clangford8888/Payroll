@@ -73,16 +73,13 @@ public class PaySheetCreatorDAO {
                 customer = rs.getString("customerName");
                 payment = rs.getInt("payment");
                 
-                // TODO: Create New Job object (JobFactory)
-                // then add to job list
-                
+                // Created new PaySheetEntry from result
+                newEntry = new PaySheetEntry(woDate, workOrder, customer, 
+                                        designation, payment, "None");
+                // Add new entry to list
+                jobList.add(newEntry);
                 jobCount++;
- 
             }
-            
-            // Debugging 
-            System.out.println("Total Jobs: " + jobCount);
-  
         }
         catch(SQLException e){
             System.out.println(e.getMessage());

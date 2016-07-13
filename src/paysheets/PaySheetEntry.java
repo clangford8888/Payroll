@@ -79,7 +79,12 @@ public class PaySheetEntry {
         return this.lastEventProvider;
     }
 
-
+    @Override
+    public String toString(){
+        String s = date.toString() + " " + workOrderNum + " " + customer + " " +
+                    type + ". Pay: " + pay;
+        return s;
+    }
     
     // TODO: Test this method
     protected void addNonSerialized(String nonSerialized){

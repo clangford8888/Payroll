@@ -41,4 +41,11 @@ public class PaySheetCreator {
         return newSheet;
     }
     
+    /*
+    TODO: At the end of pay sheet creation, we need to check for LEPs?
+    Or should this be something that we grab from database (add to job table)
+    Could do this by querying the chargeback table for the date range and return
+    any jobs with the LEP tech ID.
+    */
+    
 }

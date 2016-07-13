@@ -8,6 +8,7 @@ package paysheets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,9 +25,12 @@ public class PaySheetTestHarness {
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             Date start = df.parse("01/02/2016");
             Date end = df.parse("01/07/2016");
+            List<PaySheetEntry> list;
             PaySheetCreatorDAO pscDAO = new PaySheetCreatorDAO();
-            //pscDAO.getJobsByTech("Eric.Washington4", start, end);
-            System.out.println("Finished running query.");
+            list = pscDAO.getJobsByTech("Eric.Washington4", start, end);
+            for(PaySheetEntry p : list){
+                System.out.println(p.toString());      
+            }
         }
         catch(ParseException e){
             System.out.print(e.getMessage());
