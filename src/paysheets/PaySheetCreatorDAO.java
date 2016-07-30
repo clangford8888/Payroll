@@ -31,7 +31,16 @@ public class PaySheetCreatorDAO {
         rs = null;
     }
     
-    // TODO: Comment
+    /**
+     * Queries the database to get all jobs completed by a tech within the
+     * date range from the given parameters.
+     * 
+     * @param tech String ID of the technician the method is retrieving jobs for
+     * @param start Date Start of the date range.
+     * @param end Date End of the date range.
+     * @return List Returns a List of all PaySheetEntries that will be added to
+     *              a pay sheet.
+     */
     protected List<PaySheetEntry> getJobsByTech(String tech, Date start, Date end){
         
         PaySheetEntry newEntry;

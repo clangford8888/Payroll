@@ -56,17 +56,17 @@ public class PaySheetFormatter {
             cell.setCellStyle(cs);
         }
         // Populate first row's values
-        cell = row.getCell(0);
+        cell = row.getCell(PaySheet.DATE_INDEX);
         cell.setCellValue("DATE");
-        cell = row.getCell(1);
+        cell = row.getCell(PaySheet.CUST_INDEX);
         cell.setCellValue("CUSTOMER");
-        cell = row.getCell(2);
+        cell = row.getCell(PaySheet.NONSERIAL_INDEX);
         cell.setCellValue("EQUIPMENT");
-        cell = row.getCell(3);
+        cell = row.getCell(PaySheet.SHS_INDEX);
         cell.setCellValue("SHS");
-        cell = row.getCell(4);
+        cell = row.getCell(PaySheet.PAY_INDEX);
         cell.setCellValue("PAY");
-        cell = row.getCell(5);
+        cell = row.getCell(PaySheet.LEP_INDEX);
         cell.setCellValue("LEP");
         
         // Create second title row
@@ -78,11 +78,11 @@ public class PaySheetFormatter {
             cell.setCellStyle(cs);
         }
         // Populate the second title row's values
-        cell = row.getCell(0);
+        cell = row.getCell(PaySheet.WO_INDEX);
         cell.setCellValue("WORK ORDER");
-        cell = row.getCell(1);
+        cell = row.getCell(PaySheet.TYPE_INDEX);
         cell.setCellValue("TYPE");
-        cell = row.getCell(2);
+        cell = row.getCell(PaySheet.SERIAL_INDEX);
         cell.setCellValue("SERIALIZED");
     }
     
