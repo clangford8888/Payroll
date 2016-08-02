@@ -45,15 +45,14 @@ public class PaySheetCreatorDAO {
         
         PaySheetEntry newEntry;
         List<PaySheetEntry> jobList = new ArrayList<>();
-        int jobCount = 0;
         
         try{
             conn = DatabaseConnector.getConnection();
             // Set the string version of the query to be used
-            String sql = "select * from job "
-                        + "where techID = ? "
-                        + "and (date between ? and ?)"
-                        + "order by date";
+            String sql =    "select * from job " +
+                            "where techID = ? " +
+                            "and (date between ? and ?)" +
+                            "order by date";
             // Convert the input Dates to SQL Date format
             long startTimeAsLong = start.getTime();
             java.sql.Date sqlStart = new java.sql.Date(startTimeAsLong);
@@ -67,14 +66,13 @@ public class PaySheetCreatorDAO {
             rs = ps.executeQuery();
             
             String workOrder;
-            String accountNumber;
+            String accountNumber; // Not used
             Date woDate;
             String designation;
             String customer;
             int payment;
 
             while(rs.next()){
-                
                 workOrder = rs.getString("workOrderNum");
                 accountNumber = rs.getString("accountNum");
                 woDate = rs.getDate("date");
@@ -85,9 +83,15 @@ public class PaySheetCreatorDAO {
                 // Created new PaySheetEntry from result
                 newEntry = new PaySheetEntry(woDate, workOrder, customer, 
                                         designation, payment, "None");
+                
+                /*
+                TODO:   Query database and get SHS data
+                        Get LEP data
+                */
+                getEquipmentData(newEntry);
+                
                 // Add new entry to list
                 jobList.add(newEntry);
-                jobCount++;
             }
         }
         catch(SQLException e){
@@ -102,6 +106,80 @@ public class PaySheetCreatorDAO {
         }
         
         return jobList;
+    }
+    
+    /**
+     * Look up serialized equipment, non-serialized equipment, and SHS equipment
+     * and add them to the newly created PaySheetEntry
+     * 
+     * @param newEntry PaySheetEntry whose
+     * @return List String list containing all serialized equipment used.
+     */
+    private void getEquipmentData(PaySheetEntry newEntry){
+        
+        String workOrder = newEntry.getWorkOrderNumber();
+        // Model is receiver model number, receiver number is the serial CAID
+        String model;
+        String receiverNumber;
+        String serializedEquipment;
+        // Didn't like me using the same result set while the other was open
+        // from the calling method.
+        PreparedStatement ps2 = null;
+        ResultSet rs2 = null;
+        
+        try{
+            // Set up SQL statement to query database for serialized equipment
+            conn = DatabaseConnector.getConnection();
+            // Query database for model and R00# for the given WO#
+            String sql =    "select Model, serial_caid " +
+                            "from consumed_equip_serialized " +
+                            "where workOrderNum = ?";
+            ps2 = conn.prepareStatement(sql);
+            ps2.setString(1, workOrder);
+            rs2 = ps2.executeQuery();
+            
+            while(rs2.next()){
+                model = rs2.getString("Model");
+                receiverNumber = rs2.getString("serial_caid");
+                // Put model & R00# together, then add to the serialized list
+                serializedEquipment = model + ": " + receiverNumber;
+                newEntry.addSerialized(serializedEquipment);                
+            }
+            // Set up and query the database for the non-serialized eqt
+            String nonSerialModel;  // Model of nonserialized items used
+            int quantity;           // Quantity of nonserialized items used
+            // Using same sql variable for next query
+            sql =   "select model, quantity " +
+                    "from consumed_equip_nonserialized " +
+                    "where workOrderNum = ?";
+            ps2 = conn.prepareStatement(sql);
+            ps2.setString(1, workOrder);
+            rs2 = ps2.executeQuery();
+            // Process the result set and equipment to the equipment list
+            while(rs2.next()){
+                nonSerialModel = rs2.getString("model");
+                quantity = rs2.getInt("quantity");
+                newEntry.addNonSerialized(quantity + ": " + nonSerialModel);
+            }
+            
+            // Set up and query the database for the SHS-list
+            /*
+            TODO: QUERY THE DATABASE FOR SHS EQUIPMENT!
+            */
+            
+            
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("SQL state: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps2);
+            DatabaseConnector.closeQuietly(rs2);
+        }
+        
     }
     
     protected List<Job> getJobsByWeek(){

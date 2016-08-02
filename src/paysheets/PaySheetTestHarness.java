@@ -29,16 +29,18 @@ public class PaySheetTestHarness {
             PaySheetCreatorDAO pscDAO = new PaySheetCreatorDAO();
             list = pscDAO.getJobsByTech("Eric.Washington4", start, end);
             for(PaySheetEntry p : list){
-                System.out.println(p.toString());      
+                System.out.println(p.toString());
+                p.printEquipmentLists();
+                System.out.println();
             }
         }
         catch(ParseException e){
             System.out.print(e.getMessage());
         }
         
-        PaySheetCreatorDAO pscDAO2 = new PaySheetCreatorDAO();
-        String testGetName = pscDAO2.getTechName("Eric.Washington4");
-        System.out.println("test: " + testGetName);
+        //PaySheetCreatorDAO pscDAO2 = new PaySheetCreatorDAO();
+        //String testGetName = pscDAO2.getTechName("Eric.Washington4");
+        //System.out.println("test: " + testGetName);
     }
     
 }

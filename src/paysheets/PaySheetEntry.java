@@ -96,16 +96,36 @@ public class PaySheetEntry {
     // TODO: Test this method
     protected void addSerialized(String serialized){
         if(serialized != null){
-            nonSerializedList.add(serialized);
+            serializedList.add(serialized);
         }
     }
     
     // TODO: Test this method
     protected void addSHS(String shs){
         if(shs != null){
-            nonSerializedList.add(shs);
+            shsList.add(shs);
         }
     }
     
-    
+    protected void printEquipmentLists(){
+        if(!this.serializedList.isEmpty()){
+            System.out.println("Serialized List:");
+            for(String s : serializedList){
+                System.out.println(s);
+            }
+        }
+        else{
+            System.out.println("No serialized equipment.");
+        }
+        // Print the Non-serialized list
+        if(!this.nonSerializedList.isEmpty()){
+            System.out.println("Non-Serialized List:");
+            for(String s : nonSerializedList){
+                System.out.println(s);
+            }
+        }
+        else{
+            System.out.println("No Non-Serialized equipment.");
+        }
+    }
 }
