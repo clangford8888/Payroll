@@ -14,20 +14,20 @@ import java.util.Map;
  * The TaskReader class will build a list of SHS, Labor, and Equipment tasks
  * so the task creation factories will not have to access the database directly.
  */
-public class TaskReader {
+public class TaskCache {
     
     private Map<String,? extends EquipmentTask> nonSerializedMap;
     private Map<String,? extends EquipmentTask> serializedMap;
     private Map<String,? extends LaborTask> standardLaborMap;
     private Map<String,? extends LaborTask> shsLaborMap;
-    private TaskReaderDAO taskDAO;
+    private TaskCacheDAO taskDAO;
     
-    public TaskReader(){
+    public TaskCache(){
         nonSerializedMap = new HashMap<>();
         serializedMap = new HashMap<>();
         standardLaborMap = new HashMap<>();
         shsLaborMap = new HashMap<>();
-        taskDAO = new TaskReaderDAO();
+        taskDAO = new TaskCacheDAO();
         updateTaskLists();
     }
     

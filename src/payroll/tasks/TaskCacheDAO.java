@@ -21,13 +21,13 @@ import payroll.DatabaseConnector;
  *
  * @author Casey
  */
-public class TaskReaderDAO {
+public class TaskCacheDAO {
     
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
     
-    public TaskReaderDAO(){
+    public TaskCacheDAO(){
         conn = null;
         ps = null;
         rs = null;
