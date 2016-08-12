@@ -5,7 +5,6 @@
  */
 package paysheets;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,14 +31,18 @@ public class PaySheetCreator {
         String techName = paySheetDAO.getTechName(techID);
         
         // Create a list of entries to be added to the pay sheet
-        List<PaySheetEntry> entryList = new ArrayList<>();
+        List<PaySheetEntry> entryList;
         
         entryList = paySheetDAO.getJobsByTech(techID, start, end);
         
         // Create a new pay sheet using the tech name, and start/end dates
         PaySheet newSheet = new PaySheet(techName, start, end);
         
+        // Add entries to the newly created pay sheet
         
+        for(PaySheetEntry p : entryList){
+            newSheet.addEntry(p);
+        }
         
         
         return newSheet;

@@ -7,7 +7,11 @@ package paysheets;
 
 import java.util.Date;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
 
 /**
  * A Pay sheet represents one technician's jobs for one day, which he will be
@@ -91,6 +95,40 @@ public class PaySheet {
             String lep = inEntry.getLEP();
 
             PaySheetFormatter.addJobFormatting(workbook, rowIndex);
+            
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            HSSFRow row = sheet.getRow(rowIndex);
+            HSSFCell cell;
+            
+            // Add first row information to current entry location at rowIndex
+            // Date | Customer | NS Equip | SHS | Pay | LEP
+            cell = row.getCell(DATE_INDEX);
+            cell.setCellValue(date);
+            cell = row.getCell(CUST_INDEX);
+            cell.setCellValue(customer);
+            
+            // Traverse list of non-serialized equipment
+            cell = row.getCell(NONSERIAL_INDEX);
+            CellStyle wrapNewLines = workbook.createCellStyle();
+            wrapNewLines.setWrapText(true);
+            cell.setCellStyle(wrapNewLines);
+            
+            if(!nonSerialList.isEmpty()){
+                String nonSerialString = "";
+                for(String s : nonSerialList){
+                    // Start a new line with each additional item
+                    nonSerialString = nonSerialString + s + "\n";
+                }
+                cell.setCellValue(nonSerialString);
+            }
+            
+            cell = row.getCell(SHS_INDEX);
+            // cell.setCellValue(customer);
+            cell = row.getCell(PAY_INDEX);
+            cell.setCellValue(pay);
+            cell = row.getCell(LEP_INDEX);
+            //cell.setCellValue(customer);
+            
             
             // Increment the count of jobs
             numJobs++;

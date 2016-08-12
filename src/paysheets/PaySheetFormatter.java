@@ -100,7 +100,7 @@ public class PaySheetFormatter {
         CellStyle generalStyle = workbook.createCellStyle();
         generalStyle.setFont(font);
         generalStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("text"));
-        
+                
         // Create a cell style for dates
         CellStyle dateStyle = workbook.createCellStyle();
         dateStyle.setFont(font);
