@@ -60,15 +60,15 @@ public class PaySheetFormatter {
         cell.setCellValue("DATE");
         cell = row.getCell(PaySheet.CUST_INDEX);
         cell.setCellValue("CUSTOMER");
-        cell = row.getCell(PaySheet.NONSERIAL_INDEX);
-        cell.setCellValue("EQUIPMENT");
-        cell = row.getCell(PaySheet.SHS_INDEX);
-        cell.setCellValue("SHS");
         cell = row.getCell(PaySheet.PAY_INDEX);
         cell.setCellValue("PAY");
-        cell = row.getCell(PaySheet.LEP_INDEX);
-        cell.setCellValue("LEP");
-        
+        cell = row.getCell(PaySheet.NONSERIAL_INDEX);
+        cell.setCellValue("EQUIPMENT");
+        cell = row.getCell(PaySheet.SERIAL_INDEX);
+        cell.setCellValue("SERIALIZED");
+        cell = row.getCell(PaySheet.SHS_INDEX);
+        cell.setCellValue("SHS");
+
         // Create second title row
         row = sheet.createRow(1);
         row.setHeight((short)-1);
@@ -82,8 +82,9 @@ public class PaySheetFormatter {
         cell.setCellValue("WORK ORDER");
         cell = row.getCell(PaySheet.TYPE_INDEX);
         cell.setCellValue("TYPE");
-        cell = row.getCell(PaySheet.SERIAL_INDEX);
-        cell.setCellValue("SERIALIZED");
+        cell = row.getCell(PaySheet.LEP_INDEX);
+        cell.setCellValue("LEP");
+        
     }
     
     public static void addJobFormatting(HSSFWorkbook workbook, int rowIndex){

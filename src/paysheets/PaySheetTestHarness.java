@@ -43,13 +43,13 @@ public class PaySheetTestHarness {
             out.close();
 
             
-            /* PRINTS ALL JOBS AND THEIR DATA
+            //PRINTS ALL JOBS AND THEIR DATA
             for(PaySheetEntry p : list){
                 System.out.println(p.toString());
                 p.printEquipmentLists();
                 System.out.println();
             }
-            */
+            
         }
         catch(ParseException e){
             System.out.print(e.getMessage());
