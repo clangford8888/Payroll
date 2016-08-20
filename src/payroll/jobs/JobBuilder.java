@@ -14,7 +14,7 @@ import payroll.PaymentFileFormatChecker;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
 import payroll.tasks.TaskFactory;
-import payroll.tasks.TaskReader;
+//import payroll.tasks.TaskReader;
 
 /**
  *

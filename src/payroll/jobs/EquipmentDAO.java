@@ -12,7 +12,6 @@ import java.util.List;
 import payroll.DatabaseConnector;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
-import payroll.tasks.Task;
 
 /**
  *

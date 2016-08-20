@@ -14,7 +14,7 @@ import payroll.PaymentFileFormatChecker;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
 import payroll.tasks.TaskFactory;
-import payroll.tasks.TaskReader;
+import payroll.tasks.TaskCache;
 
 /**
  *
@@ -24,11 +24,11 @@ public class JobFactory {
     
     private final PaymentFileFormatChecker checker;
     private final TaskFactory taskFactory;
-    private final TaskReader masterTaskList;
+    private final TaskCache masterTaskList;
     
     public JobFactory(PaymentFileFormatChecker inChecker){
         this.checker = inChecker;
-        masterTaskList = new TaskReader();
+        masterTaskList = new TaskCache();
         taskFactory = new TaskFactory(masterTaskList);        
     }
     
