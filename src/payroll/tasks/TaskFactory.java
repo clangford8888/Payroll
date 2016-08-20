@@ -16,9 +16,9 @@ import payroll.PaymentFileFormatChecker;
  */
 public class TaskFactory {
     
-    TaskReader masterTaskList;
+    TaskCache masterTaskList;
     
-    public TaskFactory(TaskReader inTaskReader){
+    public TaskFactory(TaskCache inTaskReader){
         masterTaskList = inTaskReader;
     }
     
