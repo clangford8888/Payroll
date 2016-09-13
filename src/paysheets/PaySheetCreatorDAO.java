@@ -64,25 +64,18 @@ public class PaySheetCreatorDAO {
             ps.setDate(2, sqlStart);
             ps.setDate(3, sqlEnd);
             rs = ps.executeQuery();
-            
-            String workOrder;
-            String accountNumber; // Not used
-            Date woDate;
-            String designation;
-            String customer;
-            int payment;
 
             while(rs.next()){
-                workOrder = rs.getString("workOrderNum");
-                accountNumber = rs.getString("accountNum");
-                woDate = rs.getDate("date");
-                designation = rs.getString("designation");
-                customer = rs.getString("customerName");
-                payment = rs.getInt("payment");
+                String workOrder = rs.getString("workOrderNum");
+                String accountNumber = rs.getString("accountNum");
+                Date woDate = rs.getDate("date");
+                String designation = rs.getString("designation");
+                String customer = rs.getString("customerName");
+                int payment = rs.getInt("payment");
                 
                 // Created new PaySheetEntry from result
                 newEntry = new PaySheetEntry(woDate, workOrder, customer, 
-                                        designation, payment, "None");
+                                        designation, payment);
                 
                 /*
                 TODO:   Query database and get SHS data
@@ -113,20 +106,28 @@ public class PaySheetCreatorDAO {
      * and add them to the newly created PaySheetEntry
      * 
      * @param newEntry PaySheetEntry whose
-     * @return List String list containing all serialized equipment used.
+     * @return nothing. All Equipment added to the PaySheetEntry object
      */
     private void getEquipmentData(PaySheetEntry newEntry){
+        getSerializedEquipmentFromDatabase(newEntry);
+        getNonSerializedEquipmentFromDatabase(newEntry);
+            
+            // Set up and query the database for the SHS-list
+            /*
+            TODO: QUERY THE DATABASE FOR SHS EQUIPMENT!
+            */
         
-        String workOrder = newEntry.getWorkOrderNumber();
-        // Model is receiver model number, receiver number is the serial CAID
-        String model;
-        String receiverNumber;
-        String serializedEquipment;
-        // Didn't like me using the same result set while the other was open
-        // from the calling method.
-        PreparedStatement ps2 = null;
-        ResultSet rs2 = null;
         
+    }
+    
+    /**
+     * Queries the database and retrieves all Serialized Equipment. Adds all 
+     * retrieved equipment to the PaySheetEntry object's serialized list.
+     * 
+     * @param newEntry the PaySheetEntry the equipment is being retrieved for.
+     * @return None. All equipment added to the PaySheetEntry's list.
+     */
+    private void getSerializedEquipmentFromDatabase(PaySheetEntry newEntry){
         try{
             // Set up SQL statement to query database for serialized equipment
             conn = DatabaseConnector.getConnection();
@@ -134,40 +135,18 @@ public class PaySheetCreatorDAO {
             String sql =    "select Model, serial_caid " +
                             "from consumed_equip_serialized " +
                             "where workOrderNum = ?";
-            ps2 = conn.prepareStatement(sql);
-            ps2.setString(1, workOrder);
-            rs2 = ps2.executeQuery();
+            ps = conn.prepareStatement(sql);
+            String workOrder = newEntry.getWorkOrderNumber();
+            ps.setString(1, workOrder);
+            rs = ps.executeQuery();
             
-            while(rs2.next()){
-                model = rs2.getString("Model");
-                receiverNumber = rs2.getString("serial_caid");
+            while(rs.next()){
+                String model = rs.getString("Model");
+                String receiverNumber = rs.getString("serial_caid");
                 // Put model & R00# together, then add to the serialized list
-                serializedEquipment = model + ": " + receiverNumber;
+                String serializedEquipment = model + ": " + receiverNumber;
                 newEntry.addSerialized(serializedEquipment);                
             }
-            // Set up and query the database for the non-serialized eqt
-            String nonSerialModel;  // Model of nonserialized items used
-            int quantity;           // Quantity of nonserialized items used
-            // Using same sql variable for next query
-            sql =   "select model, quantity " +
-                    "from consumed_equip_nonserialized " +
-                    "where workOrderNum = ?";
-            ps2 = conn.prepareStatement(sql);
-            ps2.setString(1, workOrder);
-            rs2 = ps2.executeQuery();
-            // Process the result set and equipment to the equipment list
-            while(rs2.next()){
-                nonSerialModel = rs2.getString("model");
-                quantity = rs2.getInt("quantity");
-                newEntry.addNonSerialized(quantity + ": " + nonSerialModel);
-            }
-            
-            // Set up and query the database for the SHS-list
-            /*
-            TODO: QUERY THE DATABASE FOR SHS EQUIPMENT!
-            */
-            
-            
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
@@ -176,10 +155,44 @@ public class PaySheetCreatorDAO {
         }
         finally{
             DatabaseConnector.closeQuietly(conn);
-            DatabaseConnector.closeQuietly(ps2);
-            DatabaseConnector.closeQuietly(rs2);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
         }
-        
+    }
+    
+    /**
+     * Queries the database and retrieves all Non-Serialized Equipment. Adds 
+     * all retrieved equipment to the PaySheetEntry object's non-serial list.
+     * 
+     * @param newEntry the PaySheetEntry the equipment is being retrieved for.
+     * @return None. All equipment added to the PaySheetEntry's list.
+     */
+    private void getNonSerializedEquipmentFromDatabase(PaySheetEntry newEntry){
+        try{
+            String sql =   "select model, quantity " +
+                    "from consumed_equip_nonserialized " +
+                    "where workOrderNum = ?";
+            ps = conn.prepareStatement(sql);
+            String workOrder = newEntry.getWorkOrderNumber();
+            ps.setString(1, workOrder);
+            rs = ps.executeQuery();
+            // Process the result set and equipment to the equipment list
+            while(rs.next()){
+                String nonSerialModel = rs.getString("model");
+                int quantity = rs.getInt("quantity");
+                newEntry.addNonSerialized(quantity + ": " + nonSerialModel);
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("SQL state: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
     }
     
     protected List<Job> getJobsByWeek(){

@@ -26,7 +26,7 @@ public class PaySheetEntry {
     private final String lastEventProvider;
     
     public PaySheetEntry(Date inDate, String inWorkOrder, String inCustomer,
-                            String inType, int inPay, String inLEP){
+                            String inType, int inPay){
         date = inDate;
         workOrderNum = inWorkOrder;
         customer = inCustomer;
@@ -35,7 +35,7 @@ public class PaySheetEntry {
         serializedList = new ArrayList<>();
         shsList = new ArrayList<>();
         pay = inPay;
-        lastEventProvider = inLEP;
+        lastEventProvider = "";
         
     }
     
@@ -107,7 +107,19 @@ public class PaySheetEntry {
         }
     }
     
+    /**
+     * Debugging method to print all equipment lists.
+     */
     protected void printEquipmentLists(){
+        // Print serialized list
+        printSerializedEquipment();
+        // Print the Non-serialized list
+        printNonSerializedEquipment();
+        // Print the SHS list
+        printSHSEquipment();
+    }
+    
+    private void printSerializedEquipment(){
         if(!this.serializedList.isEmpty()){
             System.out.println("Serialized List:");
             for(String s : serializedList){
@@ -117,7 +129,9 @@ public class PaySheetEntry {
         else{
             System.out.println("No serialized equipment.");
         }
-        // Print the Non-serialized list
+    }
+    
+    private void printNonSerializedEquipment(){
         if(!this.nonSerializedList.isEmpty()){
             System.out.println("Non-Serialized List:");
             for(String s : nonSerializedList){
@@ -126,6 +140,18 @@ public class PaySheetEntry {
         }
         else{
             System.out.println("No Non-Serialized equipment.");
+        }
+    }
+    
+    private void printSHSEquipment(){
+        if(!this.shsList.isEmpty()){
+           System.out.println("SHS List:");
+           for(String s: shsList){
+               System.out.println(s);
+           }
+        }
+        else{
+            System.out.println("No SHS equipment");
         }
     }
 }
