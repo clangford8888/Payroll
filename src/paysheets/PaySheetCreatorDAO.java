@@ -21,14 +21,9 @@ import payroll.jobs.Job;
  */
 public class PaySheetCreatorDAO {
     
-    Connection conn;
-    PreparedStatement ps;
-    ResultSet rs;
     
     public PaySheetCreatorDAO(){
-        conn = null;
-        ps = null;
-        rs = null;
+
     }
     
     /**
@@ -46,8 +41,11 @@ public class PaySheetCreatorDAO {
         PaySheetEntry newEntry;
         List<PaySheetEntry> jobList = new ArrayList<>();
         
+        Connection conn = null; 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
-            conn = DatabaseConnector.getConnection();
+            
             // Set the string version of the query to be used
             String sql =    "select * from job " +
                             "where techID = ? " +
@@ -59,6 +57,7 @@ public class PaySheetCreatorDAO {
             long endTimeAsLong = end.getTime();
             java.sql.Date sqlEnd = new java.sql.Date(endTimeAsLong);
             
+            conn = DatabaseConnector.getConnection();
             ps = conn.prepareStatement(sql);     
             ps.setString(1, tech);
             ps.setDate(2, sqlStart);
@@ -81,7 +80,8 @@ public class PaySheetCreatorDAO {
                 TODO:   Query database and get SHS data
                         Get LEP data
                 */
-                getEquipmentData(newEntry);
+                getSerializedEquipmentFromDatabase(newEntry);
+                getNonSerializedEquipmentFromDatabase(newEntry);
                 
                 // Add new entry to list
                 jobList.add(newEntry);
@@ -100,26 +100,7 @@ public class PaySheetCreatorDAO {
         
         return jobList;
     }
-    
-    /**
-     * Look up serialized equipment, non-serialized equipment, and SHS equipment
-     * and add them to the newly created PaySheetEntry
-     * 
-     * @param newEntry PaySheetEntry whose
-     * @return nothing. All Equipment added to the PaySheetEntry object
-     */
-    private void getEquipmentData(PaySheetEntry newEntry){
-        getSerializedEquipmentFromDatabase(newEntry);
-        getNonSerializedEquipmentFromDatabase(newEntry);
-            
-            // Set up and query the database for the SHS-list
-            /*
-            TODO: QUERY THE DATABASE FOR SHS EQUIPMENT!
-            */
         
-        
-    }
-    
     /**
      * Queries the database and retrieves all Serialized Equipment. Adds all 
      * retrieved equipment to the PaySheetEntry object's serialized list.
@@ -128,18 +109,21 @@ public class PaySheetCreatorDAO {
      * @return None. All equipment added to the PaySheetEntry's list.
      */
     private void getSerializedEquipmentFromDatabase(PaySheetEntry newEntry){
+        
+        Connection conn = null; 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
             // Set up SQL statement to query database for serialized equipment
-            conn = DatabaseConnector.getConnection();
-            // Query database for model and R00# for the given WO#
             String sql =    "select Model, serial_caid " +
                             "from consumed_equip_serialized " +
                             "where workOrderNum = ?";
+            conn = DatabaseConnector.getConnection();
             ps = conn.prepareStatement(sql);
             String workOrder = newEntry.getWorkOrderNumber();
             ps.setString(1, workOrder);
             rs = ps.executeQuery();
-            
+            // Process the result set and add it to the entry.
             while(rs.next()){
                 String model = rs.getString("Model");
                 String receiverNumber = rs.getString("serial_caid");
@@ -168,10 +152,15 @@ public class PaySheetCreatorDAO {
      * @return None. All equipment added to the PaySheetEntry's list.
      */
     private void getNonSerializedEquipmentFromDatabase(PaySheetEntry newEntry){
+        
+        Connection conn = null; 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
             String sql =   "select model, quantity " +
                     "from consumed_equip_nonserialized " +
                     "where workOrderNum = ?";
+            conn = DatabaseConnector.getConnection();
             ps = conn.prepareStatement(sql);
             String workOrder = newEntry.getWorkOrderNumber();
             ps.setString(1, workOrder);
@@ -211,17 +200,17 @@ public class PaySheetCreatorDAO {
      * @return techName
     */
     protected String getTechName(String techID){
-        
-        String techName = "";
-        
+        String techName = "";   // Name of technician to be returned
+        Connection conn = null; 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
-            conn = DatabaseConnector.getConnection();
             // Define the query and initialize the prepared statement
             String sql = "select name from technician "
                     + " where techID = ?";
+            conn = DatabaseConnector.getConnection();
             ps = conn.prepareStatement(sql);     
             ps.setString(1, techID);
-            // Execute the query
             rs = ps.executeQuery();
             // Get the techName from the result set
             while(rs.next()){
