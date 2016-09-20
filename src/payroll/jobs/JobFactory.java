@@ -25,11 +25,13 @@ public class JobFactory {
     private final PaymentFileFormatChecker checker;
     private final TaskFactory taskFactory;
     private final TaskCache masterTaskList;
+    private final EquipmentDAO eqDAO;
     
     public JobFactory(PaymentFileFormatChecker inChecker){
         this.checker = inChecker;
         masterTaskList = new TaskCache();
-        taskFactory = new TaskFactory(masterTaskList);        
+        taskFactory = new TaskFactory(masterTaskList);
+        eqDAO = new EquipmentDAO();
     }
     
     // TODO: GETTER/SETTER METHODS FOR inputFile? In case want to use same obj
@@ -72,39 +74,32 @@ public class JobFactory {
             createdJob.setPayment(payment);
             
             // Push to Database
-            // *** DEBUG
-            // TODO:  Handle if(!jobDAO.addJob(createdJob)
-            //jobDAO.addJob(createdJob);
+            if(jobDAO.addJob(createdJob)){
+                pushJobEquipmentToDatabase(createdJob);
+            }
+            else{ // Todo: Throw exception?
+                System.out.println("Job could not be added.");
+                System.out.println(createdJob.getWorkOrderNumber());
+            }
             
             //jobDAO.deleteJob(createdJob);
-            
-            // Add Serialized Equipment to database
-            List<SerializedEquipmentTask> list = createdJob.getSerializedEquipmentTaskList();
-            for(SerializedEquipmentTask t: list){
-                //System.out.println(t.toString());
-            }
-            
-            if(!list.isEmpty()){
-                EquipmentDAO eqDAO = new EquipmentDAO(createdJob);                
-                //eqDAO.addSerializedEquipmentFromList(list);
-            }
-            
-            System.out.println("    ****    ");
-            //for(SerializedEquipmentTask t: list){
-                //System.out.println(t.getTaskName() + " " + t.getSerialNumber());
-            //}
-            
-            //createdJob.printSerializedMap();
-            
-            //Add Non-Serialized equipment to database
-            List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();            
-            
-            if(!nsList.isEmpty()){
-                EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                //eqDAO.addNonSerializedEquipmentFromList(nsList);
-            }
         }
         System.out.println("Number Jobs Created: " + jobCreatedCount);
+    }
+    
+    private void pushJobEquipmentToDatabase(Job newJob){
+        eqDAO.setJob(newJob);
+        // Add Serialized Equipment to database
+        List<SerializedEquipmentTask> list = newJob.getSerializedEquipmentTaskList();
+        if(!list.isEmpty()){               
+            eqDAO.addSerializedEquipmentFromList(list);
+        }
+       
+        List<NonSerializedEquipmentTask> nsList = newJob.getNonSerializedEquipmentTaskList();            
+            
+        if(!nsList.isEmpty()){
+            eqDAO.addNonSerializedEquipmentFromList(nsList);
+        }
     }
     
     /*
