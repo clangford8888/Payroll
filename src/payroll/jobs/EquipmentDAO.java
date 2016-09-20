@@ -21,11 +21,15 @@ public class EquipmentDAO {
     
     private Connection conn;
     private PreparedStatement ps;
-    private final Job job;
+    private Job job;
     
-    public EquipmentDAO(Job inJob){
+    public EquipmentDAO(){
         this.conn = null;
         this.ps = null;
+        this.job = null;
+    }
+    
+    protected void setJob(Job inJob){
         this.job = inJob;
     }
     
