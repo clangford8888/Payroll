@@ -45,7 +45,8 @@ public class TaskCacheDAO {
         
         try{
             conn = DatabaseConnector.getConnection();
-            String sql = "select * from nonserialized_equipment";
+            String sql = "select task, taskDescription"
+                    + " from nonserialized_equipment";
             
             ps = conn.prepareStatement(sql);
             

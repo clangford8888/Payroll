@@ -73,24 +73,35 @@ public class JobFactory {
             
             // Push to Database
             // *** DEBUG
-            jobDAO.addJob(createdJob);
+            // TODO:  Handle if(!jobDAO.addJob(createdJob)
+            //jobDAO.addJob(createdJob);
             
             //jobDAO.deleteJob(createdJob);
             
             // Add Serialized Equipment to database
             List<SerializedEquipmentTask> list = createdJob.getSerializedEquipmentTaskList();
+            for(SerializedEquipmentTask t: list){
+                //System.out.println(t.toString());
+            }
             
             if(!list.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);                
-                eqDAO.addSerializedEquipmentFromList(list);
+                //eqDAO.addSerializedEquipmentFromList(list);
             }
+            
+            System.out.println("    ****    ");
+            //for(SerializedEquipmentTask t: list){
+                //System.out.println(t.getTaskName() + " " + t.getSerialNumber());
+            //}
+            
+            //createdJob.printSerializedMap();
             
             //Add Non-Serialized equipment to database
             List<NonSerializedEquipmentTask> nsList = createdJob.getNonSerializedEquipmentTaskList();            
             
             if(!nsList.isEmpty()){
                 EquipmentDAO eqDAO = new EquipmentDAO(createdJob);
-                eqDAO.addNonSerializedEquipmentFromList(nsList);
+                //eqDAO.addNonSerializedEquipmentFromList(nsList);
             }
         }
         System.out.println("Number Jobs Created: " + jobCreatedCount);

@@ -49,7 +49,7 @@ public class TaskBuilder {
                 NonSerializedEquipmentTask newTask = 
                         new NonSerializedEquipmentTask(taskName,taskDescription);
                 // Add task to appropriate task list
-                inJob.addNonSerializedEquipmentTask(newTask);
+                //inJob.addNonSerializedEquipmentTask(newTask);
             }
             else{
                 // Use the task description to see if equipment is serialized
@@ -59,7 +59,7 @@ public class TaskBuilder {
                     SerializedEquipmentTask newTask = 
                         new SerializedEquipmentTask(taskName, taskDescription);
                     // Add task to appropriate task list
-                    inJob.addSerializedEquipmentTask(newTask);
+                    //inJob.addSerializedEquipmentTask(newTask);
                 }
             }   
         }

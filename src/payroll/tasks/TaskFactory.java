@@ -22,6 +22,9 @@ public class TaskFactory {
         masterTaskList = inTaskReader;
     }
     
+    // TODO: remove the job, portion, and return the task
+    // the job should handle adding the task
+    
     public void createTask(Job inJob, HSSFRow inRow,
                                     PaymentFileFormatChecker checker){
         
@@ -51,13 +54,23 @@ public class TaskFactory {
             // Check if taskName is Non-Serialized
             newTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
             
-            if(newTask instanceof payroll.tasks.NonSerializedEquipmentTask){
-                inJob.addNonSerializedEquipmentTask((NonSerializedEquipmentTask)newTask);
+            if(newTask == null){
+                System.out.println("NULL TASK");
+                System.out.println(inJob.getWorkOrderNumber());
             }
+            else{
+                System.out.println(newTask.toString());
+            }
+            
+            if(newTask instanceof payroll.tasks.NonSerializedEquipmentTask){
+                inJob.addEquipmentTask((NonSerializedEquipmentTask)newTask);
+            } 
+            // TODO: Rework this. Don't like casting
             else if(newTask instanceof payroll.tasks.SerializedEquipmentTask){
                 SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)newTask;
                 newSerialized.setSerialNumber(taskName);
-                inJob.addSerializedEquipmentTask((SerializedEquipmentTask)newSerialized);
+                inJob.addEquipmentTask((SerializedEquipmentTask)newSerialized);
+                //System.out.println(newSerialized.getModel() + " " + newSerialized.getSerialNumber());
             }
             // If newTask was null, it will not be added to the task list
         }

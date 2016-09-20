@@ -84,11 +84,19 @@ public abstract class Job {
     }
     
 
-    public void addSerializedEquipmentTask(SerializedEquipmentTask inTask){
+    //public void addSerializedEquipmentTask(SerializedEquipmentTask inTask){
+        //this.serializedEquipmentList.add(inTask);
+    //}
+    
+    //public void addNonSerializedEquipmentTask(NonSerializedEquipmentTask inTask){
+        //this.nonSerializedEquipmentList.add(inTask);
+    //}
+    
+    public void addEquipmentTask(SerializedEquipmentTask inTask){
         this.serializedEquipmentList.add(inTask);
     }
     
-    public void addNonSerializedEquipmentTask(NonSerializedEquipmentTask inTask){
+    public void addEquipmentTask(NonSerializedEquipmentTask inTask){
         this.nonSerializedEquipmentList.add(inTask);
     }
     
@@ -154,5 +162,11 @@ public abstract class Job {
         return payment;
     }
     
+    // Debugging method
+    public void printSerializedMap(){
+        for(SerializedEquipmentTask t: this.serializedEquipmentList){
+            System.out.println(t.getModel() + " " + t.getSerialNumber());
+        }
+    }
     
 }

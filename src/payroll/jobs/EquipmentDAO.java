@@ -61,6 +61,7 @@ public class EquipmentDAO {
             catch(SQLException e){
                 System.out.println(e.getMessage());
                 System.out.println(e.getSQLState());
+                System.out.println("techID " + techID + " WO# " + workOrderNum);
             }
             finally{
                 DatabaseConnector.closeQuietly(conn);

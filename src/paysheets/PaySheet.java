@@ -176,7 +176,7 @@ public class PaySheet {
     }
     
     /**
-     * TODO: Finish & Comment
+     * TODO: Finish SHS/LEP
      * @param inEntry
      * @param rowIndex 
      */

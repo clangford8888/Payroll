@@ -110,10 +110,10 @@ public class ServiceChange extends Job{
         }
         // Traverse equipment task list and add tasks to new job
         for(NonSerializedEquipmentTask task: this.getNonSerializedEquipmentTaskList()){
-            internetJob.addNonSerializedEquipmentTask(task);
+            internetJob.addEquipmentTask(task);
         }
         for(SerializedEquipmentTask task: this.getSerializedEquipmentTaskList()){
-            internetJob.addSerializedEquipmentTask(task);
+            internetJob.addEquipmentTask(task);
         }
         // Use existing internet install's method to calculate pay
         pay = internetJob.calculatePay();

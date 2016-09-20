@@ -57,4 +57,9 @@ public class SerializedEquipmentTask extends EquipmentTask{
         return this.model;
     }
     
+    @Override
+    public String toString(){
+        return this.model + " " + this.getSerialNumber();
+    }
+    
 }

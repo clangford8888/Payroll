@@ -184,6 +184,16 @@ public class PaySheetCreatorDAO {
         }
     }
     
+    /**
+     * Queries the database and retrieves all SHS Equipment. Adds all retrieved
+     * equipment to the PaySheetEntry object's SHS list.
+     * 
+     * @param newEntry PaySheetEntry the method retrieves equipment for.
+     */
+    private void getSHSEquipmentFromDatabase(PaySheetEntry newEntry){
+        
+    }
+    
     protected List<Job> getJobsByWeek(){
         List<Job> jobList = new ArrayList<>();
         

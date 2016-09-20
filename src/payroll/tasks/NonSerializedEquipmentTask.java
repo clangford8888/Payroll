@@ -26,4 +26,9 @@ public class NonSerializedEquipmentTask extends EquipmentTask{
     public String lookupItemNumber(String inName){
         return "";
     }
+    
+    @Override
+    public String toString(){
+        return this.getTaskDescription();
+    }
 }
