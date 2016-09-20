@@ -17,7 +17,7 @@ import java.util.Map;
 public class TaskCache {
     
     private Map<String,? extends EquipmentTask> nonSerializedMap;
-    private Map<String,? extends EquipmentTask> serializedMap;
+    private Map<String, String> serializedMap;
     private Map<String,? extends LaborTask> standardLaborMap;
     private Map<String,? extends LaborTask> shsLaborMap;
     private TaskCacheDAO taskDAO;
@@ -45,8 +45,8 @@ public class TaskCache {
         }
         System.out.println();
         for(String s : serializedMap.keySet()){
-            Task t = serializedMap.get(s);
-            System.out.println(t.getTaskName() + " " + t.getTaskDescription());
+            //Task t = serializedMap.get(s);
+            //System.out.println(t.getTaskName() + " " + t.getTaskDescription());
         }
         System.out.println();
         for(String s : standardLaborMap.keySet()){
@@ -63,15 +63,15 @@ public class TaskCache {
     
     
     public EquipmentTask getEquipmentTask(String taskName, String taskDescription){
-        EquipmentTask newTask;
         // Check if the task name is in the non-serialized map
         if(nonSerializedMap.containsKey(taskName)){
             return nonSerializedMap.get(taskName);
         }
         // Else check if the task is in the serialized map
         else if(serializedMap.containsKey(taskDescription)){
-            newTask = serializedMap.get(taskDescription);
-            return newTask;
+            SerializedEquipmentTask sTask = new SerializedEquipmentTask(taskName, taskDescription);
+            sTask.setSerialNumber(taskName);
+            return sTask;
         }
         // If the task was not found, return null. Will have to check for null
         // in calling method

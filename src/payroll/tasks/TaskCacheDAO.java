@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import payroll.DatabaseConnector;
 
@@ -79,9 +77,9 @@ public class TaskCacheDAO {
     }
     
     
-    public Map<String,SerializedEquipmentTask> getSerializedMap(){
+    public Map<String, String> getSerializedMap(){
         // Instantiate ArrayList to add tasks to
-        Map<String, SerializedEquipmentTask> serializedMap = new HashMap<>();
+        Map<String, String> serializedMap = new HashMap<>();
         try{
             // Connect to database and get all rows from serialized equipment table
             conn = DatabaseConnector.getConnection();
@@ -90,16 +88,13 @@ public class TaskCacheDAO {
             rs = ps.executeQuery(sql);
             String taskName;
             String taskDescription;
-            SerializedEquipmentTask newTask;
             
             // Loop through entire result set
             while(rs.next()){
                 // Get the task name and description from each row
                 taskName = rs.getString("model");
-                taskDescription = rs.getString("description");
-                // Create a new Task object and add to the task list
-                newTask = new SerializedEquipmentTask(taskName, taskDescription);
-                serializedMap.put(taskName, newTask);
+                taskDescription = rs.getString("description");                
+                serializedMap.put(taskName, taskDescription);
             }
         }
         catch (SQLException e){
