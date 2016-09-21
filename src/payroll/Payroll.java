@@ -43,15 +43,12 @@ public class Payroll {
         
         PaymentParser parser = new PaymentParser(myFile2);
         
-        //parser.parsePaymentFile();
+        parser.parsePaymentFile();
         parser.closeFile();
         
-        // parser.printMap(parser.getMap());
-        //JobBuilder builder = new JobBuilder(checker);
-        //builder.buildJobsFromMap(parser.getMap());
-        
         JobFactory jFactory = new JobFactory(checker);
-        //jFactory.processMap(parser.getMap());
+        jFactory.processMap(parser.getMap());
+        
         
         //String tempStr = "TEST";
         //Date tempDate1 = new Date();
@@ -67,21 +64,7 @@ public class Payroll {
         //out.close();
         
         
-        try{
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            Date start = df.parse("01/02/2016");
-            Date end = df.parse("01/07/2016");
-            PaySheetCreatorDAO pscDAO = new PaySheetCreatorDAO();
-            pscDAO.getJobsByTech("Eric.Washington4", start, end);
-            System.out.println("Finished running query.");
-        }
-        catch(ParseException e){
-            System.out.print(e.getMessage());
-        }
         
-        PaySheetCreatorDAO pscDAO2 = new PaySheetCreatorDAO();
-        String testGetName = pscDAO2.getTechName("Eric.Washington4");
-        System.out.println("test: " + testGetName);
                
         long endTime = System.currentTimeMillis();
         
