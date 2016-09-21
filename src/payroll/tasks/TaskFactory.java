@@ -52,24 +52,25 @@ public class TaskFactory {
         // If the task type represents equipment
         if(taskType.equals("E")){
             // Check if taskName is Non-Serialized
-            newTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
+            EquipmentTask eTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
             
-            if(newTask == null){
+            if(eTask == null){
                 System.out.println("NULL TASK");
+                System.out.println(taskName + " " + taskDescription);
                 System.out.println(inJob.getWorkOrderNumber());
             }
             else{
-                System.out.println(newTask.toString());
+                //System.out.println(newTask.toString());
             }
             
-            if(newTask instanceof payroll.tasks.NonSerializedEquipmentTask){
-                inJob.addEquipmentTask((NonSerializedEquipmentTask)newTask);
+            if(eTask instanceof NonSerializedEquipmentTask){
+                inJob.addEquipmentTask((NonSerializedEquipmentTask)eTask);
             } 
             // TODO: Rework this. Don't like casting
-            else if(newTask instanceof payroll.tasks.SerializedEquipmentTask){
-                SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)newTask;
-                newSerialized.setSerialNumber(taskName);
-                inJob.addEquipmentTask((SerializedEquipmentTask)newSerialized);
+            else if(eTask instanceof SerializedEquipmentTask){
+                //SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)eTask;
+                //newSerialized.setSerialNumber(taskName);
+                inJob.addEquipmentTask((SerializedEquipmentTask)eTask);
                 //System.out.println(newSerialized.getModel() + " " + newSerialized.getSerialNumber());
             }
             // If newTask was null, it will not be added to the task list

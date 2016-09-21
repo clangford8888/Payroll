@@ -62,7 +62,12 @@ public class JobFactory {
             // Create appropriate job 
             Job createdJob = createJobFromRow(advancedJobType, firstRow);
             // Task factory will create a task from each row
+            
+            // TODO: Change this to have taskFactory return a task
+            // No need to pass in the job.
             for(HSSFRow row : rowList){
+                // Task newTask = taskFactory.createTask(row);
+                
                 taskFactory.createTask(createdJob, row, checker);
             }
 
@@ -94,9 +99,8 @@ public class JobFactory {
         if(!list.isEmpty()){               
             eqDAO.addSerializedEquipmentFromList(list);
         }
-       
+        // Add Non-Serialized Equipment to database
         List<NonSerializedEquipmentTask> nsList = newJob.getNonSerializedEquipmentTaskList();            
-            
         if(!nsList.isEmpty()){
             eqDAO.addNonSerializedEquipmentFromList(nsList);
         }

@@ -60,8 +60,6 @@ public class TaskCache {
         }
     }
     
-    
-    
     public EquipmentTask getEquipmentTask(String taskName, String taskDescription){
         // Check if the task name is in the non-serialized map
         if(nonSerializedMap.containsKey(taskName)){
