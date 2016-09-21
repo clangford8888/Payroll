@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import payroll.DatabaseConnector;
 
 /**
@@ -30,15 +31,15 @@ public class JobDAO {
     }
     
     /**
-     * Returns an array list of jobs completed by a technician on a given day.
+     * Returns a list of jobs completed by a technician on a given day.
      * 
      * @param inTechID ID of the technician whose jobs are being retrieved
      * @param inDay specifies the date of the jobs being retrieved
      * @return jobList list of all jobs completed
      */
-    public ArrayList<Job> getJobsByDate(String inTechID, Date inDay){
+    public List<Job> getJobsByDate(String inTechID, Date inDay){
         
-        ArrayList<Job> jobList = new ArrayList<>();
+        List<Job> jobList = new ArrayList<>();
 
         try{
             conn = DatabaseConnector.getConnection();
@@ -57,7 +58,7 @@ public class JobDAO {
     }
     
     /**
-     * Returns an array list of jobs completed by a technician for a specified
+     * Returns a list of jobs completed by a technician for a specified
      * date range.
      * 
      * @param inTechID ID of the technician whose jobs are being retrieved
@@ -65,14 +66,12 @@ public class JobDAO {
      * @param end specifies the end date of the date range
      * @return jobList list of all jobs completed
      */
-    public ArrayList<Job> getJobsByDate(String inTechID, Date start, Date end){
-        ArrayList<Job> jobList = new ArrayList<>();
+    public List<Job> getJobsByDate(String inTechID, Date start, Date end){
+        List<Job> jobList = new ArrayList<>();
         
         return jobList;
     }
     
-    
-    // ******************TODO????????? FK CONSTRAINTS??
     /**
      * Adds a job into the database. Returns false if unable to add job.
      * @param inJob job to be added to database.
