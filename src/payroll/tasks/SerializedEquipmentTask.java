@@ -9,29 +9,45 @@ package payroll.tasks;
  *
  * @author Casey
  */
-public class SerializedEquipmentTask extends EquipmentTask{
+public class SerializedEquipmentTask implements EquipmentTask{
     
     private String serialNumber;
     private final String model;
-    private String itemNumber;
+    private final String itemNumber;
+    private final String taskDescription;
     
     public SerializedEquipmentTask(String inName, String inDescription){
-        super(inName, inDescription);
-        serialNumber = "";
-        model = inDescription;
-        itemNumber = lookupItemNumber(inName);
+        this.serialNumber = "";
+        this.model = inName;
+        this.taskDescription = inDescription;
+        this.itemNumber = lookupItemNumber(inName);
     }
     
     public SerializedEquipmentTask(String inName, String inDescription, 
                                     String inSerialNumber){
-        super(inName, inDescription);
-        serialNumber = inSerialNumber;
-        model = inDescription;
-        itemNumber = lookupItemNumber(inName);
+        this.serialNumber = inSerialNumber;
+        this.model = inName;
+        this.taskDescription = inDescription;
+        this.itemNumber = lookupItemNumber(inName);
     }
     
     public void setSerialNumber(String serialNumber){
         this.serialNumber = serialNumber;
+    }
+    
+    @Override
+    public String getTaskType(){
+        return EquipmentTask.TASK_TYPE;
+    }
+    
+    @Override
+    public String getTaskName(){
+        return this.model;
+    }
+    
+    @Override
+    public String getTaskDescription(){
+        return this.taskDescription;
     }
     
     @Override
@@ -49,10 +65,8 @@ public class SerializedEquipmentTask extends EquipmentTask{
         return serialNumber;
     }
     
-    
     // **************************************************** may remove??
     // More descriptive name for receiver/modem/tria type
-    // otherwise could use getTaskDescription from super method
     public String getModel(){
         return this.model;
     }

@@ -9,17 +9,36 @@ package payroll.tasks;
  *
  * @author Casey
  */
-public class NonSerializedEquipmentTask extends EquipmentTask{
-    String itemNumber;
+public class NonSerializedEquipmentTask implements EquipmentTask{
+    
+    private final String taskName;
+    private final String itemNumber;
+    private final String taskDescription;
     
     public NonSerializedEquipmentTask(String inName, String inDescription){
-        super(inName, inDescription);
-        itemNumber = lookupItemNumber(inName); 
+        this.taskName = inName;
+        this.taskDescription = inDescription;
+        this.itemNumber = lookupItemNumber(inName);
     }
     
     @Override
     public String getItemNumber(){
         return itemNumber;
+    }
+    
+    @Override
+    public String getTaskType(){
+        return EquipmentTask.TASK_TYPE;
+    }
+    
+    @Override
+    public String getTaskName(){
+        return this.taskName;
+    }
+    
+    @Override
+    public String getTaskDescription(){
+        return this.taskDescription;
     }
     
     // TODO ******************************* LOOKUP ITEM NUMBER IN TABLE
@@ -29,6 +48,6 @@ public class NonSerializedEquipmentTask extends EquipmentTask{
     
     @Override
     public String toString(){
-        return this.getTaskDescription();
+        return this.taskDescription;
     }
 }

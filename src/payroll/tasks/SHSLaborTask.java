@@ -15,26 +15,54 @@ import payroll.DatabaseConnector;
  *
  * @author Casey
  */
-public class SHSLaborTask extends LaborTask{
+public class SHSLaborTask implements LaborTask{
     
-    private String advancedTaskType;
+    private final String advancedTaskType;
+    private final String taskName;
+    private final String taskDescription;
+    private int payment;
     
     public SHSLaborTask(String inName, String inDescription){
-        super(inName, inDescription);
         this.advancedTaskType = "SHS Labor";
-        this.setTaskType(advancedTaskType);
+        this.taskName = inName;
+        this.taskDescription = inDescription;
     }
     
     public SHSLaborTask(String inName, String inDescription, int payment){
-        super(inName, inDescription);
         this.advancedTaskType = "SHS Labor";
-        this.taskType = advancedTaskType;
+        this.taskName = inName;
+        this.taskDescription = inDescription;
         this.payment = payment;
     }
     
     @Override
     public String getAdvancedTaskType(){
         return advancedTaskType;
+    }
+    
+    @Override
+    public int getPayment(){
+        return this.payment;
+    }
+    
+    @Override
+    public String getTaskType(){
+        return LaborTask.TASK_TYPE;
+    }
+    
+    @Override
+    public String getTaskName(){
+        return this.taskName;
+    }
+    
+    @Override
+    public String getTaskDescription(){
+        return this.taskDescription;
+    }
+    
+    @Override
+    public void setPayment(int inPayment){
+        this.payment = inPayment;
     }
     
     
@@ -49,8 +77,8 @@ public class SHSLaborTask extends LaborTask{
             conn = DatabaseConnector.getConnection();
             String sql = "select payment from shs_labor where task = ?";
             ps = conn.prepareStatement(sql);
-            String taskName = this.getTaskName();
-            ps.setString(1,taskName);
+            String name = this.getTaskName();
+            ps.setString(1,name);
             rs = ps.executeQuery();
             if(rs.next()){
                 pay += rs.getInt(1);

@@ -9,20 +9,13 @@ package payroll.tasks;
  *
  * @author Casey
  */
-public abstract class EquipmentTask extends Task {
-    String taskType;
+public interface EquipmentTask extends Task {
     
-    public EquipmentTask(String inName, String inDescription){
-        
-        super(inName,inDescription);
-        this.taskType = "Equipment";
-    }
+    static final String TASK_TYPE = "Equipment";
     
     @Override
-    public String getTaskType(){
-        return taskType;
-    }
+    public String getTaskType();
     
-    public abstract String getItemNumber();
+    public String getItemNumber();
     
 }

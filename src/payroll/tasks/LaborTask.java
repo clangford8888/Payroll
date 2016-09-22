@@ -9,37 +9,20 @@ package payroll.tasks;
  *
  * @author Casey
  */
-public abstract class LaborTask extends Task{
+public interface LaborTask extends Task{
     
-    protected String taskType;
-    protected int payment;
-    
-    public LaborTask(String inName, String inDescription){
-        super(inName,inDescription);
-        this.taskType = "Labor";
-        this.payment = 0;
-    }
-    
+    static final String TASK_TYPE = "Labor";
+        
     @Override
-    public String getTaskType(){
-        return taskType;
-    }
+    public String getTaskType();
     
-    public int getPayment(){
-        return payment;
-    }
+    public int getPayment();
     
-    public void setTaskType(String inType){
-        taskType = inType;
-    }
+    public void setPayment(int inPay);
     
-    public void setPayment(int inPay){
-        this.payment = inPay;
-    }
+    // TODO: Get rid of this!?
     
-    // TODO: Get rid of this!
+    public String getAdvancedTaskType();
     
-    public abstract String getAdvancedTaskType();
-    
-    public abstract int lookupLaborPayment();
+    public int lookupLaborPayment();
 }
