@@ -29,9 +29,9 @@ public class JobFactory {
     
     public JobFactory(PaymentFileFormatChecker inChecker){
         this.checker = inChecker;
-        masterTaskList = new TaskCache();
-        taskFactory = new TaskFactory(masterTaskList);
-        eqDAO = new EquipmentDAO();
+        this.masterTaskList = new TaskCache();
+        this.taskFactory = new TaskFactory(masterTaskList, checker);
+        this.eqDAO = new EquipmentDAO();
     }
     
     // TODO: GETTER/SETTER METHODS FOR inputFile? In case want to use same obj
@@ -67,8 +67,11 @@ public class JobFactory {
             // No need to pass in the job.
             for(HSSFRow row : rowList){
                 // Task newTask = taskFactory.createTask(row);
+                //Task newTask = taskFactory.createTask(row);
+                // Job.addTask(newTask);
                 
-                taskFactory.createTask(createdJob, row, checker);
+                // OLD WAY HERE **********
+                taskFactory.createTask(createdJob, row);
             }
 
             jobCreatedCount++;

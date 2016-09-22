@@ -17,16 +17,17 @@ import payroll.PaymentFileFormatChecker;
 public class TaskFactory {
     
     TaskCache masterTaskList;
+    PaymentFileFormatChecker checker;
     
-    public TaskFactory(TaskCache inTaskReader){
-        masterTaskList = inTaskReader;
+    public TaskFactory(TaskCache inTaskReader, PaymentFileFormatChecker inChecker){
+        this.masterTaskList = inTaskReader;
+        this.checker = inChecker;
     }
     
     // TODO: remove the job, portion, and return the task
     // the job should handle adding the task
     
-    public void createTask(Job inJob, HSSFRow inRow,
-                                    PaymentFileFormatChecker checker){
+    public void createTask(Job inJob, HSSFRow inRow){
         
         int taskTypeIndex = checker.getTaskTypeLocation();
         int taskNameIndex = checker.getTaskNameLocation();
@@ -84,6 +85,67 @@ public class TaskFactory {
             }
             else if(newTask instanceof SHSLaborTask){
                 inJob.addSHSLaborTask((SHSLaborTask)newTask);
+            }
+        }
+    }
+    
+    public void createTask(HSSFRow inRow, PaymentFileFormatChecker checker){
+        
+        int taskTypeIndex = checker.getTaskTypeLocation();
+        int taskNameIndex = checker.getTaskNameLocation();
+        int taskDescriptionIndex = checker.getTaskDescriptionLocation();
+        
+        HSSFRow row = inRow;
+        // Select the cell at the Task Type Position
+        HSSFCell taskTypeCell = row.getCell(taskTypeIndex);
+        // Get the task type and store the value
+        String taskType = getStringCellValue(taskTypeCell);
+        // Get task name and store value
+        HSSFCell taskNameCell = row.getCell(taskNameIndex);
+        String taskName = getStringCellValue(taskNameCell);
+        // Get task description and store value
+        HSSFCell taskDescriptionCell = row.getCell(taskDescriptionIndex);
+        String taskDescription = getStringCellValue(taskDescriptionCell);
+        
+        Task newTask;
+        // New approach: Search for task by description, since the R00# is the
+        // task name in the payment file. If we search for Task based on name,
+        // it will not show up since the R00#'s are unique.
+        
+        // If the task type represents equipment
+        if(taskType.equals("E")){
+            // Check if taskName is Non-Serialized
+            EquipmentTask eTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
+            
+            if(eTask == null){
+                System.out.println("NULL TASK");
+                System.out.println(taskName + " " + taskDescription);
+            }
+            else{
+                //System.out.println(newTask.toString());
+            }
+            
+            if(eTask instanceof NonSerializedEquipmentTask){
+                //inJob.addEquipmentTask((NonSerializedEquipmentTask)eTask);
+            } 
+            // TODO: Rework this. Don't like casting
+            else if(eTask instanceof SerializedEquipmentTask){
+                //SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)eTask;
+                //newSerialized.setSerialNumber(taskName);
+                //inJob.addEquipmentTask((SerializedEquipmentTask)eTask);
+                //System.out.println(newSerialized.getModel() + " " + newSerialized.getSerialNumber());
+            }
+            // If newTask was null, it will not be added to the task list
+        }
+        // Else If task type indicates Labor task
+        else if(taskType.equals("L")){
+            newTask = masterTaskList.getLaborTask(taskName);
+            // If task name is standard labor task
+            if(newTask instanceof StandardLaborTask){
+                //inJob.addStandardLaborTask((StandardLaborTask)newTask);
+            }
+            else if(newTask instanceof SHSLaborTask){
+                //inJob.addSHSLaborTask((SHSLaborTask)newTask);
             }
         }
     }
