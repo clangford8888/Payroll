@@ -89,7 +89,7 @@ public class TaskFactory {
         }
     }
     
-    public void createTask(HSSFRow inRow, PaymentFileFormatChecker checker){
+    public Task createTask(HSSFRow inRow){
         
         int taskTypeIndex = checker.getTaskTypeLocation();
         int taskNameIndex = checker.getTaskNameLocation();
@@ -107,7 +107,6 @@ public class TaskFactory {
         HSSFCell taskDescriptionCell = row.getCell(taskDescriptionIndex);
         String taskDescription = getStringCellValue(taskDescriptionCell);
         
-        Task newTask;
         // New approach: Search for task by description, since the R00# is the
         // task name in the payment file. If we search for Task based on name,
         // it will not show up since the R00#'s are unique.
@@ -117,6 +116,10 @@ public class TaskFactory {
             // Check if taskName is Non-Serialized
             EquipmentTask eTask = masterTaskList.getEquipmentTask(taskName, taskDescription);
             
+            // Todo: change to return null object rather than null
+                return eTask;
+            
+            /*
             if(eTask == null){
                 System.out.println("NULL TASK");
                 System.out.println(taskName + " " + taskDescription);
@@ -133,20 +136,30 @@ public class TaskFactory {
                 //SerializedEquipmentTask newSerialized = (SerializedEquipmentTask)eTask;
                 //newSerialized.setSerialNumber(taskName);
                 //inJob.addEquipmentTask((SerializedEquipmentTask)eTask);
-                //System.out.println(newSerialized.getModel() + " " + newSerialized.getSerialNumber());
             }
-            // If newTask was null, it will not be added to the task list
+            */
+            
         }
         // Else If task type indicates Labor task
         else if(taskType.equals("L")){
-            newTask = masterTaskList.getLaborTask(taskName);
+            LaborTask lTask = masterTaskList.getLaborTask(taskName);
+            
+            return lTask;
+            
+            /*
             // If task name is standard labor task
-            if(newTask instanceof StandardLaborTask){
+            if(lTask instanceof StandardLaborTask){
                 //inJob.addStandardLaborTask((StandardLaborTask)newTask);
             }
-            else if(newTask instanceof SHSLaborTask){
+            else if(lTask instanceof SHSLaborTask){
                 //inJob.addSHSLaborTask((SHSLaborTask)newTask);
             }
+            */
+        }
+        
+        // TODO: RETURN NULL OBJECT!
+        else{
+            return null;
         }
     }
     
