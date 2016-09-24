@@ -8,10 +8,13 @@ package payroll.jobs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import payroll.tasks.EquipmentTask;
+import payroll.tasks.LaborTask;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SHSLaborTask;
 import payroll.tasks.SerializedEquipmentTask;
 import payroll.tasks.StandardLaborTask;
+import payroll.tasks.Task;
 
 /**
  *
@@ -26,10 +29,10 @@ public abstract class Job {
     private final String customerName;
     private final String techID;
     private final String jobType;
-    private List<SerializedEquipmentTask> serializedEquipmentList;
-    private List<NonSerializedEquipmentTask> nonSerializedEquipmentList;
-    private List<StandardLaborTask> standardLaborList;
-    private List<SHSLaborTask> shsList;
+    protected List<SerializedEquipmentTask> serializedEquipmentList;
+    protected List<NonSerializedEquipmentTask> nonSerializedEquipmentList;
+    protected List<StandardLaborTask> standardLaborList;
+    protected List<SHSLaborTask> shsList;
     private int payment;
     
     public Job(String inANum, String inWONum, Date inDate, String inDesignation,
@@ -82,16 +85,7 @@ public abstract class Job {
         }
         return pay;
     }
-    
-
-    //public void addSerializedEquipmentTask(SerializedEquipmentTask inTask){
-        //this.serializedEquipmentList.add(inTask);
-    //}
-    
-    //public void addNonSerializedEquipmentTask(NonSerializedEquipmentTask inTask){
-        //this.nonSerializedEquipmentList.add(inTask);
-    //}
-    
+     
     public void addEquipmentTask(SerializedEquipmentTask inTask){
         this.serializedEquipmentList.add(inTask);
     }
@@ -100,10 +94,10 @@ public abstract class Job {
         this.nonSerializedEquipmentList.add(inTask);
     }
     
-    public void addStandardLaborTask(StandardLaborTask inTask){
+    public void addLaborTask(StandardLaborTask inTask){
         this.standardLaborList.add(inTask);
     }
-    public void addSHSLaborTask(SHSLaborTask inTask){
+    public void addLaborTask(SHSLaborTask inTask){
         this.shsList.add(inTask);
     }
     

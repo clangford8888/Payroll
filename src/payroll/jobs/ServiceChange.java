@@ -102,11 +102,11 @@ public class ServiceChange extends Job{
                                                 this.getJobType());
         // Traverse standard labor list and add tasks to new job
         for(StandardLaborTask task : laborList){
-            internetJob.addStandardLaborTask(task);
+            internetJob.addLaborTask(task);
         }
         // Traverse shs task list and add tasks to new job
         for(SHSLaborTask task : this.getSHSTaskList()){
-            internetJob.addSHSLaborTask(task);
+            internetJob.addLaborTask(task);
         }
         // Traverse equipment task list and add tasks to new job
         for(NonSerializedEquipmentTask task: this.getNonSerializedEquipmentTaskList()){

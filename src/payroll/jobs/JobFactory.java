@@ -12,9 +12,12 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import payroll.PaymentFileFormatChecker;
 import payroll.tasks.NonSerializedEquipmentTask;
+import payroll.tasks.SHSLaborTask;
 import payroll.tasks.SerializedEquipmentTask;
+import payroll.tasks.StandardLaborTask;
 import payroll.tasks.TaskFactory;
 import payroll.tasks.TaskCache;
+import payroll.tasks.Task;
 
 /**
  *
@@ -63,15 +66,22 @@ public class JobFactory {
             Job createdJob = createJobFromRow(advancedJobType, firstRow);
             // Task factory will create a task from each row
             
-            // TODO: Change this to have taskFactory return a task
-            // No need to pass in the job.
+            // Generally bad practice using instanceof. May be changed in the future
             for(HSSFRow row : rowList){
-                // Task newTask = taskFactory.createTask(row);
-                //Task newTask = taskFactory.createTask(row);
-                // Job.addTask(newTask);
+                Task newTask = taskFactory.createTask(row);
+                if(newTask instanceof SerializedEquipmentTask){
+                    createdJob.addEquipmentTask((SerializedEquipmentTask)newTask);
+                }
+                else if(newTask instanceof NonSerializedEquipmentTask){
+                    createdJob.addEquipmentTask((NonSerializedEquipmentTask)newTask);
+                }
+                else if(newTask instanceof StandardLaborTask){
+                    createdJob.addLaborTask((StandardLaborTask)newTask);
+                }
+                else if(newTask instanceof SHSLaborTask){
+                    createdJob.addLaborTask((SHSLaborTask)newTask);
+                }
                 
-                // OLD WAY HERE **********
-                taskFactory.createTask(createdJob, row);
             }
 
             jobCreatedCount++;

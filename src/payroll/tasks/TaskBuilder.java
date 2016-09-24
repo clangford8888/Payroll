@@ -75,7 +75,7 @@ public class TaskBuilder {
                 // Set the labor payment
                 stdLaborTask.setPayment(pay);
                 // Add Standard Labor Task to job
-                inJob.addStandardLaborTask(stdLaborTask);
+        //        inJob.addStandardLaborTask(stdLaborTask);
             }
             // Else return new Smart Home Service task
             else if(isSHSLaborTask(taskName)){
@@ -86,7 +86,7 @@ public class TaskBuilder {
                 // Set the labor payment
                 shsTask.setPayment(pay);
                 // Add SHS Labor Task to job
-                inJob.addSHSLaborTask(shsTask);
+        //        inJob.addSHSLaborTask(shsTask);
             }
         }
     }
