@@ -82,6 +82,7 @@ public class PaySheetCreatorDAO {
                 */
                 getSerializedEquipmentFromDatabase(newEntry);
                 getNonSerializedEquipmentFromDatabase(newEntry);
+                getSHSEquipmentFromDatabase(newEntry);
                 
                 // Add new entry to list
                 jobList.add(newEntry);
@@ -157,9 +158,12 @@ public class PaySheetCreatorDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
-            String sql =   "select model, quantity " +
-                    "from consumed_equip_nonserialized " +
-                    "where workOrderNum = ?";
+            String sql =    "select t1.model, t1.quantity " +
+                            "from consumed_equip_nonserialized as t1 " +
+                            " inner join nonserialized_equipment as t2 " +
+                            " on t1.model = t2.taskDescription " +
+                            "where t1.workOrderNum = ? and t2.SHS < 1";
+                 
             conn = DatabaseConnector.getConnection();
             ps = conn.prepareStatement(sql);
             String workOrder = newEntry.getWorkOrderNumber();
@@ -183,7 +187,7 @@ public class PaySheetCreatorDAO {
             DatabaseConnector.closeQuietly(rs);
         }
     }
-    
+        
     /**
      * Queries the database and retrieves all SHS Equipment. Adds all retrieved
      * equipment to the PaySheetEntry object's SHS list.
@@ -191,7 +195,38 @@ public class PaySheetCreatorDAO {
      * @param newEntry PaySheetEntry the method retrieves equipment for.
      */
     private void getSHSEquipmentFromDatabase(PaySheetEntry newEntry){
-        
+        Connection conn = null; 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            String sql =    "select t1.model, t1.quantity " +
+                            "from consumed_equip_nonserialized as t1 " +
+                            " inner join nonserialized_equipment as t2 " +
+                            " on t1.model = t2.taskDescription " +
+                            "where t1.workOrderNum = ? and t2.SHS > 0";
+                 
+            conn = DatabaseConnector.getConnection();
+            ps = conn.prepareStatement(sql);
+            String workOrder = newEntry.getWorkOrderNumber();
+            ps.setString(1, workOrder);
+            rs = ps.executeQuery();
+            // Process the result set and equipment to the equipment list
+            while(rs.next()){
+                String nonSerialModel = rs.getString("model");
+                int quantity = rs.getInt("quantity");
+                newEntry.addSHS(quantity + ": " + nonSerialModel);
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("SQL state: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
+        }
+        finally{
+            DatabaseConnector.closeQuietly(conn);
+            DatabaseConnector.closeQuietly(ps);
+            DatabaseConnector.closeQuietly(rs);
+        }
     }
     
     protected List<Job> getJobsByWeek(){
