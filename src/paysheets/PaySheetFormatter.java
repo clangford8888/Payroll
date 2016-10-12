@@ -18,7 +18,12 @@ import org.apache.poi.ss.usermodel.Font;
  * @author Casey
  */
 public class PaySheetFormatter {
-    
+    private static final int DATE_WIDTH = 5000;
+    private static final int CUSTOMER_WIDTH = 6800;
+    private static final int PAY_WIDTH = 5000;
+    private static final int SERIAL_WIDTH = 6800;
+    private static final int NONSERIAL_WIDTH = 7000;
+    private static final int SHS_WIDTH = 7000;
     /*
         Given a workbook, this method formats the first two rows to contain
         the title information for a standard pay sheet. Assumes the workbook
@@ -28,6 +33,7 @@ public class PaySheetFormatter {
         workbook.createSheet("Sheet 1");
         // Each pay sheet only uses the first sheet
         HSSFSheet sheet = workbook.getSheetAt(0);
+        setDefaultColumnWidth(sheet);
         HSSFRow row;
         HSSFCell cell;
   
@@ -85,6 +91,22 @@ public class PaySheetFormatter {
         cell = row.getCell(PaySheet.LEP_INDEX);
         cell.setCellValue("LEP");
         
+    }
+    
+    /**
+     * Sets the default column width based on the constants defined for the
+     * PaySheetFormatter class. Apache POI uses an odd system of 1/256th of a
+     * character for the width.
+     * 
+     * @param sheet the HSSFSheet that the column width is being set for
+     */
+    public static void setDefaultColumnWidth(HSSFSheet sheet){
+        sheet.setColumnWidth(PaySheet.DATE_INDEX, DATE_WIDTH);
+        sheet.setColumnWidth(PaySheet.CUST_INDEX, CUSTOMER_WIDTH);
+        sheet.setColumnWidth(PaySheet.PAY_INDEX, PAY_WIDTH);
+        sheet.setColumnWidth(PaySheet.SERIAL_INDEX, SERIAL_WIDTH);
+        sheet.setColumnWidth(PaySheet.NONSERIAL_INDEX, NONSERIAL_WIDTH);
+        sheet.setColumnWidth(PaySheet.SHS_INDEX, SHS_WIDTH);
     }
     
     public static void addJobFormatting(HSSFWorkbook workbook, int rowIndex){
