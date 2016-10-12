@@ -26,26 +26,26 @@ public class Payroll {
     public static void main(String[] args) throws FileNotFoundException, IOException{
        
         long startTime = System.currentTimeMillis();
-       
-        //File myFile = new File("src/payroll/input/inputFile.xls");
+
+        /*
+        PaymentFileFormatChecker checker1 = new PaymentFileFormatChecker();
+        File myFile = new File("src/payroll/input/inputFile.xls");
+        checker1.readFileFormat(myFile);
+        System.out.println(checker1.toString());
+        PaymentParser parser1 = new PaymentParser(myFile);
+        parser1.parsePaymentFile();
+        parser1.closeFile();
+        JobFactory jFactory1 = new JobFactory(checker1);
+        jFactory1.processMap(parser1.getMap());
+        */
         
         PaymentFileFormatChecker checker = new PaymentFileFormatChecker();
-        
-        //checker.readFileFormat(myFile);
-        //System.out.println(checker.toString());
-        //System.out.println(myFile.getAbsolutePath());
-        
-        
-        // Every time a new payment file is selected, we will need to check the format again
         File myFile2 = new File("src/payroll/input/Payments 01-01-16 to 01-07-16.xls");
         checker.readFileFormat(myFile2);
         System.out.println(checker.toString());
-        
         PaymentParser parser = new PaymentParser(myFile2);
-        
         parser.parsePaymentFile();
         parser.closeFile();
-        
         JobFactory jFactory = new JobFactory(checker);
         jFactory.processMap(parser.getMap());
         
@@ -62,10 +62,7 @@ public class Payroll {
         //FileOutputStream out = new FileOutputStream("src/payroll/input/workbook.xls");
         //workbook.write(out);
         //out.close();
-        
-        
-        
-               
+
         long endTime = System.currentTimeMillis();
         
         long runTime = endTime-startTime;
