@@ -8,13 +8,10 @@ package payroll.jobs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
-import payroll.tasks.EquipmentTask;
-import payroll.tasks.LaborTask;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SHSLaborTask;
 import payroll.tasks.SerializedEquipmentTask;
 import payroll.tasks.StandardLaborTask;
-import payroll.tasks.Task;
 
 /**
  *

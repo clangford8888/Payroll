@@ -14,20 +14,17 @@ public class SerializedEquipmentTask implements EquipmentTask{
     private String serialNumber;
     private final String model;
     private final String itemNumber;
-    private final String taskDescription;
     
     public SerializedEquipmentTask(String inName, String inDescription){
-        this.serialNumber = "";
-        this.model = inName;
-        this.taskDescription = inDescription;
+        this.serialNumber = inName;
+        this.model = inDescription;
         this.itemNumber = lookupItemNumber(inName);
     }
     
     public SerializedEquipmentTask(String inName, String inDescription, 
                                     String inSerialNumber){
         this.serialNumber = inSerialNumber;
-        this.model = inName;
-        this.taskDescription = inDescription;
+        this.model = inDescription;
         this.itemNumber = lookupItemNumber(inName);
     }
     
@@ -42,12 +39,12 @@ public class SerializedEquipmentTask implements EquipmentTask{
     
     @Override
     public String getTaskName(){
-        return this.model;
+        return this.serialNumber;
     }
     
     @Override
     public String getTaskDescription(){
-        return this.taskDescription;
+        return this.model;
     }
     
     @Override
@@ -73,7 +70,7 @@ public class SerializedEquipmentTask implements EquipmentTask{
     
     @Override
     public String toString(){
-        return this.model + " " + this.getSerialNumber();
+        return this.model + " " + this.serialNumber;
     }
     
 }

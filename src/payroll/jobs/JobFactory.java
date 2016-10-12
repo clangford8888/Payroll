@@ -81,7 +81,6 @@ public class JobFactory {
                 else if(newTask instanceof SHSLaborTask){
                     createdJob.addLaborTask((SHSLaborTask)newTask);
                 }
-                
             }
 
             jobCreatedCount++;

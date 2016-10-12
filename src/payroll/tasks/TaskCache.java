@@ -77,7 +77,7 @@ public class TaskCache {
     }
     
     public LaborTask getLaborTask(String taskName){
-        LaborTask newTask;
+
         if(standardLaborMap.containsKey(taskName)){
             return standardLaborMap.get(taskName);
         }
