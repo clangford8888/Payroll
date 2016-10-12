@@ -115,13 +115,8 @@ public class PaySheet {
         addNonSerialListData(inEntry, row, cell);
         // Add serialized equipment to the serialized cell
         addSerializedListData(inEntry, row, cell);
-        // TODO: Add SHS equipment to the SHS cell
-
-        cell = row.getCell(SHS_INDEX);
-        List<String> shsList = inEntry.getSHSList();
-        /*
-        TODO: ADD GET SHS LIST INFO HERE
-        */
+        //Add SHS equipment to the SHS cell
+        addSHSData(inEntry, row, cell);
     }
     
     private void addNonSerialListData(PaySheetEntry inEntry, HSSFRow row, HSSFCell cell){
@@ -146,6 +141,31 @@ public class PaySheet {
                 }
             }
             cell.setCellValue(nonSerialString);
+        }
+    }
+    
+    private void addSHSData(PaySheetEntry inEntry, HSSFRow row, HSSFCell cell){
+        cell = row.getCell(SHS_INDEX);
+        CellStyle wrapNewLines = workbook.createCellStyle();
+        wrapNewLines.setWrapText(true);
+        cell.setCellStyle(wrapNewLines);
+        List<String> shsList = inEntry.getSHSList();
+        if(!shsList.isEmpty()){
+            String shsString = "";
+            // Using normal for loop to interate so we don't add a new line
+            // at the end of the cell
+            int listSize = shsList.size();
+            for(int i = 0; i < listSize; i++){
+                if(i < listSize - 1){
+                    // Add a new line on to the end of the cell
+                    shsString = shsString + shsList.get(i)
+                                        + "\n";
+                }
+                else{
+                    shsString = shsString + shsList.get(i);
+                }
+            }
+            cell.setCellValue(shsString);
         }
     }
     
@@ -176,7 +196,7 @@ public class PaySheet {
     }
     
     /**
-     * TODO: Finish SHS/LEP
+     * TODO: Finish LEP
      * @param inEntry
      * @param rowIndex 
      */
