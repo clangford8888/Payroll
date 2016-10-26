@@ -38,4 +38,4 @@ Thumbs.db
 
 # Input files #
 ####################
-src/payroll/input
+src/payroll/input/
