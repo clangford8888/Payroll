@@ -38,4 +38,7 @@ Thumbs.db
 
 # Input files #
 ####################
+*.csv
+*.xls
+*.xlsx
 /src/payroll/input/*
