@@ -5,6 +5,7 @@
  */
 package paysheets;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,5 +55,22 @@ public class PaySheetCreator {
     Could do this by querying the chargeback table for the date range and return
     any jobs with the LEP tech ID.
     */
+    
+    
+    /**
+     * Creates all pay sheets for all technicians for a given date and returns
+     * them as a list of PaySheets. Is the name long? Yes, but it describes
+     * what is happening!
+     * 
+     * @param start Start of date range
+     * @param end End of date range
+     * @return 
+     */
+    public List<PaySheet> createAllTechPaySheetsByDateRange(Date start, Date end){
+        // TODO: Check for stupid input dates
+        List<PaySheet> paySheetList = new ArrayList<>();
+        
+        return paySheetList;
+    }
     
 }
