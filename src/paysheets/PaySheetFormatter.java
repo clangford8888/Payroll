@@ -12,6 +12,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.RegionUtil;
 
 /**
  *
@@ -91,6 +93,8 @@ public class PaySheetFormatter {
         cell = row.getCell(PaySheet.LEP_INDEX);
         cell.setCellValue("LEP");
         
+        // Add thick border around title row
+        addJobBorder(workbook, 0);
     }
     
     /**
@@ -149,5 +153,35 @@ public class PaySheetFormatter {
             cell = row.createCell(cellNum);
             cell.setCellStyle(generalStyle);
         }
+        // Add thick border around job.
+        addJobBorder(workbook, rowIndex);
+    }
+    
+    /**
+     * Given a workbook, will add a thick border to the job.
+     * @param workbook 
+     * @param rowIndex int value of the starting row to add border
+     */
+    private static void addJobBorder(HSSFWorkbook workbook, int rowIndex){
+        
+        if(rowIndex < 0){
+            rowIndex = 0; // Protect against invalid input.
+        }
+        // Set the cell range
+        int firstRow = rowIndex;
+        int lastRow = rowIndex + 1;
+        int firstCol = 0;
+        int lastCol = 5;
+        CellRangeAddress region = new CellRangeAddress(firstRow, lastRow,
+                                                        firstCol, lastCol);
+        // Set the border style
+        short borderStyle = CellStyle.BORDER_THICK;
+        // Get the sheet formatting will be added to
+        HSSFSheet sheet = workbook.getSheetAt(0);
+        // Apply the border
+        RegionUtil.setBorderBottom(borderStyle, region, sheet, workbook);
+        RegionUtil.setBorderTop(borderStyle, region, sheet, workbook);
+        RegionUtil.setBorderLeft(borderStyle, region, sheet, workbook);
+        RegionUtil.setBorderRight(borderStyle, region, sheet, workbook);
     }
 }
