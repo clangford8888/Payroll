@@ -133,6 +133,7 @@ public class PaySheetFormatter {
         dateStyle.setFont(font);
         // Set the cell data format to date (0xe) is the built in format
         dateStyle.setDataFormat((short)0xe);
+        dateStyle.setAlignment(CellStyle.ALIGN_LEFT);
         
         // Create a new row at the given index
         row = sheet.createRow(rowIndex);
@@ -153,8 +154,6 @@ public class PaySheetFormatter {
             cell = row.createCell(cellNum);
             cell.setCellStyle(generalStyle);
         }
-        // Add thick border around job.
-        addJobBorder(workbook, rowIndex);
     }
     
     /**
@@ -162,7 +161,7 @@ public class PaySheetFormatter {
      * @param workbook 
      * @param rowIndex int value of the starting row to add border
      */
-    private static void addJobBorder(HSSFWorkbook workbook, int rowIndex){
+    protected static void addJobBorder(HSSFWorkbook workbook, int rowIndex){
         
         if(rowIndex < 0){
             rowIndex = 0; // Protect against invalid input.

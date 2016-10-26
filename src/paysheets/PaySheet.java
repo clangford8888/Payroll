@@ -91,6 +91,8 @@ public class PaySheet {
             addFirstRowData(inEntry, rowIndex);
             // Add second row information to the new entry
             addSecondRowData(inEntry, rowIndex);
+            // Add border formatting
+            PaySheetFormatter.addJobBorder(workbook, rowIndex);
             // Increment the count of jobs on this pay sheet.
             numJobs++;
         }
