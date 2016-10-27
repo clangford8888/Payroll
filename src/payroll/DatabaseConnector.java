@@ -73,4 +73,13 @@ public class DatabaseConnector {
             }
         }
     }
+    
+    public static void closeQuietlyAll(Connection inConnection,
+                                        PreparedStatement inPreparedStatement,
+                                        ResultSet inResultSet){
+        // Close all individually
+        closeQuietly(inConnection);
+        closeQuietly(inPreparedStatement);
+        closeQuietly(inResultSet);
+    }
 }
