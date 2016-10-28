@@ -251,7 +251,7 @@ public class PaySheetCreatorDAO {
         ResultSet rs = null;
         try{
             // Define the query and initialize the prepared statement
-            String sql = "select name from technician "
+            String sql = "select firstName, lastName from technician "
                     + " where techID = ?";
             conn = DatabaseConnector.getConnection();
             ps = conn.prepareStatement(sql);     
@@ -259,7 +259,8 @@ public class PaySheetCreatorDAO {
             rs = ps.executeQuery();
             // Get the techName from the result set
             while(rs.next()){
-                techName = rs.getString("name");
+                techName = rs.getString("firstName") + " "
+                            + rs.getString("lastName");
             }
         }
         catch(SQLException e){

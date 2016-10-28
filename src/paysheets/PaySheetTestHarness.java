@@ -55,9 +55,9 @@ public class PaySheetTestHarness {
             System.out.print(e.getMessage());
         }
         
-        //PaySheetCreatorDAO pscDAO2 = new PaySheetCreatorDAO();
-        //String testGetName = pscDAO2.getTechName("Eric.Washington4");
-        //System.out.println("test: " + testGetName);
+        PaySheetCreatorDAO pscDAO2 = new PaySheetCreatorDAO();
+        String testGetName = pscDAO2.getTechName("Eric.Washington4");
+        System.out.println("test: " + testGetName);
     }
     
 }
