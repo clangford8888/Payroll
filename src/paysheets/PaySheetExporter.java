@@ -6,6 +6,7 @@
 package paysheets;
 
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,9 +74,26 @@ public class PaySheetExporter {
         // Add the date to end of file name
         Date startDate = sheet.getStartDate();
         Date endDate = sheet.getEndDate();
-        String start = startDate.toString();
-        String end = endDate.toString();
-        fileName += "_" + start + "_" + end;
+        String dateString = formatDateString(startDate, endDate);
+        fileName += "_" + dateString;
+        
+        return fileName;
+    }
+    
+    /**
+     * Takes two dates and returns the string representation using a simple
+     * date format
+     * @param start Start Date
+     * @param end End Date
+     * @return fileName String representation to be appended to fileName
+     */
+    private String formatDateString(Date start, Date end){
+        
+        String fileName = "";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-DD-yy");
+        String startString = dateFormat.format(start);
+        String endString = dateFormat.format(end);
+        fileName = startString + "_" + endString;
         
         return fileName;
     }
