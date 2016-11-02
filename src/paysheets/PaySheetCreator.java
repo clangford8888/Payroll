@@ -37,7 +37,7 @@ public class PaySheetCreator {
         entryList = paySheetDAO.getJobsByTech(techID, start, end);
         
         // Create a new pay sheet using the tech name, and start/end dates
-        PaySheet newSheet = new PaySheet(techName, start, end);
+        PaySheet newSheet = new PaySheet(techID, techName, start, end);
         
         // Add entries to the newly created pay sheet
         

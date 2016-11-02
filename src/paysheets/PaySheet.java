@@ -22,6 +22,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
  */
 public class PaySheet {
     
+    private final String techID;
     private final String techName;
     private final Date startDate;
     private final Date endDate;
@@ -46,7 +47,8 @@ public class PaySheet {
     protected static final int LEP_INDEX = 2;
     
 
-    public PaySheet(String techName, Date start, Date end){
+    public PaySheet(String techID, String techName, Date start, Date end){
+        this.techID = techID;
         this.techName = techName;
         this.startDate = start;
         this.endDate = end;
@@ -62,6 +64,10 @@ public class PaySheet {
     /*
         Getter methods for PaySheet
     */ 
+    public String getTechID(){
+        return this.techID;
+    }
+    
     public String getTechName(){
         return this.techName;
     }
