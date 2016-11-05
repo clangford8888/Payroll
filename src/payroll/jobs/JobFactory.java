@@ -153,7 +153,7 @@ public class JobFactory {
         String techID = rowParser.getTechID();
         String customerName = rowParser.getCustomerName();
         
-        // Switch on jobType to determine the sublcass & designation of job to build
+        // Switch on jobType to determine the subclass & designation of job to build
         String designation;
         Job newJob;
         switch(jobType){
