@@ -42,3 +42,7 @@ Thumbs.db
 *.xls
 *.xlsx
 /src/payroll/input/*
+
+# Files #
+/.idea/workspace.xml
+*.xml
