@@ -43,6 +43,10 @@ Thumbs.db
 *.xlsx
 /src/payroll/input/*
 
-# Files #
+# Files / Annoying Folders #
+############################
 /.idea/workspace.xml
 *.xml
+/nbproject/private/
+/test/
+/.idea/workspace/
