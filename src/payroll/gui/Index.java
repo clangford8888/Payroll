@@ -6,6 +6,9 @@
 package payroll.gui;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -40,7 +43,9 @@ public class Index extends javax.swing.JFrame {
         outputDirectoryLabel = new javax.swing.JLabel();
         outputDirectoryTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        techList = new javax.swing.JList<>();
+        DefaultListModel<CheckListItem> checkListModel = new DefaultListModel<>();
+        checkListModel = populateListModel(checkListModel);
+        techList = new javax.swing.JList<>(checkListModel);
         lblSelectTechnicians = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,11 +66,7 @@ public class Index extends javax.swing.JFrame {
 
         outputDirectoryTextField.setEditable(false);
 
-        techList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        techList.setModel(checkListModel);
         jScrollPane1.setViewportView(techList);
 
         lblSelectTechnicians.setText("Select Technicians:");
@@ -138,13 +139,30 @@ public class Index extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 22, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private List<CheckListItem> getTechnicianListFromDatabase(){
+        List<CheckListItem> techList = new ArrayList<>();
+        GuiDAO guiDAO = new GuiDAO();
+        techList = guiDAO.getActiveTechList();
+        return techList;
+    }
+    
+    private DefaultListModel<CheckListItem> populateListModel(DefaultListModel<CheckListItem> listModel){
+        List<CheckListItem> technicianCheckList = getTechnicianListFromDatabase();
+        for(CheckListItem item : technicianCheckList){
+            listModel.addElement(item);
+        }
+        return listModel;
+    }
+    
+    
+    
     private void chooseDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseDirectoryButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser("C:/");
@@ -210,6 +228,6 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel outputDirectoryLabel;
     private javax.swing.JTextField outputDirectoryTextField;
     private javax.swing.JButton resetFormButton;
-    private javax.swing.JList<String> techList;
+    private javax.swing.JList<CheckListItem> techList;
     // End of variables declaration//GEN-END:variables
 }
