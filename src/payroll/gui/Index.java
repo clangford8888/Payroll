@@ -6,10 +6,10 @@
 package payroll.gui;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,7 +45,9 @@ public class Index extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         DefaultListModel<CheckListItem> checkListModel = new DefaultListModel<>();
         checkListModel = populateListModel(checkListModel);
-        techList = new javax.swing.JList<>(checkListModel);
+        techJList = new javax.swing.JList<>(checkListModel);
+        // Set the cell renderer to use checkboxes
+        techJList.setCellRenderer(new CheckboxListRenderer());
         lblSelectTechnicians = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,8 +68,13 @@ public class Index extends javax.swing.JFrame {
 
         outputDirectoryTextField.setEditable(false);
 
-        techList.setModel(checkListModel);
-        jScrollPane1.setViewportView(techList);
+        techJList.setModel(checkListModel);
+        techJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                techJListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(techJList);
 
         lblSelectTechnicians.setText("Select Technicians:");
 
@@ -86,12 +93,12 @@ public class Index extends javax.swing.JFrame {
                         .addComponent(resetFormButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(exportPaySheetsTabLayout.createSequentialGroup()
                         .addGroup(exportPaySheetsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(exportPaySheetsTabLayout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(outputDirectoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(outputDirectoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSelectTechnicians))
                         .addGap(0, 201, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -102,8 +109,8 @@ public class Index extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblSelectTechnicians)
                 .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(exportPaySheetsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(outputDirectoryLabel)
                     .addComponent(outputDirectoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -147,7 +154,7 @@ public class Index extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private List<CheckListItem> getTechnicianListFromDatabase(){
-        List<CheckListItem> techList = new ArrayList<>();
+        List<CheckListItem> techList;
         GuiDAO guiDAO = new GuiDAO();
         techList = guiDAO.getActiveTechList();
         return techList;
@@ -176,6 +183,16 @@ public class Index extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You did not select a directory.");
         }
     }//GEN-LAST:event_chooseDirectoryButtonActionPerformed
+
+    private void techJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_techJListMouseClicked
+        JList<CheckListItem> list = (JList<CheckListItem>)evt.getSource();
+        // Get index of item clicked
+        int index = list.locationToIndex(evt.getPoint());
+        CheckListItem item = (CheckListItem)list.getModel().getElementAt(index);
+        item.switchSelectedState();
+        // Repaint the cell
+        list.repaint(list.getCellBounds(index, index));
+    }//GEN-LAST:event_techJListMouseClicked
     
     private void setOutputDirectoryLabel(File file){
         String directoryLocation = file.getAbsolutePath();
@@ -228,6 +245,6 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel outputDirectoryLabel;
     private javax.swing.JTextField outputDirectoryTextField;
     private javax.swing.JButton resetFormButton;
-    private javax.swing.JList<CheckListItem> techList;
+    private javax.swing.JList<CheckListItem> techJList;
     // End of variables declaration//GEN-END:variables
 }
