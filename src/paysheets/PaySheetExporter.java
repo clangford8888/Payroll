@@ -21,7 +21,7 @@ public class PaySheetExporter {
     final static int FIRST_NAME_FIRST = 1;
     
     private int format;
-    private PaySheetExporterDAO pseDAO;
+    private final PaySheetExporterDAO pseDAO;
     
     public PaySheetExporter(int nameFormat){
         // If input format is out of bounds, default to last name first

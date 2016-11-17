@@ -10,11 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+import paysheets.PaySheetExporter;
 
 /**
  *
@@ -270,11 +270,15 @@ public class Index extends javax.swing.JFrame {
         //checkValidDirectorySelected();
         System.out.println("Dates " + validDates);
         System.out.println("techs " + validTechs);
+        if(validDates && validTechs){
+            exportPaySheets(startDate, endDate);
+        }
     }//GEN-LAST:event_exportPaySheetsButtonActionPerformed
-
+    
+    private void exportPaySheets(Date startDate, Date endDate){
+        PaySheetExporter exporter = new PaySheetExporter();
+    }
     private boolean checkValidDateSelections(Date startDate, Date endDate){
-        System.out.println("Start: " + startDate.toString());
-        System.out.println("End: " + endDate.toString());
         if(startDate == null || endDate == null){
             return false;
         }

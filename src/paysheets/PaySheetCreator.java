@@ -5,9 +5,10 @@
  */
 package paysheets;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -40,12 +41,9 @@ public class PaySheetCreator {
         PaySheet newSheet = new PaySheet(techID, techName, start, end);
         
         // Add entries to the newly created pay sheet
-        
         for(PaySheetEntry p : entryList){
             newSheet.addEntry(p);
         }
-        
-        
         return newSheet;
     }
     
@@ -58,17 +56,17 @@ public class PaySheetCreator {
     
     
     /**
-     * Creates all pay sheets for all technicians for a given date and returns
-     * them as a list of PaySheets. Is the name long? Yes, but it describes
-     * what is happening!
+     * Creates all pay sheets for the technicians in a given set.
      * 
+     * @param techIDList Set of all tech IDs to create pay sheets for
      * @param start Start of date range
      * @param end End of date range
      * @return 
      */
-    public List<PaySheet> createAllTechPaySheetsByDateRange(Date start, Date end){
+    public Set<PaySheet> createMultiplePaySheets(Set<String> techIDList, 
+                                                    Date start, Date end){
         // TODO: Check for stupid input dates
-        List<PaySheet> paySheetList = new ArrayList<>();
+        Set<PaySheet> paySheetList = new HashSet<>();
         
         return paySheetList;
     }
