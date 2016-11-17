@@ -258,7 +258,6 @@ public class Index extends javax.swing.JFrame {
             CheckListItem checkbox = (CheckListItem)list.getModel().getElementAt(index);
             checkbox.setSelected(!checkbox.isSelected());
             list.repaint();
-            System.out.println("Repainted");
         }
     }//GEN-LAST:event_techJListMouseClicked
 
@@ -273,6 +272,50 @@ public class Index extends javax.swing.JFrame {
         System.out.println("techs " + validTechs);
     }//GEN-LAST:event_exportPaySheetsButtonActionPerformed
 
+    private boolean checkValidDateSelections(Date startDate, Date endDate){
+        System.out.println("Start: " + startDate.toString());
+        System.out.println("End: " + endDate.toString());
+        if(startDate == null || endDate == null){
+            return false;
+        }
+        Calendar currentDate = Calendar.getInstance();
+        Date maxSelectableDate = currentDate.getTime();
+        if(endDate.after(maxSelectableDate)){
+            JOptionPane.showMessageDialog(null, "You selected an end date in the future!",
+                                                "Alert!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        /* Magic value is the first date of the year payroll was tracked. */
+        Calendar minCalendar = Calendar.getInstance();
+        minCalendar.set(2015, 0, 0);
+        Date minSelectableDate = minCalendar.getTime();
+        if(startDate.before(minSelectableDate)){
+            JOptionPane.showMessageDialog(null, "Start date before 01/01/2015!",
+                                                "Alert!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if(startDate.after(endDate)){
+            JOptionPane.showMessageDialog(null, "Start date before end date!",
+                                                "Alert!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // If everything passes, the dates are valid.
+        return true;
+    }
+    
+    private boolean checkValidTechnicianSelection(){
+        if(techJList == null){
+            System.out.println("NULL!");
+            return false;
+        }
+        List<CheckListItem> checkedList = techJList.getSelectedValuesList();
+        if(checkedList.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Alert!", "No technicians selected!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
     private void techJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_techJListValueChanged
         // TODO add your handling code here:
         
@@ -311,45 +354,7 @@ public class Index extends javax.swing.JFrame {
             techJList.repaint();
         }
     }
-    
-    private boolean checkValidDateSelections(Date startDate, Date endDate){
-        if(startDate == null || endDate == null){
-            return false;
-        }
-        Calendar currentDate = Calendar.getInstance();
-        Date maxSelectableDate = currentDate.getTime();
-        if(endDate.after(maxSelectableDate)){
-            return false;
-        }
-        /* Magic value is the first date of the year payroll was tracked. */
-        Date minSelectableDate = new Date(2015,1,1);
-        if(startDate.before(minSelectableDate)){
-            return false;
-        }
-        if(startDate.after(endDate)){
-            JOptionPane.showMessageDialog(null, "Alert!", "Start date before end date!", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        // If everything passes, the dates are valid.
-        return true;
-    }
-    
-    private boolean checkValidTechnicianSelection(){
-        if(techJList == null){
-            System.out.println("NULL!");
-            return false;
-        }
-        List<CheckListItem> checkedList = techJList.getSelectedValuesList();
-        for(CheckListItem item : checkedList){
-            System.out.println(item.toString());
-        }
-        if(checkedList.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Alert!", "No technicians selected!", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
-    
+
     /**
      * @param args the command line arguments
      */
