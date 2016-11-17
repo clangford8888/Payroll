@@ -14,8 +14,7 @@ import javax.swing.ListCellRenderer;
  *
  * @author Casey
  */
-public class CheckboxListRenderer extends JCheckBox implements
-        ListCellRenderer<CheckListItem>{
+public class CheckboxListRenderer implements ListCellRenderer<CheckListItem>{
     
     public CheckboxListRenderer(){
         
@@ -28,13 +27,13 @@ public class CheckboxListRenderer extends JCheckBox implements
                                     int index,
                                     boolean isSelected,
                                     boolean cellHasFocus){
-        setEnabled(list.isEnabled());
-        setSelected(value.isSelected());
-        setFont(list.getFont());
-        setBackground(list.getBackground());
-        setForeground(list.getForeground());
-        setText(value.toString());
-        return this;
+        value.setEnabled(list.isEnabled());
+        value.setSelected(value.isSelected());
+        value.setFont(list.getFont());
+        value.setBackground(list.getBackground());
+        value.setForeground(list.getForeground());
+        value.setText(value.toString());
+        return value;
     }
 }
 

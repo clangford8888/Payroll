@@ -5,39 +5,25 @@
  */
 package payroll.gui;
 
+import javax.swing.JCheckBox;
+
 /**
  *
  * @author Casey
  */
-public class CheckListItem {
+public class CheckListItem extends JCheckBox{
     private final String firstName;
     private final String lastName;
-    private boolean checked;
     
+    // Initialize all items as cheched.
     public CheckListItem(String fName, String lName){
         firstName = fName;
         lastName = lName;
-        checked = true;
+        this.setSelected(true);
     }
     
     @Override
     public String toString(){
         return firstName + " " + lastName;
-    }
-    
-    public boolean isSelected(){
-        return checked;
-    }
-    
-    /**
-     * This method changes the state of the checked item. If the item is not
-     * checked, then it will be checked after this method is called.
-     */
-    public void switchSelectedState(){
-        checked = !checked;
-    }
-    
-    public void setSelectedState(boolean inChecked){
-        checked = inChecked;
     }
 }
