@@ -114,6 +114,11 @@ public class Index extends javax.swing.JFrame {
         });
 
         btnUncheckAll.setText("Uncheck All");
+        btnUncheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUncheckAllActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout exportPaySheetsTabLayout = new javax.swing.GroupLayout(exportPaySheetsTab);
         exportPaySheetsTab.setLayout(exportPaySheetsTabLayout);
@@ -221,13 +226,7 @@ public class Index extends javax.swing.JFrame {
         }
         return listModel;
     }
-    
-    
-    
-    private void clearAllSelectedJListItems(){
-        techJList.clearSelection();
-    }
-    
+
     private void chooseDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseDirectoryButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser("C:/");
@@ -284,13 +283,33 @@ public class Index extends javax.swing.JFrame {
         // TODO add your handling code here:
         selectAllJListItems();
     }//GEN-LAST:event_btnCheckAllActionPerformed
-    
+
     // Sets all items in the JList to selected
     private void selectAllJListItems(){
-        System.out.println("selecting all items");
         ListModel<CheckListItem> model = techJList.getModel();
         int lastElementIndex = model.getSize() - 1;
-        techJList.setSelectionInterval(0, lastElementIndex);
+        techJList.addSelectionInterval(0, lastElementIndex);
+        for(int i = 0; i <= lastElementIndex; i++){
+            CheckListItem item = model.getElementAt(i);
+            item.setSelected(true);
+            techJList.repaint();
+        }
+    }
+    
+    private void btnUncheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUncheckAllActionPerformed
+        // TODO add your handling code here:
+        clearAllSelectedJListItems();
+    }//GEN-LAST:event_btnUncheckAllActionPerformed
+    
+    private void clearAllSelectedJListItems(){
+        techJList.clearSelection();
+        ListModel<CheckListItem> model = techJList.getModel();
+        int lastElementIndex = model.getSize() - 1;
+        for(int i = 0; i <= lastElementIndex; i++){
+            CheckListItem item = model.getElementAt(i);
+            item.setSelected(false);
+            techJList.repaint();
+        }
     }
     
     private boolean checkValidDateSelections(Date startDate, Date endDate){
