@@ -19,8 +19,8 @@ public class TaskFactory {
     TaskCache masterTaskList;
     PaymentFileFormatChecker checker;
     
-    public TaskFactory(TaskCache inTaskReader, PaymentFileFormatChecker inChecker){
-        this.masterTaskList = inTaskReader;
+    public TaskFactory(PaymentFileFormatChecker inChecker){
+        this.masterTaskList = new TaskCache();
         this.checker = inChecker;
     }
      

@@ -30,6 +30,12 @@ public class EquipmentDAO {
         this.job = null;
     }
     
+    public EquipmentDAO(Job inJob){
+        this.conn = null;
+        this.ps = null;
+        this.job = inJob;
+    }
+    
     protected void setJob(Job inJob){
         this.job = inJob;
     }
