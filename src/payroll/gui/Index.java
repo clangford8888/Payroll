@@ -18,7 +18,6 @@ import javax.swing.ListModel;
 import paysheets.PaySheet;
 import paysheets.PaySheetCreator;
 import paysheets.PaySheetExporter;
-import paysheets.PaySheetTestHarness;
 
 /**
  *
@@ -223,7 +222,7 @@ public class Index extends javax.swing.JFrame {
         return techList;
     }
     
-    DefaultListModel<TechCheckListItem> populateListModel(DefaultListModel<TechCheckListItem> listModel){
+    private DefaultListModel<TechCheckListItem> populateListModel(DefaultListModel<TechCheckListItem> listModel){
         List<TechCheckListItem> technicianCheckList = getTechnicianListFromDatabase();
         for(TechCheckListItem item : technicianCheckList){
             listModel.addElement(item);
@@ -233,7 +232,7 @@ public class Index extends javax.swing.JFrame {
 
     private void chooseDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseDirectoryButtonActionPerformed
         // TODO add your handling code here:
-        JFileChooser chooser = new JFileChooser("C:/");
+        JFileChooser chooser = new JFileChooser("C:/Users/Casey/Documents/Netbeans Projects/Payroll/test/Output Files");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION){
@@ -241,7 +240,9 @@ public class Index extends javax.swing.JFrame {
             setOutputDirectoryLabel(file);
         }
         else{
-            JOptionPane.showMessageDialog(null, "You did not select a directory.");
+            JOptionPane.showMessageDialog(this, "You did not select a directory.");
+            // Forces user to select a directory
+            chooseDirectoryButtonActionPerformed(evt);
         }
     }//GEN-LAST:event_chooseDirectoryButtonActionPerformed
     
@@ -271,15 +272,14 @@ public class Index extends javax.swing.JFrame {
         Date endDate = jdcEndDate.getDate();
         boolean validDates = checkValidDateSelections(startDate, endDate);
         boolean validTechs = checkValidTechnicianSelection();
-        //checkValidDirectorySelected();
-        System.out.println("Dates " + validDates);
-        System.out.println("techs " + validTechs);
-        if(validDates && validTechs){
+        boolean validDirectory = checkValidDirectorySelected();
+        if(validDates && validTechs && validDirectory){
             exportPaySheets(startDate, endDate);
         }
     }//GEN-LAST:event_exportPaySheetsButtonActionPerformed
     
     private void exportPaySheets(Date startDate, Date endDate){
+        System.out.println("EXPORTING PAY SHEETS\n");
         List<TechCheckListItem> list = techJList.getSelectedValuesList();
         for(TechCheckListItem item : list){
             try {
@@ -303,7 +303,7 @@ public class Index extends javax.swing.JFrame {
         Calendar currentDate = Calendar.getInstance();
         Date maxSelectableDate = currentDate.getTime();
         if(endDate.after(maxSelectableDate)){
-            JOptionPane.showMessageDialog(null, "You selected an end date in the future!",
+            JOptionPane.showMessageDialog(this, "You selected an end date in the future!",
                                                 "Alert!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -312,12 +312,12 @@ public class Index extends javax.swing.JFrame {
         minCalendar.set(2015, 0, 0);
         Date minSelectableDate = minCalendar.getTime();
         if(startDate.before(minSelectableDate)){
-            JOptionPane.showMessageDialog(null, "Start date before 01/01/2015!",
+            JOptionPane.showMessageDialog(this, "Start date before 01/01/2015!",
                                                 "Alert!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if(startDate.after(endDate)){
-            JOptionPane.showMessageDialog(null, "Start date before end date!",
+            JOptionPane.showMessageDialog(this, "Start date before end date!",
                                                 "Alert!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -325,9 +325,24 @@ public class Index extends javax.swing.JFrame {
         return true;
     }
     
+    private boolean checkValidDirectorySelected(){
+        String directoryPath = outputDirectoryTextField.getText();
+        if(directoryPath.equals("")){
+            JOptionPane.showMessageDialog(this, "No output directory selected!",
+                                                "Alert!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        File outputDirectory = new File(directoryPath);
+        if(!outputDirectory.exists()){
+            JOptionPane.showMessageDialog(this, "Output directory does not exist!",
+                                                "Alert!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
     private boolean checkValidTechnicianSelection(){
         if(techJList == null){
-            System.out.println("NULL!");
             return false;
         }
         List<TechCheckListItem> checkedList = techJList.getSelectedValuesList();
