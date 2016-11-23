@@ -89,7 +89,6 @@ public class JobDAO {
             String techID = inJob.getTechID();
             String customerName = inJob.getCustomerName();
             int payment = inJob.getPayment();
-            
             String sql = "insert into job values(?,?,?,?,?,?,?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, workOrderNum);
@@ -99,7 +98,6 @@ public class JobDAO {
             ps.setString(5, techID);
             ps.setString(6, customerName);
             ps.setInt(7, payment);
-            
             int update = ps.executeUpdate();
             
             if(update > 0){
@@ -136,9 +134,7 @@ public class JobDAO {
             conn = DatabaseConnector.getConnection();
             String workOrderNum = inJob.getWorkOrderNumber();
             String sql = "delete from job where workOrderNum = ?";
-            
             ps = conn.prepareStatement(sql);
-            
             ps.setString(1, workOrderNum);
             int update = ps.executeUpdate();
             
