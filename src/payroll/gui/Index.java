@@ -287,9 +287,8 @@ public class Index extends javax.swing.JFrame {
                 PaySheetCreator psc = new PaySheetCreator();
                 PaySheet createdSheet = psc.createPaySheet(techID, startDate, endDate);
                 PaySheetExporter exporter = new PaySheetExporter();
-                //FileOutputStream outputStream = new FileOutputStream();
-                String fileName = exporter.createFileName(createdSheet);
-                System.out.println("Filename Created: " + fileName);
+                File outputDirectory = new File(outputDirectoryTextField.getText());
+                exporter.exportPaySheet(outputDirectory, createdSheet);
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -298,6 +297,8 @@ public class Index extends javax.swing.JFrame {
     }
     private boolean checkValidDateSelections(Date startDate, Date endDate){
         if(startDate == null || endDate == null){
+            JOptionPane.showMessageDialog(this, "You did not select a date!",
+                                                "Alert!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         Calendar currentDate = Calendar.getInstance();
