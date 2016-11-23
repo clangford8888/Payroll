@@ -14,7 +14,7 @@ import javax.swing.ListCellRenderer;
  *
  * @author Casey
  */
-public class CheckboxListRenderer implements ListCellRenderer<CheckListItem>{
+public class CheckboxListRenderer implements ListCellRenderer<TechCheckListItem>{
     
     public CheckboxListRenderer(){
         
@@ -22,8 +22,8 @@ public class CheckboxListRenderer implements ListCellRenderer<CheckListItem>{
     
     @Override
     public Component getListCellRendererComponent(
-                                    JList<? extends CheckListItem> list,
-                                    CheckListItem value,
+                                    JList<? extends TechCheckListItem> list,
+                                    TechCheckListItem value,
                                     int index,
                                     boolean isSelected,
                                     boolean cellHasFocus){

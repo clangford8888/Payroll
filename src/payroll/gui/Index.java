@@ -14,7 +14,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+
+import paysheets.PaySheet;
+import paysheets.PaySheetCreator;
 import paysheets.PaySheetExporter;
+import paysheets.PaySheetTestHarness;
 
 /**
  *
@@ -47,7 +51,7 @@ public class Index extends javax.swing.JFrame {
         outputDirectoryLabel = new javax.swing.JLabel();
         outputDirectoryTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        DefaultListModel<CheckListItem> checkListModel = new DefaultListModel<>();
+        DefaultListModel<TechCheckListItem> checkListModel = new DefaultListModel<>();
         checkListModel = populateListModel(checkListModel);
         techJList = new javax.swing.JList<>(checkListModel);
         // Set the cell renderer to use checkboxes
@@ -212,16 +216,16 @@ public class Index extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private List<CheckListItem> getTechnicianListFromDatabase(){
-        List<CheckListItem> techList;
+    private List<TechCheckListItem> getTechnicianListFromDatabase(){
+        List<TechCheckListItem> techList;
         GuiDAO guiDAO = new GuiDAO();
         techList = guiDAO.getActiveTechList();
         return techList;
     }
     
-    private DefaultListModel<CheckListItem> populateListModel(DefaultListModel<CheckListItem> listModel){
-        List<CheckListItem> technicianCheckList = getTechnicianListFromDatabase();
-        for(CheckListItem item : technicianCheckList){
+    DefaultListModel<TechCheckListItem> populateListModel(DefaultListModel<TechCheckListItem> listModel){
+        List<TechCheckListItem> technicianCheckList = getTechnicianListFromDatabase();
+        for(TechCheckListItem item : technicianCheckList){
             listModel.addElement(item);
         }
         return listModel;
@@ -251,11 +255,11 @@ public class Index extends javax.swing.JFrame {
         JList when finished.
     */
     private void techJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_techJListMouseClicked
-        JList<CheckListItem> list = (JList<CheckListItem>)evt.getSource();
+        JList<TechCheckListItem> list = (JList<TechCheckListItem>)evt.getSource();
         // Get index of item clicked
         int index = list.locationToIndex(evt.getPoint());
         if(index != -1){
-            CheckListItem checkbox = (CheckListItem)list.getModel().getElementAt(index);
+            TechCheckListItem checkbox = (TechCheckListItem)list.getModel().getElementAt(index);
             checkbox.setSelected(!checkbox.isSelected());
             list.repaint();
         }
@@ -276,7 +280,21 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_exportPaySheetsButtonActionPerformed
     
     private void exportPaySheets(Date startDate, Date endDate){
-        PaySheetExporter exporter = new PaySheetExporter();
+        List<TechCheckListItem> list = techJList.getSelectedValuesList();
+        for(TechCheckListItem item : list){
+            try {
+                String techID = item.getTechID();
+                PaySheetCreator psc = new PaySheetCreator();
+                PaySheet createdSheet = psc.createPaySheet(techID, startDate, endDate);
+                PaySheetExporter exporter = new PaySheetExporter();
+                //FileOutputStream outputStream = new FileOutputStream();
+                String fileName = exporter.createFileName(createdSheet);
+                System.out.println("Filename Created: " + fileName);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
     private boolean checkValidDateSelections(Date startDate, Date endDate){
         if(startDate == null || endDate == null){
@@ -312,7 +330,7 @@ public class Index extends javax.swing.JFrame {
             System.out.println("NULL!");
             return false;
         }
-        List<CheckListItem> checkedList = techJList.getSelectedValuesList();
+        List<TechCheckListItem> checkedList = techJList.getSelectedValuesList();
         if(checkedList.isEmpty()){
             JOptionPane.showMessageDialog(null, "Alert!", "No technicians selected!", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -333,11 +351,11 @@ public class Index extends javax.swing.JFrame {
 
     // Sets all items in the JList to selected
     private void selectAllJListItems(){
-        ListModel<CheckListItem> model = techJList.getModel();
+        ListModel<TechCheckListItem> model = techJList.getModel();
         int lastElementIndex = model.getSize() - 1;
         techJList.addSelectionInterval(0, lastElementIndex);
         for(int i = 0; i <= lastElementIndex; i++){
-            CheckListItem item = model.getElementAt(i);
+            TechCheckListItem item = model.getElementAt(i);
             item.setSelected(true);
             techJList.repaint();
         }
@@ -350,10 +368,10 @@ public class Index extends javax.swing.JFrame {
     
     private void clearAllSelectedJListItems(){
         techJList.clearSelection();
-        ListModel<CheckListItem> model = techJList.getModel();
+        ListModel<TechCheckListItem> model = techJList.getModel();
         int lastElementIndex = model.getSize() - 1;
         for(int i = 0; i <= lastElementIndex; i++){
-            CheckListItem item = model.getElementAt(i);
+            TechCheckListItem item = model.getElementAt(i);
             item.setSelected(false);
             techJList.repaint();
         }
@@ -412,6 +430,6 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JLabel outputDirectoryLabel;
     private javax.swing.JTextField outputDirectoryTextField;
     private javax.swing.JButton resetFormButton;
-    private javax.swing.JList<CheckListItem> techJList;
+    private javax.swing.JList<TechCheckListItem> techJList;
     // End of variables declaration//GEN-END:variables
 }

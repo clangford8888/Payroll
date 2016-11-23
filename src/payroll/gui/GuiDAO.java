@@ -21,22 +21,23 @@ public class GuiDAO {
     public GuiDAO(){
     }
     
-    List<CheckListItem> getActiveTechList(){
-        List<CheckListItem> techList = new ArrayList<>();
+    List<TechCheckListItem> getActiveTechList(){
+        List<TechCheckListItem> techList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
             conn = DatabaseConnector.getConnection();
-            String sql = "select firstName, lastName from technician "
+            String sql = "select techID, firstName, lastName from technician "
                         + "where active = 1";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                //Create new CheckListItem for each active tech
+                //Create new TechCheckListItem for each active tech
+                String techID = rs.getString("techID");
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
-                techList.add(new CheckListItem(firstName, lastName));
+                techList.add(new TechCheckListItem(techID, firstName, lastName));
             }
         }
         catch(SQLException e){
