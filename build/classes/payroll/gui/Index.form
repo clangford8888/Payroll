@@ -203,9 +203,9 @@
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList&lt;&gt;(checkListModel)"/>
                         <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="// Set the cell renderer to use checkboxes&#xd;&#xa;techJList.setCellRenderer(new CheckboxListRenderer());"/>
-                        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="DefaultListModel&lt;CheckListItem&gt; checkListModel = new DefaultListModel&lt;&gt;();&#xd;&#xa;checkListModel = populateListModel(checkListModel);"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="DefaultListModel&lt;payroll.gui.TechCheckListItem&gt; checkListModel = new DefaultListModel&lt;&gt;();&#xd;&#xa;checkListModel = populateListModel(checkListModel);"/>
                         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Index_techList"/>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;CheckListItem&gt;"/>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;payroll.gui.TechCheckListItem&gt;"/>
                         <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="selectAllJListItems();"/>
                       </AuxValues>
                     </Component>

@@ -7,9 +7,5 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="api" level="project" />
-    <orderEntry type="library" name="apidocs" level="project" />
-    <orderEntry type="library" name="jcalendar-1.41" level="project" />
-    <orderEntry type="library" name="poi-3.13-20150929" level="project" />
   </component>
 </module>
