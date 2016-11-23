@@ -20,7 +20,7 @@ public class PaySheetExporterDAO {
     public PaySheetExporterDAO(){
     }
     
-    protected String getTechName(String techID){
+    protected String getTechNameFromDatabase(String techID){
         // Set techName to input techID in case DB does not return a result;
         String techName = techID;
         // Declare JDBC components
@@ -57,7 +57,7 @@ public class PaySheetExporterDAO {
      * @param techID ID of the technician
      * @return fileName
      */
-    protected String getNameByFirstName(String techID){
+    protected String getNameFromDatabaseByFirstName(String techID){
         // Set a default file name so we don't return a null value
         String defaultFileName = "TECH_NOT_FOUND";
         String fileName = defaultFileName;
@@ -96,8 +96,7 @@ public class PaySheetExporterDAO {
      * @param techID ID of the technician
      * @return fileName
      */
-    protected String getNameByLastName(String techID){
-        System.out.println(techID);
+    protected String getNameFromDatabaseByLastName(String techID){
         // Set a default file name so we don't return a null value
         String defaultFileName = "TECH_NOT_FOUND";
         String fileName = defaultFileName;
@@ -116,7 +115,6 @@ public class PaySheetExporterDAO {
                 String lastName = rs.getString("lastName");
                 String firstName = rs.getString("firstName");
                 fileName = lastName + "_" + firstName;
-                System.out.println(fileName);
             }
         }
         catch(SQLException e){

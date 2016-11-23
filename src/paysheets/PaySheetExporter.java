@@ -5,9 +5,14 @@
  */
 package paysheets;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  * Exports PaySheet workbooks into Excel format.
@@ -42,23 +47,47 @@ public class PaySheetExporter {
         this.pseDAO = new PaySheetExporterDAO();
     }
     
-    protected void exportPaySheet(FileOutputStream out, PaySheet sheet){
+    public void exportPaySheet(File outputDirectory, PaySheet sheet){
         // Get tech name from PaySheetExporterDAO
         String techID = sheet.getTechName();
-        
-        
+
         // Format string for file name
-        String fileName = createFileName(sheet);
-        System.out.println(fileName);
+        String outputFileName = createFileName(sheet);
+        String directoryPath = outputDirectory.getPath();
+        String outputFilePath = createOutputFilePath(directoryPath, outputFileName);
+        System.out.println("Full output path:\n" + outputFilePath);
+        try{
+            FileOutputStream outputStream = new FileOutputStream(outputFilePath);
+            writePaySheet(outputStream, sheet);
+            outputStream.close();
+        }
+        catch(FileNotFoundException e){
+            JOptionPane.showMessageDialog(null, "The file could not be created at this location!",
+                                            "Alert!", JOptionPane.ERROR_MESSAGE);
+            // TODO log error
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    private void writePaySheet(FileOutputStream ouputStream, PaySheet sheet){
+        HSSFWorkbook workbook = sheet.getWorkbook();
+        if(workbook != null){
+            try{
+                workbook.write(ouputStream);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
     
     /**
      * Returns a String representation of the file name for the PaySheet being
      * exported.
-     * 
-     * @param techName Name of technician
+     *
      * @param sheet PaySheet being exported
-     * @param format int representing which name will be displayed first
      * @return fileName String representation of the final file name
      */
     private String createFileName(PaySheet sheet){
@@ -66,18 +95,29 @@ public class PaySheetExporter {
         String techID = sheet.getTechID();
         String fileName;
         if(this.format == FIRST_NAME_FIRST){
-            fileName = pseDAO.getNameByFirstName(techID);
+            fileName = pseDAO.getNameFromDatabaseByFirstName(techID);
         }
         else{
-            fileName = pseDAO.getNameByLastName(techID);
+            fileName = pseDAO.getNameFromDatabaseByLastName(techID);
         }
         // Add the date to end of file name
         Date startDate = sheet.getStartDate();
         Date endDate = sheet.getEndDate();
         String dateString = formatDateString(startDate, endDate);
-        fileName += "_" + dateString;
-        
+        fileName += "_" + dateString + ".xls";
         return fileName;
+    }
+    
+    /**
+     * Returns a full output file path given a directory path and an output file
+     * name.
+     * 
+     * @param directoryPath
+     * @param outputFileName
+     * @return 
+     */
+    private String createOutputFilePath(String directoryPath, String outputFileName){
+        return directoryPath + "\\" + outputFileName;
     }
     
     /**

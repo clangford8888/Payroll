@@ -59,5 +59,14 @@ public class PaySheetTestHarness {
         String testGetName = pscDAO2.getTechName("Eric.Washington4");
         System.out.println("test: " + testGetName);
     }
-    
+
+    public static void testSingleGuiExportQuery(String techID, Date start, Date end){
+
+        PaySheetCreator psc = new PaySheetCreator();
+        PaySheet createdSheet = psc.createPaySheet(techID, start, end);
+        PaySheetExporter exporter = new PaySheetExporter();
+        //FileOutputStream outputStream = new FileOutputStream();
+        //String fileName = exporter.createFileName(createdSheet);
+        //System.out.println("Filename Created: " + fileName);
+    }
 }

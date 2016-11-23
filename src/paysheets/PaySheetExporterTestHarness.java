@@ -23,13 +23,13 @@ public class PaySheetExporterTestHarness {
     public static void main(String[] args){
         PaySheetExporterDAO pseDAO = new PaySheetExporterDAO();
         
-        String test = pseDAO.getTechName("Angel.Torres1");
+        String test = pseDAO.getTechNameFromDatabase("Angel.Torres1");
         System.out.println(test);
-        String test1 = pseDAO.getTechName("Jhonny.Gonzalez3");
+        String test1 = pseDAO.getTechNameFromDatabase("Jhonny.Gonzalez3");
         System.out.println(test1);
-        String test2 = pseDAO.getTechName("david.rose");
+        String test2 = pseDAO.getTechNameFromDatabase("david.rose");
         System.out.println(test2);
-        String test3 = pseDAO.getTechName("allen.kerr");
+        String test3 = pseDAO.getTechNameFromDatabase("allen.kerr");
         System.out.println(test3);
         System.out.println();
         
@@ -65,7 +65,7 @@ public class PaySheetExporterTestHarness {
             PaySheetExporter lastName = new PaySheetExporter(PaySheetExporter.LAST_NAME_FIRST);
             FileOutputStream out = new FileOutputStream("src/payroll/input/TestWorkbook2.xls");
         
-            lastName.exportPaySheet(out , testPaySheet);
+            //lastName.exportPaySheet(out , testPaySheet);
         
         
             //HSSFWorkbook workbook = testPaySheet.getWorkbook();

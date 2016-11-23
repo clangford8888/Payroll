@@ -28,19 +28,10 @@ public class PaySheetCreator {
             // For now, returning null if any data is missing
             return null;
         }
-        // TODO: Check if valid date range
-        
         String techName = paySheetDAO.getTechName(techID);
-        
-        // Create a list of entries to be added to the pay sheet
         List<PaySheetEntry> entryList;
-        
         entryList = paySheetDAO.getJobsByTech(techID, start, end);
-        
-        // Create a new pay sheet using the tech name, and start/end dates
         PaySheet newSheet = new PaySheet(techID, techName, start, end);
-        
-        // Add entries to the newly created pay sheet
         for(PaySheetEntry p : entryList){
             newSheet.addEntry(p);
         }
@@ -63,12 +54,18 @@ public class PaySheetCreator {
      * @param end End of date range
      * @return 
      */
-    public Set<PaySheet> createMultiplePaySheets(Set<String> techIDList, 
-                                                    Date start, Date end){
-        // TODO: Check for stupid input dates
-        Set<PaySheet> paySheetList = new HashSet<>();
+    public Set<PaySheet> createMultiplePaySheets(List<String> techIDList, Date start, Date end){
+
+        Set<PaySheet> paySheetSet = new HashSet<>();
+
+        for(String techID : techIDList){
+            PaySheet createdSheet = createPaySheet(techID, start, end);
+            if(createdSheet != null){
+                paySheetSet.add(createdSheet);
+            }
+        }
         
-        return paySheetList;
+        return paySheetSet;
     }
     
 }
