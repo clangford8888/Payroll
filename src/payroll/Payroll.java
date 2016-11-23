@@ -40,7 +40,7 @@ public class Payroll {
         */
         
         PaymentFileFormatChecker checker = new PaymentFileFormatChecker();
-        File myFile2 = new File("src/payroll/input/Payments 01-01-16 to 01-07-16.xls");
+        File myFile2 = new File("input/Payments 01-01-16 to 01-07-16.xls");
         checker.readFileFormat(myFile2);
         System.out.println(checker.toString());
         PaymentParser parser = new PaymentParser(myFile2);

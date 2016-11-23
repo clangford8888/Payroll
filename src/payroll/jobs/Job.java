@@ -8,6 +8,8 @@ package payroll.jobs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SHSLaborTask;
 import payroll.tasks.SerializedEquipmentTask;
@@ -26,7 +28,7 @@ public abstract class Job {
     private final String customerName;
     private final String techID;
     private final String jobType;
-    protected List<SerializedEquipmentTask> serializedEquipmentList;
+    protected Set<SerializedEquipmentTask> serializedEquipmentGroup;
     protected List<NonSerializedEquipmentTask> nonSerializedEquipmentList;
     protected List<StandardLaborTask> standardLaborList;
     protected List<SHSLaborTask> shsList;
@@ -42,7 +44,7 @@ public abstract class Job {
         this.techID = inTID;
         this.customerName = inCName;
         this.jobType = inJobType;
-        this.serializedEquipmentList = new ArrayList<>();
+        this.serializedEquipmentGroup = new HashSet<>();
         this.nonSerializedEquipmentList = new ArrayList<>();
         this.standardLaborList = new ArrayList<>();
         this.shsList = new ArrayList<>();
@@ -60,7 +62,7 @@ public abstract class Job {
         this.techID = inTID;
         this.customerName = inCName;
         this.jobType = inJobType;
-        this.serializedEquipmentList = new ArrayList<>();
+        this.serializedEquipmentGroup = new HashSet<>();
         this.nonSerializedEquipmentList = new ArrayList<>();
         this.standardLaborList = new ArrayList<>();
         this.shsList = new ArrayList<>();
@@ -84,7 +86,7 @@ public abstract class Job {
     }
      
     public void addEquipmentTask(SerializedEquipmentTask inTask){
-        this.serializedEquipmentList.add(inTask);
+        this.serializedEquipmentGroup.add(inTask);
     }
     
     public void addEquipmentTask(NonSerializedEquipmentTask inTask){
@@ -125,8 +127,8 @@ public abstract class Job {
         return customerName;
     }
     
-    public List<SerializedEquipmentTask> getSerializedEquipmentTaskList(){
-        return serializedEquipmentList;
+    public Set<SerializedEquipmentTask> getSerializedEquipmentTaskList(){
+        return serializedEquipmentGroup;
     }
     
     public List<NonSerializedEquipmentTask> getNonSerializedEquipmentTaskList(){
@@ -155,7 +157,7 @@ public abstract class Job {
     
     // Debugging method
     public void printSerializedMap(){
-        for(SerializedEquipmentTask t: this.serializedEquipmentList){
+        for(SerializedEquipmentTask t: this.serializedEquipmentGroup){
             System.out.println(t.getModel() + " " + t.getSerialNumber());
         }
     }

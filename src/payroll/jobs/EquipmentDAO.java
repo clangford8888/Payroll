@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 import payroll.DatabaseConnector;
 import payroll.tasks.NonSerializedEquipmentTask;
 import payroll.tasks.SerializedEquipmentTask;
@@ -33,7 +34,7 @@ public class EquipmentDAO {
         this.job = inJob;
     }
     
-    protected void addSerializedEquipmentFromList(List<SerializedEquipmentTask> list){
+    protected void addSerializedEquipmentFromSet(Set<SerializedEquipmentTask> list){
         
         String workOrderNum = job.getWorkOrderNumber();
         String techID = job.getTechID();

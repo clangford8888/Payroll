@@ -8,6 +8,7 @@ package payroll.jobs;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import payroll.PaymentFileFormatChecker;
@@ -37,10 +38,6 @@ public class JobFactory {
         this.eqDAO = new EquipmentDAO();
     }
     
-    // TODO: GETTER/SETTER METHODS FOR inputFile? In case want to use same obj
-    //          to parse multiple files.
-    
-
     /*
     Purpose: Traverse a HashMap of <WO#, List<Row>> and build jobs for
             each work order number.
@@ -107,9 +104,9 @@ public class JobFactory {
     private void pushJobEquipmentToDatabase(Job newJob){
         eqDAO.setJob(newJob);
         // Add Serialized Equipment to database
-        List<SerializedEquipmentTask> list = newJob.getSerializedEquipmentTaskList();
-        if(!list.isEmpty()){               
-            eqDAO.addSerializedEquipmentFromList(list);
+        Set<SerializedEquipmentTask> serializedSet = newJob.getSerializedEquipmentTaskList();
+        if(!serializedSet.isEmpty()){               
+            eqDAO.addSerializedEquipmentFromSet(serializedSet);
         }
         // Add Non-Serialized Equipment to database
         List<NonSerializedEquipmentTask> nsList = newJob.getNonSerializedEquipmentTaskList();            
@@ -123,7 +120,7 @@ public class JobFactory {
              build the correct type of job.
     Parameters: inList: List of HSSFRow. 
     */
-    public String getJobType(HSSFRow inRow){
+    private String getJobType(HSSFRow inRow){
         
         int advancedJobTypeIndex = checker.getAdvancedTypeLocation();
         
@@ -209,6 +206,7 @@ public class JobFactory {
                             date, designation, techID, customerName, jobType);
                 break; 
             default:
+                // TODO throw exception
                 System.out.println("JOB TYPE NOT FOUND!");
                 return null;
         }
