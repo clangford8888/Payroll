@@ -8,11 +8,7 @@ package payroll;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import payroll.jobs.JobFactory;
-import paysheets.PaySheetCreatorDAO;
+import payroll.jobs.JobMapParser;
 
 /**
  *
@@ -46,8 +42,8 @@ public class Payroll {
         PaymentParser parser = new PaymentParser(myFile2);
         parser.parsePaymentFile();
         parser.closeFile();
-        JobFactory jFactory = new JobFactory(checker);
-        jFactory.processMap(parser.getMap());
+        JobMapParser mapParser = new JobMapParser(parser.getMap(),checker);
+        mapParser.parseUnprocessedRowMap();
         
         
         //String tempStr = "TEST";
