@@ -23,6 +23,7 @@ public class JobDAO {
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
+    private final int MYSQL_DUPLICATE_PK = 1062;
     
     public JobDAO(){
         conn = null;
@@ -49,9 +50,7 @@ public class JobDAO {
             System.out.println(e.getSQLState());
         }
         finally{
-            DatabaseConnector.closeQuietly(conn);
-            DatabaseConnector.closeQuietly(ps);
-            DatabaseConnector.closeQuietly(rs);
+            DatabaseConnector.closeQuietlyAll(conn, ps, rs);
         }
         
         return jobList;
@@ -108,8 +107,6 @@ public class JobDAO {
             }
         }
         catch(SQLException e){
-            
-            final int MYSQL_DUPLICATE_PK = 1062;
             if(e.getErrorCode() == MYSQL_DUPLICATE_PK){
                 System.out.println("Tried to add duplicate job.");
             }
@@ -120,9 +117,7 @@ public class JobDAO {
             }
         }
         finally{
-            DatabaseConnector.closeQuietly(conn);
-            DatabaseConnector.closeQuietly(ps);
-            DatabaseConnector.closeQuietly(rs);
+            DatabaseConnector.closeQuietlyAll(conn, ps, rs);
         }
         
         return jobAdded;
@@ -157,9 +152,7 @@ public class JobDAO {
             System.out.println("Error Code: " + e.getErrorCode());
         }
         finally{
-            DatabaseConnector.closeQuietly(conn);
-            DatabaseConnector.closeQuietly(ps);
-            DatabaseConnector.closeQuietly(rs);
+            DatabaseConnector.closeQuietlyAll(conn, ps, rs);
         }
         
         return jobDeleted;
